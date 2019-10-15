@@ -62,14 +62,35 @@ expo start
 
 ```bash
 cd project-path
-expo start --android,
-expo start --ios,
-expo start --web,
+expo start --android
+expo start --ios
+expo start --web
 ```
 
 Open Expo Client on your device. Use it to scan the QR code printed by expo start.  You may have to wait a minute while your project bundles and loads for the first time.
 
 Also you can log in to Expo CLI with an Expo account (you can sign up by pressing s in the terminal window with the development server running, or by running expo register) and then use the same account to log in to Expo client mobile app. Once you log in, a link to your current project will automatically appear inside Expo client on your phone.
+
+
+## Project structure
+
+
+--**assets** — Fonts, icons and images.
+
+--**components** — All shared React components. Usually these components are the ones that we call “dummy”, that have no state logic and can be easily reused across the app.
+
+--**config** — Config files.
+
+--**i18n** — These are the translation strings for users of different language and locale
+
+--**modules** — There are pieces that have no corresponding view part (JSX). Typical examples of that is the colors module (contains all the app colors) and the utils module (contains utility functions that are being reused).
+
+--**services** — These are the functions that wrap the API calls.
+
+--**views** — Application screens. These are also React components, but they are the ones that we call containers, because they contain their own state.
+
+[Best practices for creating React Native apps](https://medium.com/react-native-training/best-practices-for-creating-react-native-apps-part-1-66311c746df3)
+
 
 
 
