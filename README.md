@@ -72,6 +72,91 @@ Open Expo Client on your device. Use it to scan the QR code printed by expo star
 Also you can log in to Expo CLI with an Expo account (you can sign up by pressing s in the terminal window with the development server running, or by running expo register) and then use the same account to log in to Expo client mobile app. Once you log in, a link to your current project will automatically appear inside Expo client on your phone.
 
 
+## Continuous Integration (CI)
+
+### Test with Jest
+
+[(Testing with Jest - Documentation)](https://docs.expo.io/versions/latest/guides/testing-with-jest/)
+
+We will set up the CI to run the following two scripts.
+
+```bash
+npm ci
+npx jest --ci
+```
+
+Travis CI
+
+```yml
+language: node_js
+node_js:
+  - node
+  - lts/*
+cache:
+  directories:
+    - ~/.npm
+    - .jest
+before_script:
+  - npm install -g npm@latest
+script:
+  - npm ci
+  - npx jest --ci
+```
+
+## Continuous Delivery (CD)
+
+### Deploy to Expo
+
+To interact with the Expo API, we need to install the Expo CLI:
+
+```bash
+npm install --save-dev expo-cli
+```
+
+To perform the authentication, we will add this script to our configuration:
+
+```bash
+npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+```
+($EXPO_USERNAME and $EXPO_PASSWORD  are environment variables which are "injected" into the environment and scrubbed from the logs to keep it safe.
+
+
+To create the builds, we will add this script to our configuration:
+```bash
+npx expo publish --non-interactive
+```
+
+Travis CI
+
+```yml
+language: node_js
+node_js:
+  - node
+  - lts/*
+cache:
+  directories:
+    - ~/.npm
+    - .jest
+before_script:
+  - npm install -g npm@latest
+  - echo fs.inotify.max_user_instances=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+  - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+  - echo fs.inotify.max_queued_events=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+script:
+  - npm ci
+  - npx jest --ci
+jobs:
+  include:
+    - stage: deploy
+      node_js: lts/*
+      script:
+        - npm ci
+        - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+        - npx expo publish --non-interactive
+```
+
+[Setting up Continuous Integration and Continuous Delivery](https://docs.expo.io/versions/latest/guides/setting-up-continuous-integration/)
+
 ## Project structure
 
 
