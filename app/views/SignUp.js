@@ -28,50 +28,50 @@ export default class SignUp extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Image
-          style={styles.logo}
-          source={require('./../assets/images/murcy.png')}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Username'
-          autoCapitalize="none"
-          placeholderTextColor='darkgrey'
-          onChangeText={val => this.onChangeText('username', val)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Password'
-          secureTextEntry={true}
-          autoCapitalize="none"
-          placeholderTextColor='darkgrey'
-          onChangeText={val => this.onChangeText('password', val)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Email'
-          autoCapitalize="none"
-          placeholderTextColor='darkgrey'
-          onChangeText={val => this.onChangeText('email', val)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Phone Number'
-          autoCapitalize="none"
-          placeholderTextColor='darkgrey'
-          onChangeText={val => this.onChangeText('phone_number', val)}
-        />
+        <View style={styles.container}>
+          <Image
+              style={styles.logo}
+              source={require('./../assets/images/murcy.png')}
+          />
+          <TextInput
+              style={styles.input}
+              placeholder='Username'
+              autoCapitalize="none"
+              placeholderTextColor='darkgrey'
+              onChangeText={val => this.onChangeText('username', val)}
+          />
+          <TextInput
+              style={styles.input}
+              placeholder='Password'
+              secureTextEntry={true}
+              autoCapitalize="none"
+              placeholderTextColor='darkgrey'
+              onChangeText={val => this.onChangeText('password', val)}
+          />
+          <TextInput
+              style={styles.input}
+              placeholder='Email'
+              autoCapitalize="none"
+              placeholderTextColor='darkgrey'
+              onChangeText={val => this.onChangeText('email', val)}
+          />
+          <TextInput
+              style={styles.input}
+              placeholder='Phone Number'
+              autoCapitalize="none"
+              placeholderTextColor='darkgrey'
+              onChangeText={val => this.onChangeText('phone_number', val)}
+          />
 
-        <Button
-          buttonStyle={styles.button}
-          title="Sign Up"
-          onPress={() => {this.signUp}} />
+          <Button
+              buttonStyle={styles.button}
+              title="Sign Up"
+              onPress={() => {this.signUp}} />
 
-        <Link to="/">
-          <Text>Log In</Text>
-        </Link>
-      </View>
+          <Link to="/">
+            <Text>Log In</Text>
+          </Link>
+        </View>
     )
   }
 }

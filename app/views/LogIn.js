@@ -19,7 +19,7 @@ export default class LogIn extends Component {
   logIn = async () => {
     const { email, password } = this.state
     try {
-      
+
       // here place your signup logic
       //console.log('user successfully signed up!: ', success)
     } catch (err) {
@@ -29,36 +29,36 @@ export default class LogIn extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Image
-          style={styles.logo}
-          source={require('./../assets/images/murcy.png')}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Email'
-          autoCapitalize="none"
-          placeholderTextColor='darkgrey'
-          onChangeText={val => this.onChangeText('email', val)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Password'
-          secureTextEntry={true}
-          autoCapitalize="none"
-          placeholderTextColor='darkgrey'
-          onChangeText={val => this.onChangeText('password', val)}
-        />
+        <View style={styles.container}>
+          <Image
+              style={styles.logo}
+              source={require('./../assets/images/murcy.png')}
+          />
+          <TextInput
+              style={styles.input}
+              placeholder='Email'
+              autoCapitalize="none"
+              placeholderTextColor='darkgrey'
+              onChangeText={val => this.onChangeText('email', val)}
+          />
+          <TextInput
+              style={styles.input}
+              placeholder='Password'
+              secureTextEntry={true}
+              autoCapitalize="none"
+              placeholderTextColor='darkgrey'
+              onChangeText={val => this.onChangeText('password', val)}
+          />
 
-        <Button
-          buttonStyle={styles.button}
-          title="Log In"
-          onPress={() => {this.logIn}} />
+          <Button
+              buttonStyle={styles.button}
+              title="Log In"
+              onPress={() => {this.logIn}} />
 
-        <Link to="/signin">
-          <Text>Sign Up</Text>
-        </Link>
-      </View>
+          <Link to="/signin">
+            <Text>Sign Up</Text>
+          </Link>
+        </View>
     )
   }
 }
