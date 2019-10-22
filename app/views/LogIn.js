@@ -8,23 +8,35 @@ import {
 } from 'react-native'
 import { Button } from 'react-native-elements';
 import { Link } from './../config/routing';
+import {logInUser, signUpUser} from "../services/user/userFuncs";
 
 export default class LogIn extends Component {
-  state = {
-    username: '', password: '', email: '', phone_number: ''
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      error: false
+    }
+    this.onChangeText = this.onChangeText.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   onChangeText = (key, val) => {
     this.setState({ [key]: val })
   }
-  logIn = async () => {
-    const { email, password } = this.state
-    try {
 
-      // here place your signup logic
-      //console.log('user successfully signed up!: ', success)
-    } catch (err) {
-      //console.log('error signing up: ', err)
-    }
+  handleSubmit() {
+    logInUser(this.state.email, this.state.password)
+        .then((data) => {
+          console.log(data);
+          //this.setState(data);
+        })
+        .catch((error)=>{
+          console.log("Api call error");
+          alert(error.message);
+        });
   }
 
   render() {
@@ -53,7 +65,7 @@ export default class LogIn extends Component {
           <Button
               buttonStyle={styles.button}
               title="Log In"
-              onPress={() => {this.logIn}} />
+              onPress={() => {this.handleSubmit()}} />
 
           <Link to="/signin">
             <Text>Sign Up</Text>

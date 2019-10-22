@@ -8,25 +8,48 @@ import {
 } from 'react-native'
 import { Button } from 'react-native-elements';
 import { Link } from './../config/routing';
+import { signUpUser } from '../services/user/userFuncs';
 
 export default class SignUp extends Component {
-  state = {
-    username: '', password: '', email: '', phone_number: ''
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: '',
+      password: '',
+      email: '',
+      phone_number: '',
+      error: false
+    }
+    this.onChangeText = this.onChangeText.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   onChangeText = (key, val) => {
     this.setState({ [key]: val })
   }
-  signUp = async () => {
-    const { username, password, email, phone_number } = this.state
-    try {
-      // here place your signup logic
-      //console.log('user successfully signed up!: ', success)
-    } catch (err) {
-      //console.log('error signing up: ', err)
-    }
+
+  handleSubmit() {
+    signUpUser(this.state.username, this.state.password, this.state.email, this.state.phone_number)
+        .then((data) => {
+            console.log(data);
+            //this.setState(data);
+        })
+        .catch((error)=>{
+            alert(error.message);
+         });
   }
 
+
   render() {
+    let showErr = (
+        this.state.error ?
+            <Text>
+              {this.state.error}
+            </Text> :
+            <View></View>
+    );
+
     return (
         <View style={styles.container}>
           <Image
@@ -66,7 +89,9 @@ export default class SignUp extends Component {
           <Button
               buttonStyle={styles.button}
               title="Sign Up"
-              onPress={() => {this.signUp}} />
+              onPress={() => {this.handleSubmit()}} />
+
+          {showErr}
 
           <Link to="/">
             <Text>Log In</Text>
