@@ -25,9 +25,8 @@ export const signUpUser = (username, password, email, phone_number) => {
             console.log(json)
         })
         .catch((error) => {
-            console.log("error fetching data")
             console.log(error)
-            console.log(error.message) // Server can't be reached!
+            console.log(error.message)
             throw error;
         });
 }

@@ -28,18 +28,33 @@ export default class LogIn extends Component {
     }
 
     handleSubmit() {
-        logInUser(this.state.email, this.state.password)
-            .then((data) => {
-                console.log(data);
-                //this.setState(data);
-            })
-            .catch((error) => {
-                console.log("Api call error");
-                alert(error.message);
-            });
+        if(this.state.email !== '' && this.state.password !== ''){
+            logInUser(this.state.email, this.state.password)
+                .then((data) => {
+                    console.log(data);
+                    //this.setState(data);
+                })
+                .catch((error) => {
+                    this.setState( {error: error.message})
+                });
+        }
+        else{
+            this.setState({error: 'Introduzca todos los campos'})
+        }
+
     }
 
     render() {
+        let showErr = (
+            this.state.error ?
+                <View style={styles.error}>
+                    <Text style={{color: 'red'}}>
+                        {this.state.error}
+                    </Text>
+                </View> :
+                <View></View>
+        );
+
         return (
             <View style={styles.container}>
                 <View style={styles.cross}>
@@ -67,6 +82,7 @@ export default class LogIn extends Component {
                 <TextInput
                     style={styles.input}
                     placeholder='Email'
+                    keyboardType='email-address'
                     autoCapitalize="none"
                     placeholderTextColor='darkgrey'
                     onChangeText={val => this.onChangeText('email', val)}
@@ -79,6 +95,8 @@ export default class LogIn extends Component {
                     placeholderTextColor='darkgrey'
                     onChangeText={val => this.onChangeText('password', val)}
                 />
+
+                {showErr}
 
                 <Button
                     buttonStyle={styles.button}
@@ -140,7 +158,7 @@ const styles = StyleSheet.create({
     button: {
         width: 150,
         height: 55,
-        marginTop: 30,
+        marginTop: 20,
         margin: 10,
         backgroundColor: 'grey',
         borderRadius: 14
@@ -149,6 +167,10 @@ const styles = StyleSheet.create({
         width: 150,
         height: 55,
         borderRadius: 14
-    }
+    },
+    error: {
+        margin: 10,
+
+    },
 
 })
