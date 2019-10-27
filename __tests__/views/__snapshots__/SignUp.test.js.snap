@@ -103,6 +103,29 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
     <TextInput
       allowFontScaling={true}
       autoCapitalize="none"
+      keyboardType="email-address"
+      onChangeText={[Function]}
+      placeholder="Email"
+      placeholderTextColor="darkgrey"
+      rejectResponderTermination={true}
+      style={
+        Object {
+          "backgroundColor": "whitesmoke",
+          "borderRadius": 14,
+          "color": "grey",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "height": 55,
+          "margin": 10,
+          "padding": 8,
+          "width": 300,
+        }
+      }
+      underlineColorAndroid="transparent"
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
       onChangeText={[Function]}
       placeholder="Password"
       placeholderTextColor="darkgrey"
@@ -127,9 +150,10 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
       allowFontScaling={true}
       autoCapitalize="none"
       onChangeText={[Function]}
-      placeholder="Email"
+      placeholder="Repeat password"
       placeholderTextColor="darkgrey"
       rejectResponderTermination={true}
+      secureTextEntry={true}
       style={
         Object {
           "backgroundColor": "whitesmoke",
@@ -145,28 +169,7 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
       }
       underlineColorAndroid="transparent"
     />
-    <TextInput
-      allowFontScaling={true}
-      autoCapitalize="none"
-      onChangeText={[Function]}
-      placeholder="Phone Number"
-      placeholderTextColor="darkgrey"
-      rejectResponderTermination={true}
-      style={
-        Object {
-          "backgroundColor": "whitesmoke",
-          "borderRadius": 14,
-          "color": "grey",
-          "fontSize": 18,
-          "fontWeight": "500",
-          "height": 55,
-          "margin": 10,
-          "padding": 8,
-          "width": 300,
-        }
-      }
-      underlineColorAndroid="transparent"
-    />
+    <View />
     <View
       style={
         Object {
@@ -201,7 +204,7 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
               "height": 55,
               "justifyContent": "center",
               "margin": 10,
-              "marginTop": 30,
+              "marginTop": 20,
               "padding": 8,
               "width": 150,
             }
@@ -223,7 +226,6 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
         </View>
       </View>
     </View>
-    <View />
     <View
       style={
         Object {
@@ -257,6 +259,7 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
               "flexDirection": "row",
               "height": 55,
               "justifyContent": "center",
+              "marginBottom": 50,
               "padding": 8,
               "width": 150,
             }

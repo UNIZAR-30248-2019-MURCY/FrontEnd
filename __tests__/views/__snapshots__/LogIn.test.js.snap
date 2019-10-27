@@ -81,6 +81,7 @@ exports[`<LogIn /> LogIn test against snapshot 1`] = `
     <TextInput
       allowFontScaling={true}
       autoCapitalize="none"
+      keyboardType="email-address"
       onChangeText={[Function]}
       placeholder="Email"
       placeholderTextColor="darkgrey"
@@ -123,6 +124,7 @@ exports[`<LogIn /> LogIn test against snapshot 1`] = `
       }
       underlineColorAndroid="transparent"
     />
+    <View />
     <View
       style={
         Object {
@@ -157,7 +159,7 @@ exports[`<LogIn /> LogIn test against snapshot 1`] = `
               "height": 55,
               "justifyContent": "center",
               "margin": 10,
-              "marginTop": 30,
+              "marginTop": 20,
               "padding": 8,
               "width": 150,
             }
