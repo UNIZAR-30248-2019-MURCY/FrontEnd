@@ -1,0 +1,283 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<SignUp /> SignUp test against snapshot 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "flex-end",
+        "marginBottom": 40,
+        "marginRight": 10,
+        "marginTop": 50,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "borderRadius": 3,
+        }
+      }
+    >
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#2089dc",
+              "borderRadius": 3,
+              "borderWidth": 0,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 8,
+            }
+          }
+        >
+          <Text />
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+      }
+    }
+  >
+    <Image
+      source={1}
+      style={
+        Object {
+          "height": 100,
+          "marginBottom": 30,
+          "padding": 8,
+          "width": 100,
+        }
+      }
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Username"
+      placeholderTextColor="darkgrey"
+      rejectResponderTermination={true}
+      style={
+        Object {
+          "backgroundColor": "whitesmoke",
+          "borderRadius": 14,
+          "color": "grey",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "height": 55,
+          "margin": 10,
+          "padding": 8,
+          "width": 300,
+        }
+      }
+      underlineColorAndroid="transparent"
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Password"
+      placeholderTextColor="darkgrey"
+      rejectResponderTermination={true}
+      secureTextEntry={true}
+      style={
+        Object {
+          "backgroundColor": "whitesmoke",
+          "borderRadius": 14,
+          "color": "grey",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "height": 55,
+          "margin": 10,
+          "padding": 8,
+          "width": 300,
+        }
+      }
+      underlineColorAndroid="transparent"
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Email"
+      placeholderTextColor="darkgrey"
+      rejectResponderTermination={true}
+      style={
+        Object {
+          "backgroundColor": "whitesmoke",
+          "borderRadius": 14,
+          "color": "grey",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "height": 55,
+          "margin": 10,
+          "padding": 8,
+          "width": 300,
+        }
+      }
+      underlineColorAndroid="transparent"
+    />
+    <TextInput
+      allowFontScaling={true}
+      autoCapitalize="none"
+      onChangeText={[Function]}
+      placeholder="Phone Number"
+      placeholderTextColor="darkgrey"
+      rejectResponderTermination={true}
+      style={
+        Object {
+          "backgroundColor": "whitesmoke",
+          "borderRadius": 14,
+          "color": "grey",
+          "fontSize": 18,
+          "fontWeight": "500",
+          "height": 55,
+          "margin": 10,
+          "padding": 8,
+          "width": 300,
+        }
+      }
+      underlineColorAndroid="transparent"
+    />
+    <View
+      style={
+        Object {
+          "borderRadius": 14,
+        }
+      }
+    >
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "grey",
+              "borderColor": "#2089dc",
+              "borderRadius": 14,
+              "borderWidth": 0,
+              "flexDirection": "row",
+              "height": 55,
+              "justifyContent": "center",
+              "margin": 10,
+              "marginTop": 30,
+              "padding": 8,
+              "width": 150,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "white",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
+            }
+          >
+            Sign Up
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View />
+    <View
+      style={
+        Object {
+          "borderRadius": 14,
+        }
+      }
+    >
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#2089dc",
+              "borderRadius": 14,
+              "borderWidth": 0,
+              "flexDirection": "row",
+              "height": 55,
+              "justifyContent": "center",
+              "padding": 8,
+              "width": 150,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "grey",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
+            }
+          >
+            Log In
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

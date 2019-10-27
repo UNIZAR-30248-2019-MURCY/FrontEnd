@@ -13,6 +13,9 @@
     "transformIgnorePatterns": [
       "node_modules/(?!react-native)/"
     ],
+    "setupFiles": [
+      "<rootDir>/app/config/jest/setup.js"
+    ],
     "collectCoverage": true,
     "collectCoverageFrom": [
       "**/*.{js,jsx}",
@@ -28,9 +31,9 @@
     "expo": "^35.0.0",
     "react": "16.8.6",
     "react-art": "^16.10.2",
-    "react-dom": "16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-35.0.0.tar.gz",
     "react-native-elements": "^1.2.6",
+    "react-native-vector-icons": "^6.6.0",
     "react-native-web": "^0.11.7",
     "react-router-dom": "^5.1.2",
     "react-router-native": "^5.1.2",
@@ -38,8 +41,11 @@
   },
   "devDependencies": {
     "babel-preset-expo": "^7.0.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "expo-cli": "^3.4.1",
     "jest-expo": "^35.0.0",
+    "react-dom": "^16.8.6",
     "react-test-renderer": "16.8.6"
   },
   "private": true

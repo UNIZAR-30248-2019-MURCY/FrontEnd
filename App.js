@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Router, Switch, Route } from './app/config/routing';
+import Welcome from './app/views/Welcome';
 import LogIn from './app/views/LogIn';
 import SignUp from './app/views/SignUp';
 
@@ -11,8 +12,9 @@ class App extends Component {
       <View style={styles.container}>
         <Router>
           <Switch>
-            <Route exact path="/" render={props => <LogIn {...props} />} />
-            <Route path="/signin" render={props => <SignUp {...props} />} />
+            <Route exact path="/" render={props => <Welcome {...props} />} />
+            <Route exact path="/login" render={props => <LogIn {...props} />} />
+            <Route path="/signup" render={props => <SignUp {...props} />} />
           </Switch>
         </Router>
       </View>
@@ -22,8 +24,6 @@ class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   }
 });
 export default App;

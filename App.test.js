@@ -11,8 +11,4 @@ describe('<App />', () => {
         const rendered = renderer.create(<App />).toJSON();
         expect(rendered).toBeTruthy();
     });
-    it('App test against snapshot', () => {
-        const tree = renderer.create(<App />).toJSON();
-        expect(tree).toMatchSnapshot();
-    });
 });

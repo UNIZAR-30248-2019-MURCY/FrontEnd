@@ -9,6 +9,7 @@ import {
 import { Button } from 'react-native-elements';
 import { Link } from './../config/routing';
 import { signUpUser } from '../services/user/userFuncs';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class SignUp extends Component {
 
@@ -52,6 +53,24 @@ export default class SignUp extends Component {
 
     return (
         <View style={styles.container}>
+            <View style={styles.cross}>
+                <Button
+                    type="clear"
+                    icon={
+                        <Icon
+                            name="times"
+                            size={30}
+                            color="grey"
+                        />
+                    }
+                    onPress={() => {
+                        this.props.history.goBack();
+                    }
+                    }
+                />
+            </View>
+
+            <View style={styles.login}>
           <Image
               style={styles.logo}
               source={require('./../assets/images/murcy.png')}
@@ -93,17 +112,45 @@ export default class SignUp extends Component {
 
           {showErr}
 
-          <Link to="/">
-            <Text>Log In</Text>
-          </Link>
+            <Button
+                className='login-button'
+                type="clear"
+                buttonStyle={styles.button2}
+                title="Log In"
+                titleStyle={{color: 'grey'}}
+                onPress={() => {
+                    this.props.history.replace('/login');}
+                } />
+            </View>
         </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        //justifyContent: 'center',
+    },
+    cross: {
+        marginTop: 50,
+        marginBottom: 40,
+        marginRight: 10,
+        alignItems: 'flex-end',
+    },
+    login: {
+        flex: 1,
+        alignItems: 'center',
+        //justifyContent: 'center',
+    },
+    logo: {
+        marginBottom: 30,
+        padding: 8,
+        width: 100,
+        height: 100
+    },
   input: {
-    width: 350,
+    width: 300,
     height: 55,
     backgroundColor: 'whitesmoke',
     margin: 10,
@@ -113,35 +160,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '500',
   },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    //justifyContent: 'center',
-    marginTop: 100,
-    padding: 20
-  },
-  logo: {
-    margin: 30,
-    padding: 8,
-    width: 100,
-    height: 100
-  },
-  signUpScreenButton: {
-    marginRight: 40,
-    marginLeft: 40,
-    marginTop: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
-    backgroundColor: 'grey',
-    borderRadius: 10,
-  },
   button: {
     width: 150,
     height: 55,
-    margin: 40,
-    padding: 8,
+      marginTop:30,
+    margin: 10,
     backgroundColor: 'grey',
     borderRadius: 14
-  }
+  },
+    button2: {
+        width: 150,
+        height: 55,
+        borderRadius: 14
+    }
 
 })
