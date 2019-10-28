@@ -4,9 +4,10 @@ import {
     TextInput,
     StyleSheet,
     Image,
-    Text
+    Text,
+    ScrollView
 } from 'react-native'
-import {Button} from 'react-native-elements';
+import {Button, CheckBox } from 'react-native-elements';
 import {signUpUser} from '../services/user/userFuncs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -19,11 +20,14 @@ export default class SignUp extends Component {
             password: '',
             email: '',
             phone_number: '',
+            checked: false,
             error: false
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    
 
     onChangeText = (key, val) => {
         this.setState({[key]: val})
@@ -40,10 +44,11 @@ export default class SignUp extends Component {
                 .catch((error) => {
                     this.setState({error: error.message})
                 })
+        } else if (!this.state.checked) {
+            this.setState({error: 'You must accept the terms and conditions '})
         } else {
             this.setState({error: 'Introduzca todos los campos '})
         }
-
     }
 
     render() {
@@ -56,9 +61,11 @@ export default class SignUp extends Component {
                 </View> :
                 <View></View>
         );
+        
 
         return (
             <View style={styles.container}>
+                <ScrollView>
                 <View style={styles.cross}>
                     <Button
                         type="clear"
@@ -70,7 +77,7 @@ export default class SignUp extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.history.goBack();
+                            this.props.history.push('/');
                         }
                         }
                     />
@@ -84,6 +91,7 @@ export default class SignUp extends Component {
                     <TextInput
                         style={styles.input}
                         placeholder='Username'
+                        value={this.state.username}
                         autoCapitalize="none"
                         placeholderTextColor='darkgrey'
                         onChangeText={val => this.onChangeText('username', val)}
@@ -112,6 +120,15 @@ export default class SignUp extends Component {
                         placeholderTextColor='darkgrey'
                         onChangeText={val => this.onChangeText('password', val)}
                     />
+                    <CheckBox
+                        center
+                        title={<Text style={{color: 'blue', textDecorationLine: 'underline'}}
+                        onPress={() => {
+                            this.props.history.push('/termsConditions');
+                        }}>I have read and I accept the Terms and Conditions </Text>}
+                        checked={this.state.checked}
+                        onPress={() => this.setState({ checked: !this.state.checked })}
+                    />
 
                     {showErr}
 
@@ -134,6 +151,7 @@ export default class SignUp extends Component {
                         }
                         }/>
                 </View>
+                </ScrollView>
             </View>
         )
     }

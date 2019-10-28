@@ -68,7 +68,7 @@ export default class LogIn extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.history.goBack();
+                            this.props.history.push('/');
                         }
                         }
                     />

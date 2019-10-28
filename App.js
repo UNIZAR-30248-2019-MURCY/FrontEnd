@@ -5,6 +5,7 @@ import Welcome from './app/views/Welcome';
 import LogIn from './app/views/LogIn';
 import SignUp from './app/views/SignUp';
 import EmailConfirm from './app/views/EmailConfirm';
+import TermsConditions from './app/views/Terms&Cond';
 
 
 class App extends Component {
@@ -15,6 +16,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={props => <Welcome {...props} />} />
             <Route exact path="/login" render={props => <LogIn {...props} />} />
+            <Route exact path="/termsConditions" render={props => <TermsConditions {...props} />} />
             <Route path="/signup" render={props => <SignUp {...props} />} />
             <Route path="/emailconfirm" render={props => <EmailConfirm {...props} />} />
           </Switch>
