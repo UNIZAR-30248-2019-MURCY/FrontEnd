@@ -6,6 +6,9 @@ import LogIn from './app/views/LogIn';
 import SignUp from './app/views/SignUp';
 import EmailConfirm from './app/views/EmailConfirm';
 import TermsConditions from './app/views/Terms&Cond';
+import Player from './app/views/Player';
+import Editor from './app/views/Editor';
+import CreateQuestion from './app/views/CreateQuestion';
 
 
 class App extends Component {
@@ -19,6 +22,9 @@ class App extends Component {
             <Route exact path="/termsConditions" render={props => <TermsConditions {...props} />} />
             <Route path="/signup" render={props => <SignUp {...props} />} />
             <Route path="/emailconfirm" render={props => <EmailConfirm {...props} />} />
+            <Route path="/player" render={props => <Player {...props} />} />
+            <Route path="/editor" render={props => <Editor {...props} />} />
+            <Route path="/createQuestion" render={props => <CreateQuestion {...props} />} />
           </Switch>
         </Router>
       </View>

@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
 
-export default class Welcome extends Component {
+export default class Terms extends Component {
 
     constructor(props) {
         super(props);

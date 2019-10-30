@@ -18,6 +18,7 @@ export default class SignUp extends Component {
         this.state = {
             username: '',
             password: '',
+            password2: '',
             email: '',
             phone_number: '',
             checked: false,
@@ -34,8 +35,8 @@ export default class SignUp extends Component {
     }
 
     handleSubmit() {
-        if (this.state.username !== '' && this.state.password !== '' && this.state.email !== '' && this.state.phone_number !== '') {
-            signUpUser(this.state.username, this.state.password, this.state.email, this.state.phone_number)
+        if (this.state.username !== '' && this.state.password !== '' && this.state.email !== '') {
+            signUpUser(this.state.username, this.state.password, this.state.email)
                 .then((data) => {
                     console.log(data);
                     //this.setState(data);
@@ -46,6 +47,8 @@ export default class SignUp extends Component {
                 })
         } else if (!this.state.checked) {
             this.setState({error: 'You must accept the terms and conditions '})
+        } else if (this.state.password !== this.state.password2) {
+            this.setState({error: 'Passwords must be the same '})
         } else {
             this.setState({error: 'Introduzca todos los campos '})
         }

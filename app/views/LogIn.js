@@ -29,6 +29,8 @@ export default class LogIn extends Component {
 
     handleSubmit() {
         if(this.state.email !== '' && this.state.password !== ''){
+            this.props.history.push('/player');
+            /*
             logInUser(this.state.email, this.state.password)
                 .then((data) => {
                     console.log(data);
@@ -37,6 +39,7 @@ export default class LogIn extends Component {
                 .catch((error) => {
                     this.setState( {error: error.message})
                 });
+                */
         }
         else{
             this.setState({error: 'Introduzca todos los campos'})
