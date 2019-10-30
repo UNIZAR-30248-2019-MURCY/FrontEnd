@@ -2,21 +2,52 @@ import React, {Component} from 'react';
 import {
     View,
     StyleSheet,
-    Image,
+    FlatList,
+    ScrollView
 } from 'react-native'
-import {Button, colors, Text} from 'react-native-elements';
+import {Button, Text, List, ListItem} from 'react-native-elements';
 
 export default class Editor extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            list : [
+                {
+                key:'1',
+                  name: '¿Cual es la capital de España?',
+                  subtitle: 'Puedo poner mas cosas'
+                },
+                {
+                    key:'2',
+                  name: '¿Quién invento el teléfono?',
+                  subtitle: 'Pulse para abrir'
+                },
+              ]
+        }
     }
+
 
     render() {
         return (
+            <ScrollView>
             <View style={styles.container}>
                 <View style={styles.containerMurcy}>
-                    <Text h2>Welcome Editor</Text>
+                    <Text h2>Welcome Editor {"\n"}</Text>
+                    <Text h4>Questions:</Text>
+                    <FlatList
+                        data={this.state.list}
+                        renderItem={({ item }) => (
+                        <ListItem
+                            title={item.name}
+                            subtitle={item.subtitle}
+                            bottomDivider
+                            onPress={() => {
+                                this.props.history.push('/createQuestion');
+                            }}
+                        />
+                        )}
+                    />
                     <Button
                         className='enter-button'
                         type="clear"
@@ -28,6 +59,7 @@ export default class Editor extends Component {
                         }}/>
                 </View>
             </View>
+            </ScrollView>
         )
     }
 }
@@ -41,9 +73,9 @@ const styles = StyleSheet.create({
     },
     containerMurcy: {
         flex: 1,
-        alignItems: 'center',
+        //alignItems: 'center',
         //justifyContent: 'center',
-        marginTop: 160,
+        marginTop: 100,
         padding: 20
     },
     logo: {
@@ -61,7 +93,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 25,
-        color: 'grey'
+        color: 'blue'
     }
 
 })

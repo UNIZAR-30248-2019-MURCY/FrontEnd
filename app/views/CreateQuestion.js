@@ -5,7 +5,10 @@ import {
     TextInput,
     ScrollView
 } from 'react-native'
-import {Button, CheckBox, Text} from 'react-native-elements';
+import {Button, Text} from 'react-native-elements';
+
+import { RadioButton } from 'react-native-paper';
+
 
 export default class CreateQuestion extends Component {
 
@@ -13,10 +16,11 @@ export default class CreateQuestion extends Component {
         super(props);
         this.state = {
             question: '',
-            answer: '',
-            checked: false,
-            checkbox2: false,
-            checkbox3: false,
+            answer1: '',
+            answer2: '',
+            answer3: '',
+            answer4: '',
+            value: '1',
             error: false
         }
         this.onChangeText = this.onChangeText.bind(this);
@@ -30,7 +34,7 @@ export default class CreateQuestion extends Component {
     handleSubmit() {
         if(this.state.question !== '' && this.state.answer !== ''){
             /*
-            logInUser(this.state.email, this.state.password)
+            createQuestion(this.state.question, this.state.answer1, this.state.answer2, this.state.answer3, this.state.answer4, this.state.value)
                 .then((data) => {
                     console.log(data);
                     //this.setState(data);
@@ -60,18 +64,49 @@ export default class CreateQuestion extends Component {
                         placeholderTextColor='darkgrey'
                         onChangeText={val => this.onChangeText('question', val)}
                     />
+                    <Text>----------------------------</Text>
                     <View>
-                        <CheckBox 
+                    <RadioButton.Group
+                        onValueChange={value => this.setState({ value })}
+                        value={this.state.value}
+                    >
+                        <View>
+                        <TextInput
                             style={styles.input}
-                            center
-                            title={<TextInput 
-                                placeholder='Answer 1'
-                                autoCapitalize="none"
-                                placeholderTextColor='darkgrey'
-                                onChangeText={val => this.onChangeText('answer', val)}/>}
-                            checked={this.state.checked}
-                            onPress={() => this.setState({ checked: !this.state.checked })}
+                            placeholder='Answer 1'
+                            placeholderTextColor='darkgrey'
+                            onChangeText={val => this.onChangeText('answer1', val)}
                         />
+                        <RadioButton value="1" />
+                        </View>
+                        <View>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Answer 2'
+                            placeholderTextColor='darkgrey'
+                            onChangeText={val => this.onChangeText('answer2', val)}
+                        />
+                        <RadioButton value="2" />
+                        </View>
+                        <View>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Answer 3'
+                            placeholderTextColor='darkgrey'
+                            onChangeText={val => this.onChangeText('answer3', val)}
+                        />
+                        <RadioButton value="3" />
+                        </View>
+                        <View>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Answer 4'
+                            placeholderTextColor='darkgrey'
+                            onChangeText={val => this.onChangeText('answer4', val)}
+                        />
+                        <RadioButton value="4" />
+                        </View>
+                    </RadioButton.Group>
                     </View>
                     <Button
                     buttonStyle={styles.button}
@@ -79,6 +114,16 @@ export default class CreateQuestion extends Component {
                     onPress={() => {
                         this.handleSubmit()
                     }}/>
+                    <Button
+                        className='login-button'
+                        type="clear"
+                        buttonStyle={styles.button2}
+                        title="Return"
+                        titleStyle={{color: 'grey'}}
+                        onPress={() => {
+                            this.props.history.replace('/editor');
+                        }
+                        }/>
                 </View>
             </View>
             </ScrollView>
@@ -123,5 +168,10 @@ const styles = StyleSheet.create({
         width: 150,
         height: 55,
         padding: 8,
+    },
+    button2: {
+        width: 150,
+        height: 55,
+        borderRadius: 14
     }
 })
