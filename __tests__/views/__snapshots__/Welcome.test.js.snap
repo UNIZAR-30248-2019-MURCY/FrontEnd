@@ -128,7 +128,7 @@ exports[`<Welcome /> Welcome test against snapshot 1`] = `
               }
             }
           >
-            Entrar
+            Enter
           </Text>
         </View>
       </View>
