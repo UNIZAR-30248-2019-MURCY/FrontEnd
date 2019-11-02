@@ -157,6 +157,19 @@ jobs:
 
 [Setting up Continuous Integration and Continuous Delivery](https://docs.expo.io/versions/latest/guides/setting-up-continuous-integration/)
 
+### Deploy to Netlify
+
+[Murcy Web](https://murcy.netlify.com)
+
+
+1. [Start a new Netlify project](https://app.netlify.com/signup)
+
+2. Pick your Git hosting service and select your repository
+
+3. Click "Build your site"
+
+[Publishing Websites - Documentation Expo](https://docs.expo.io/versions/latest/distribution/publishing-websites/#netlify)
+
 ## Project structure
 
 

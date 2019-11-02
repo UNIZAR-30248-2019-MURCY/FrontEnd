@@ -71,7 +71,7 @@ export default class LogIn extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.navigation.navigate('Welcome');
+                            this.props.navigation.goBack();
                         }
                         }
                     />

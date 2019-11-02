@@ -78,7 +78,7 @@ export default class SignUp extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.navigation.navigate('Welcome');
+                            this.props.navigation.goBack();
                         }
                         }
                     />
@@ -131,7 +131,8 @@ export default class SignUp extends Component {
                     />
                     <CheckBox
                         center
-                        title={<Text style={{color: 'blue', textDecorationLine: 'underline'}}
+                        containerStyle={styles.checkBox}
+                        title={<Text style={{color: 'black'}}
                         onPress={() => {
                             this.props.navigation.navigate('TermsConditions');
                         }}>I have read and I accept the Terms and Conditions </Text>}
@@ -217,6 +218,11 @@ const
         error: {
             margin: 10,
 
+        },
+        checkBox: {
+            width: 300,
+            marginTop: 20,
+            borderRadius: 14,
         },
 
     })

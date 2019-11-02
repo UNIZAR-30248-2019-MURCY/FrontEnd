@@ -16,7 +16,10 @@ export default class Terms extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                <Text h1>Terms and conditions</Text>
+                <View style={styles.containerTitle}>
+                    <Text h2>Terms and conditions</Text>
+                </View>
+
                 <View style={styles.containerMurcy}>
                     <View>
                         <Text> These Terms and Conditions regulate the download, access and use of the MURCY application.</Text>
@@ -52,7 +55,7 @@ export default class Terms extends Component {
                         title="Return"
                         titleStyle={styles.buttonText}
                         onPress={() => {
-                            this.props.navigation.navigate('SignUp');
+                            this.props.navigation.replace('SignUp');
                         }}/>
                 </View>
                 </ScrollView>
@@ -68,11 +71,16 @@ const styles = StyleSheet.create({
         //justifyContent: 'center',
         padding: 20
     },
+    containerTitle: {
+        alignItems: 'center',
+        marginTop: 50,
+        padding: 20
+    },
     containerMurcy: {
         flex: 1,
         alignItems: 'center',
         //justifyContent: 'center',
-        marginTop: 160,
+        marginTop: 10,
         padding: 20
     },
     logo: {
@@ -83,7 +91,7 @@ const styles = StyleSheet.create({
         height: 100
     },
     button: {
-        marginTop: 70,
+        marginTop: 40,
         width: 150,
         height: 55,
         padding: 8,

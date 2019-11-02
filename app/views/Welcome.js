@@ -25,7 +25,7 @@ export default class Welcome extends Component {
                         className='enter-button'
                         type="clear"
                         buttonStyle={styles.button}
-                        title="Entrar"
+                        title="Enter"
                         titleStyle={styles.buttonText}
                         onPress={() => {
                             this.props.navigation.navigate('LogIn');
