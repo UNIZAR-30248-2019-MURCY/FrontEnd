@@ -94,7 +94,7 @@ const RootStack = createStackNavigator(
         CreateQuestion: CreateQuestion,
     },
     {
-      initialRouteName: 'Player',
+      initialRouteName: 'Welcome',
       headerMode: 'none',
       navigationOptions: {
         headerVisible: false,

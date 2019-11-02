@@ -4,7 +4,9 @@ node_js:
   - node
   - lts/*
 cache:
+  yarn: true
   directories:
+    - node_modules
     - ~/.npm
     - .jest
 before_script:
@@ -13,13 +15,13 @@ before_script:
   - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
   - echo fs.inotify.max_queued_events=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 script:
-  - npm ci
+  - yarn install
   - npx jest --ci
 jobs:
   include:
     - stage: deploy
       node_js: lts/*
       script:
-        - npm ci
+        - yarn install
         - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
         - npx expo publish --non-interactive
