@@ -8,15 +8,16 @@ import {
 } from 'react-native'
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {logInUser, signUpUser} from "../services/user/userFuncs";
+import {logInUser, signUpUser} from "../../services/user/userFuncs";
 
 export default class LogIn extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            email: '',
+            username: '',
             password: '',
+            token: '',
             error: false
         }
         this.onChangeText = this.onChangeText.bind(this);
@@ -28,18 +29,17 @@ export default class LogIn extends Component {
     }
 
     handleSubmit() {
-        if(this.state.email !== '' && this.state.password !== ''){
-            this.props.history.push('/player');
-            /*
-            logInUser(this.state.email, this.state.password)
+        if(this.state.username !== '' && this.state.password !== ''){
+
+            logInUser(this.state.username, this.state.password)
                 .then((data) => {
-                    console.log(data);
-                    //this.setState(data);
+                    this.setState( {token: data})
+                    this.props.navigation.replace('Player');
                 })
                 .catch((error) => {
                     this.setState( {error: error.message})
                 });
-                */
+
         }
         else{
             this.setState({error: 'Introduzca todos los campos'})
@@ -71,7 +71,7 @@ export default class LogIn extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.history.push('/');
+                            this.props.navigation.navigate('Welcome');
                         }
                         }
                     />
@@ -80,15 +80,14 @@ export default class LogIn extends Component {
                 <View style={styles.login}>
                 <Image
                     style={styles.logo}
-                    source={require('./../assets/images/murcy.png')}
+                    source={require('../../assets/images/murcy.png')}
                 />
                 <TextInput
                     style={styles.input}
-                    placeholder='Email'
-                    keyboardType='email-address'
+                    placeholder='Username'
                     autoCapitalize="none"
                     placeholderTextColor='darkgrey'
-                    onChangeText={val => this.onChangeText('email', val)}
+                    onChangeText={val => this.onChangeText('username', val)}
                 />
                 <TextInput
                     style={styles.input}
@@ -115,7 +114,7 @@ export default class LogIn extends Component {
                     title="Sign Up"
                     titleStyle={{color: 'grey'}}
                     onPress={() => {
-                        this.props.history.replace('/signup');
+                        this.props.navigation.replace('SignUp');
                     }
                     }/>
 

@@ -27,7 +27,7 @@ export default class EmailConfirm extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.history.goBack();
+                            this.props.navigation.goBack();
                         }
                         }
                     />

@@ -1,5 +1,5 @@
-export const signUpUser = (username, password, email, phone_number) => {
-    const URL = `https://murcy.com/users/`;
+export const signUpUser = (username, password, email, fullName) => {
+    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/user`;
     return fetch(URL, {
         method: 'POST',
         headers: {
@@ -10,19 +10,15 @@ export const signUpUser = (username, password, email, phone_number) => {
             username: username,
             password: password,
             email: email,
-            phone_number: phone_number
+            fullName: fullName
         }),
     })
-        .then((response) => {
-            if(response.statusText === "OK" && response.status >= 200 && response.status < 300) {
-                return response.json()
+        .then(async (response) => {
+            if(response.status === 201) {
+                return response
             } else {
-                throw new Error("Server can't be reached!")
+                throw new Error("User already exists")
             }
-        })
-        .then((json) => {
-            console.log("json!")
-            console.log(json)
         })
         .catch((error) => {
             console.log(error)
@@ -32,8 +28,8 @@ export const signUpUser = (username, password, email, phone_number) => {
 }
 
 
-export const logInUser = (email, password) => {
-    const URL = `https://murcy.com/login`;
+export const logInUser = (username, password) => {
+    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/user/login`;
     return fetch(URL, {
         method: 'POST',
         headers: {
@@ -41,20 +37,18 @@ export const logInUser = (email, password) => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            email: email,
+            username: username,
             password: password
         }),
     })
-        .then((response) => {
-            if(response.statusText === "OK" && response.status >= 200 && response.status < 300) {
-                return response.json()
-            } else {
-                throw new Error("Server can't be reached!")
+        .then(async (response) => {
+            if(response.status === 200) {
+                const responseJSON = await response.json();
+                console.log(responseJSON)
+                return responseJSON
+            } else{
+                throw new Error("LogIn error")
             }
-        })
-        .then((json) => {
-            console.log("json!")
-            console.log(json)
         })
         .catch((error) => {
             console.log("error fetching data")

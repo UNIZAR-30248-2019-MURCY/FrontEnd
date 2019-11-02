@@ -81,9 +81,8 @@ exports[`<LogIn /> LogIn test against snapshot 1`] = `
     <TextInput
       allowFontScaling={true}
       autoCapitalize="none"
-      keyboardType="email-address"
       onChangeText={[Function]}
-      placeholder="Email"
+      placeholder="Username"
       placeholderTextColor="darkgrey"
       rejectResponderTermination={true}
       style={

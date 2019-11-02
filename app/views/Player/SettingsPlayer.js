@@ -5,8 +5,9 @@ import {
     Image,
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
+import Icon from "react-native-vector-icons/FontAwesome";
 
-export default class Welcome extends Component {
+export default class SettingsPlayer extends Component {
 
     constructor(props) {
         super(props);
@@ -15,23 +16,28 @@ export default class Welcome extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.containerMurcy}>
-                    <Image
-                        style={styles.logo}
-                        source={require('./../assets/images/murcy.png')}
-                    />
-                    <Text h1>Murcy</Text>
+                <View style={styles.containerTitle}>
+                    <Text h2>Settings</Text>
+                </View>
+
+                <View style={styles.containerSettings}>
                     <Button
                         className='enter-button'
                         type="clear"
                         buttonStyle={styles.button}
-                        title="Entrar"
+                        title="Request to be Editor"
+                        titleStyle={styles.buttonText}
+                    />
+                    <Button
+                        className='enter-button'
+                        type="clear"
+                        buttonStyle={styles.button}
+                        title="Editor Mode"
                         titleStyle={styles.buttonText}
                         onPress={() => {
-                            this.props.navigation.navigate('LogIn');
+                            this.props.navigation.replace('Editor');
                         }}/>
                 </View>
-
             </View>
         )
     }
@@ -40,32 +46,23 @@ export default class Welcome extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         //justifyContent: 'center',
+        alignItems: 'center',
         padding: 20
     },
-    containerMurcy: {
-        flex: 1,
-        alignItems: 'center',
-        //justifyContent: 'center',
-        marginTop: 160,
+    containerTitle: {
+        marginTop: 50,
         padding: 20
     },
-    logo: {
-        margin: 30,
-        marginBottom: 15,
-        padding: 8,
-        width: 100,
-        height: 100
+
+    containerSettings: {
+        padding: 20
     },
     button: {
-        marginTop: 70,
-        width: 150,
-        height: 55,
-        padding: 8,
+        marginBottom: 5,
     },
     buttonText: {
-        fontSize: 25,
+        fontSize: 20,
         color: 'grey'
     }
 

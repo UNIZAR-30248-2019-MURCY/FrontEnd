@@ -43,7 +43,7 @@ export default class CreateQuestion extends Component {
                     this.setState( {error: error.message})
                 });
                 */
-               this.props.history.push('/editor');
+                this.props.navigation.goBack();
         }
         else{
             this.setState({error: 'Introduzca todos los campos'})
@@ -55,8 +55,10 @@ export default class CreateQuestion extends Component {
         return (
             <ScrollView>
             <View style={styles.container}>
-                <View style={styles.containerMurcy}>
-                    <Text h3>Create a new Question</Text>
+                <View style={styles.containerTitle}>
+                    <Text h2>New Question</Text>
+                </View>
+                <View style={styles.containerCreate}>
                     <TextInput
                         style={styles.input}
                         placeholder='Question'
@@ -121,7 +123,7 @@ export default class CreateQuestion extends Component {
                         title="Return"
                         titleStyle={{color: 'grey'}}
                         onPress={() => {
-                            this.props.history.replace('/editor');
+                            this.props.navigation.goBack();
                         }
                         }/>
                 </View>
@@ -138,11 +140,15 @@ const styles = StyleSheet.create({
         //justifyContent: 'center',
         padding: 20
     },
-    containerMurcy: {
+    containerTitle: {
+        marginTop: 50,
+        padding: 20
+    },
+    containerCreate: {
         flex: 1,
         alignItems: 'center',
         //justifyContent: 'center',
-        marginTop: 160,
+        marginTop: 10,
         padding: 20
     },
     logo: {
@@ -164,10 +170,12 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     button: {
-        marginTop: 70,
         width: 150,
         height: 55,
-        padding: 8,
+        marginTop: 20,
+        margin: 10,
+        backgroundColor: 'grey',
+        borderRadius: 14
     },
     button2: {
         width: 150,

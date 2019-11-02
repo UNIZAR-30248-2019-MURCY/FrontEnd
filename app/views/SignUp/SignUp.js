@@ -8,7 +8,7 @@ import {
     ScrollView
 } from 'react-native'
 import {Button, CheckBox } from 'react-native-elements';
-import {signUpUser} from '../services/user/userFuncs';
+import {signUpUser} from '../../services/user/userFuncs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class SignUp extends Component {
@@ -20,7 +20,7 @@ export default class SignUp extends Component {
             password: '',
             password2: '',
             email: '',
-            phone_number: '',
+            fullName: '',
             checked: false,
             error: false
         }
@@ -28,19 +28,17 @@ export default class SignUp extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    
+
 
     onChangeText = (key, val) => {
         this.setState({[key]: val})
     }
 
     handleSubmit() {
-        if (this.state.username !== '' && this.state.password !== '' && this.state.email !== '') {
-            signUpUser(this.state.username, this.state.password, this.state.email)
+        if (this.state.username !== '' && this.state.password !== '' && this.state.email !== '' && this.state.fullName !== '') {
+            signUpUser(this.state.username, this.state.password, this.state.email, this.state.fullName)
                 .then((data) => {
-                    console.log(data);
-                    //this.setState(data);
-                    this.props.history.replace('/emailconfirm');
+                    this.props.navigation.replace('EmailConfirm');
                 })
                 .catch((error) => {
                     this.setState({error: error.message})
@@ -64,7 +62,7 @@ export default class SignUp extends Component {
                 </View> :
                 <View></View>
         );
-        
+
 
         return (
             <View style={styles.container}>
@@ -80,7 +78,7 @@ export default class SignUp extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.history.push('/');
+                            this.props.navigation.navigate('Welcome');
                         }
                         }
                     />
@@ -89,7 +87,7 @@ export default class SignUp extends Component {
                 <View style={styles.login}>
                     <Image
                         style={styles.logo}
-                        source={require('./../assets/images/murcy.png')}
+                        source={require('../../assets/images/murcy.png')}
                     />
                     <TextInput
                         style={styles.input}
@@ -123,11 +121,19 @@ export default class SignUp extends Component {
                         placeholderTextColor='darkgrey'
                         onChangeText={val => this.onChangeText('password', val)}
                     />
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Full Name'
+                        value={this.state.fullName}
+                        autoCapitalize="none"
+                        placeholderTextColor='darkgrey'
+                        onChangeText={val => this.onChangeText('fullName', val)}
+                    />
                     <CheckBox
                         center
                         title={<Text style={{color: 'blue', textDecorationLine: 'underline'}}
                         onPress={() => {
-                            this.props.history.push('/termsConditions');
+                            this.props.navigation.navigate('TermsConditions');
                         }}>I have read and I accept the Terms and Conditions </Text>}
                         checked={this.state.checked}
                         onPress={() => this.setState({ checked: !this.state.checked })}
@@ -150,7 +156,7 @@ export default class SignUp extends Component {
                         title="Log In"
                         titleStyle={{color: 'grey'}}
                         onPress={() => {
-                            this.props.history.replace('/login');
+                            this.props.navigation.replace('LogIn');
                         }
                         }/>
                 </View>

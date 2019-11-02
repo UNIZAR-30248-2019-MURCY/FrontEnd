@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import SignUp from "../../app/views/SignUp";
+import SignUp from "../../app/views/SignUp/SignUp";
 
 describe('<SignUp />', () => {
     it('SignUp renders without crashing', () => {
@@ -13,10 +13,10 @@ describe('<SignUp />', () => {
         expect(welcomePage).toMatchSnapshot();
     });
     it('should navigate to Log In', () => {
-        const historyMock = { replace: jest.fn() };
-        const wrapper = shallow(<SignUp history={historyMock} />);
+        const navigationMock = { replace: jest.fn() };
+        const wrapper = shallow(<SignUp navigation={navigationMock} />);
         wrapper.find('.login-button').simulate('press');
-        expect(historyMock.replace.mock.calls.length).toEqual(1);
-        expect(historyMock.replace.mock.calls[0]).toEqual(['/login']);
+        expect(navigationMock.replace.mock.calls.length).toEqual(1);
+        expect(navigationMock.replace.mock.calls[0]).toEqual(['LogIn']);
     })
 });

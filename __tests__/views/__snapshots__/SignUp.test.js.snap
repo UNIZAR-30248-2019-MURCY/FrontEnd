@@ -172,6 +172,29 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
           }
           underlineColorAndroid="transparent"
         />
+        <TextInput
+          allowFontScaling={true}
+          autoCapitalize="none"
+          onChangeText={[Function]}
+          placeholder="Full Name"
+          placeholderTextColor="darkgrey"
+          rejectResponderTermination={true}
+          style={
+            Object {
+              "backgroundColor": "whitesmoke",
+              "borderRadius": 14,
+              "color": "grey",
+              "fontSize": 18,
+              "fontWeight": "500",
+              "height": 55,
+              "margin": 10,
+              "padding": 8,
+              "width": 300,
+            }
+          }
+          underlineColorAndroid="transparent"
+          value=""
+        />
         <View
           accessible={true}
           isTVSelectable={true}

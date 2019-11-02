@@ -5,8 +5,9 @@ import {
     Image,
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
+import Icon from "react-native-vector-icons/FontAwesome";
 
-export default class Player extends Component {
+export default class SettingScreen extends Component {
 
     constructor(props) {
         super(props);
@@ -15,26 +16,21 @@ export default class Player extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.containerMurcy}>
-                    <Text h2>Welcome player</Text>
-                    <Button
-                        className='enter-button'
-                        type="clear"
-                        buttonStyle={styles.button}
-                        title="Request to be Editor"
-                        titleStyle={styles.buttonText}
-                    />
-                    <Button
-                        className='enter-button'
-                        type="clear"
-                        buttonStyle={styles.button}
-                        title="Mode Editor"
-                        titleStyle={styles.buttonText}
-                        onPress={() => {
-                            this.props.history.push('/editor');
-                        }}/>
+                <View style={styles.containerTitle}>
+                    <Text h2>Settings</Text>
                 </View>
 
+                <View style={styles.containerSettings}>
+                    <Button
+                        className='enter-button'
+                        type="clear"
+                        buttonStyle={styles.button}
+                        title="Player Mode"
+                        titleStyle={styles.buttonText}
+                        onPress={() => {
+                            this.props.navigation.replace('Player');
+                        }}/>
+                </View>
             </View>
         )
     }
@@ -47,28 +43,19 @@ const styles = StyleSheet.create({
         //justifyContent: 'center',
         padding: 20
     },
-    containerMurcy: {
-        flex: 1,
-        alignItems: 'center',
-        //justifyContent: 'center',
-        marginTop: 160,
+    containerTitle: {
+        marginTop: 50,
         padding: 20
     },
-    logo: {
-        margin: 30,
-        marginBottom: 15,
-        padding: 8,
-        width: 100,
-        height: 100
+
+    containerSettings: {
+        padding: 20
     },
     button: {
-        marginTop: 70,
-        width: 250,
-        height: 55,
-        padding: 8,
+        marginBottom: 5,
     },
     buttonText: {
-        fontSize: 25,
+        fontSize: 20,
         color: 'grey'
     }
 
