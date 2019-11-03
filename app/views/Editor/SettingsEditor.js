@@ -5,7 +5,7 @@ import {
     Image,
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
-import Icon from "react-native-vector-icons/FontAwesome";
+import {NavigationActions, StackActions} from "react-navigation";
 
 export default class SettingScreen extends Component {
 
@@ -28,7 +28,11 @@ export default class SettingScreen extends Component {
                         title="Player Mode"
                         titleStyle={styles.buttonText}
                         onPress={() => {
-                            this.props.navigation.replace('Player');
+                            const toPlayer = StackActions.reset({
+                                index: 0,
+                                actions: [NavigationActions.navigate({ routeName: 'Player' })],
+                            });
+                            this.props.navigation.dispatch(toPlayer);
                         }}/>
                 </View>
             </View>

@@ -4,7 +4,8 @@ import {
     TextInput,
     StyleSheet,
     Image,
-    Text
+    Text,
+    AsyncStorage
 } from 'react-native'
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -22,19 +23,38 @@ export default class LogIn extends Component {
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.setItem = this.setItem.bind(this);
     }
 
     onChangeText = (key, val) => {
         this.setState({[key]: val})
     }
 
-    handleSubmit() {
-        if(this.state.username !== '' && this.state.password !== ''){
+    setItem = async (name, data) => {
+        try {
+            await AsyncStorage.setItem(name, data);
+            console.log('data stored');
+        } catch (error) {
+            console.log('AsyncStorage save error: ' + error.message);
+        }
+    };
 
+    handleSubmit() {
+
+        const saveToken = async token => {
+            try {
+                await AsyncStorage.setItem('token', JSON.stringify(token));
+                console.log('token stored');
+            } catch (error) {
+                // Error retrieving data
+                console.log(error.message);
+            }
+        };
+
+        if(this.state.username !== '' && this.state.password !== ''){
             logInUser(this.state.username, this.state.password)
                 .then((data) => {
-                    this.setState( {token: data})
-                    this.props.navigation.replace('Player');
+                    saveToken(data).then(r => this.props.navigation.replace('Player'));
                 })
                 .catch((error) => {
                     this.setState( {error: error.message})

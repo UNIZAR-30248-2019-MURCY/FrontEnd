@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import {
     View,
     StyleSheet,
-    Image,
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
-import Icon from "react-native-vector-icons/FontAwesome";
+import { NavigationActions, StackActions } from 'react-navigation';
 
 export default class SettingsPlayer extends Component {
 
@@ -27,7 +26,9 @@ export default class SettingsPlayer extends Component {
                         buttonStyle={styles.button}
                         title="Request to be Editor"
                         titleStyle={styles.buttonText}
-                    />
+                        onPress={() => {
+                            this.props.navigation.navigate('Request');
+                        }}/>
                     <Button
                         className='enter-button'
                         type="clear"
@@ -35,7 +36,11 @@ export default class SettingsPlayer extends Component {
                         title="Editor Mode"
                         titleStyle={styles.buttonText}
                         onPress={() => {
-                            this.props.navigation.replace('Editor');
+                            const toEditor = StackActions.reset({
+                                index: 0,
+                                actions: [NavigationActions.navigate({ routeName: 'Editor' })],
+                            });
+                            this.props.navigation.dispatch(toEditor);
                         }}/>
                 </View>
             </View>

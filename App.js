@@ -15,13 +15,47 @@ import SettingsPlayer from "./app/views/Player/SettingsPlayer";
 import QuestionsEdit from "./app/views/Editor/QuestionsEdit";
 import QuizzesEdit from "./app/views/Editor/QuizzesEdit";
 import SettingsEditor from "./app/views/Editor/SettingsEditor";
+import Request from "./app/views/Player/Request";
+import RequestConfirm from "./app/views/Player/RequestConfirm";
 
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+
+
+/*
+  Player
+ */
+const QuizzesPlayerStack = createStackNavigator(
+    {
+        QuizzesScreen: QuizzesScreen,
+    },
+    {
+        initialRouteName: 'QuizzesScreen',
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
+    }
+);
+
+const SettingsPlayerStack = createStackNavigator(
+    {
+        SettingsPlayer: SettingsPlayer,
+        Request: Request,
+        RequestConfirm: RequestConfirm
+    },
+    {
+        initialRouteName: 'SettingsPlayer',
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
+    }
+);
 
 const playerNavigator = createMaterialBottomTabNavigator(
     {
         Quizzes: {
-            screen: QuizzesScreen,
+            screen: QuizzesPlayerStack,
             navigationOptions: {
                 showLabel: false,
                 tabBarIcon: ({ tintColor }) => (
@@ -30,7 +64,7 @@ const playerNavigator = createMaterialBottomTabNavigator(
             }
         },
         Settings: {
-            screen: SettingsPlayer,
+            screen: SettingsPlayerStack,
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
                     <Icon name="cogs" size={22} color={tintColor} />
@@ -46,10 +80,54 @@ const playerNavigator = createMaterialBottomTabNavigator(
     }
 );
 
+
+/*
+  Editor
+ */
+
+const QuestionsEditStack = createStackNavigator(
+    {
+        QuestionsEdit: QuestionsEdit,
+    },
+    {
+        initialRouteName: 'QuestionsEdit',
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
+    }
+);
+
+const QuizzesEditStack = createStackNavigator(
+    {
+        QuizzesEdit: QuizzesEdit,
+    },
+    {
+        initialRouteName: 'QuizzesEdit',
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
+    }
+);
+
+const SettingsEditorStack = createStackNavigator(
+    {
+        SettingsEditor: SettingsEditor,
+    },
+    {
+        initialRouteName: 'SettingsEditor',
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
+    }
+);
+
 const editorNavigator = createMaterialBottomTabNavigator(
     {
         Questions: {
-            screen: QuestionsEdit,
+            screen: QuestionsEditStack,
             navigationOptions: {
                 showLabel: false,
                 tabBarIcon: ({ tintColor }) => (
@@ -58,7 +136,7 @@ const editorNavigator = createMaterialBottomTabNavigator(
             }
         },
         Quizzes: {
-            screen: QuizzesEdit,
+            screen: QuizzesEditStack,
             navigationOptions: {
                 showLabel: false,
                 tabBarIcon: ({ tintColor }) => (
@@ -67,7 +145,7 @@ const editorNavigator = createMaterialBottomTabNavigator(
             }
         },
         Settings: {
-            screen: SettingsEditor,
+            screen: SettingsEditorStack,
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
                     <Icon name="cogs" size={22} color={tintColor} />
@@ -82,6 +160,11 @@ const editorNavigator = createMaterialBottomTabNavigator(
         barStyle: { backgroundColor: 'black' },
     }
 );
+
+/*
+  Root
+ */
+
 const RootStack = createStackNavigator(
     {
         Welcome: Welcome,
@@ -94,6 +177,7 @@ const RootStack = createStackNavigator(
         CreateQuestion: CreateQuestion,
     },
     {
+
       initialRouteName: 'Welcome',
       headerMode: 'none',
       navigationOptions: {
