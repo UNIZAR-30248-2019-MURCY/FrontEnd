@@ -10,6 +10,7 @@ import {
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {logInUser, signUpUser} from "../../services/user/userFuncs";
+import {NavigationActions, StackActions} from "react-navigation";
 
 export default class LogIn extends Component {
 
@@ -23,21 +24,11 @@ export default class LogIn extends Component {
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.setItem = this.setItem.bind(this);
     }
 
     onChangeText = (key, val) => {
         this.setState({[key]: val})
     }
-
-    setItem = async (name, data) => {
-        try {
-            await AsyncStorage.setItem(name, data);
-            console.log('data stored');
-        } catch (error) {
-            console.log('AsyncStorage save error: ' + error.message);
-        }
-    };
 
     handleSubmit() {
 
@@ -50,11 +41,17 @@ export default class LogIn extends Component {
                 console.log(error.message);
             }
         };
+        const toApp = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate({ routeName: 'Player' })],
+        });
 
         if(this.state.username !== '' && this.state.password !== ''){
             logInUser(this.state.username, this.state.password)
                 .then((data) => {
-                    saveToken(data).then(r => this.props.navigation.replace('Player'));
+                    saveToken(data).then(r =>
+                        this.props.navigation.dispatch(toApp)
+                    );
                 })
                 .catch((error) => {
                     this.setState( {error: error.message})
