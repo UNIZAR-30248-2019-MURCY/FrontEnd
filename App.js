@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Router, Switch, Route } from './app/config/routing';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Welcome from './app/views/Welcome';
@@ -17,9 +16,11 @@ import QuizzesEdit from "./app/views/Editor/QuizzesEdit";
 import SettingsEditor from "./app/views/Editor/SettingsEditor";
 import Request from "./app/views/Player/Request";
 import RequestConfirm from "./app/views/Player/RequestConfirm";
+import RequestList from "./app/views/Reviewer/RequestList";
+import RequestDetails from "./app/views/Reviewer/RequestDetails";
+
 
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-
 
 /*
   Player
@@ -41,7 +42,7 @@ const SettingsPlayerStack = createStackNavigator(
     {
         SettingsPlayer: SettingsPlayer,
         Request: Request,
-        RequestConfirm: RequestConfirm
+        RequestConfirm: RequestConfirm,
     },
     {
         initialRouteName: 'SettingsPlayer',
@@ -161,6 +162,49 @@ const editorNavigator = createMaterialBottomTabNavigator(
     }
 );
 
+const RequestListStack = createStackNavigator(
+    {
+        RequestList: RequestList,
+        RequestDetails: RequestDetails,
+    },
+    {
+        initialRouteName: 'RequestList',
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
+    }
+);
+
+
+const reviewerNavigator = createMaterialBottomTabNavigator(
+    {
+        Requests: {
+            screen: RequestListStack,
+            navigationOptions: {
+                showLabel: false,
+                tabBarIcon: ({ tintColor }) => (
+                    <Icon name="edit" size={22} color={tintColor} />
+                )
+            }
+        },
+        Settings: {
+            screen: SettingsEditorStack,
+            navigationOptions: {
+                tabBarIcon: ({ tintColor }) => (
+                    <Icon name="cogs" size={22} color={tintColor} />
+                )
+            }
+        }
+    },
+    {
+        initialRouteName: 'Requests',
+        activeColor: '#f0edf6',
+        inactiveColor: 'gray',
+        barStyle: { backgroundColor: 'black' },
+    }
+);
+
 /*
   Root
  */
@@ -174,6 +218,7 @@ const RootStack = createStackNavigator(
         TermsConditions: TermsConditions,
         Player: playerNavigator,
         Editor: editorNavigator,
+        Reviewer: reviewerNavigator,
         CreateQuestion: CreateQuestion,
     },
     {

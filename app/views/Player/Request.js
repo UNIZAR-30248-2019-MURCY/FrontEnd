@@ -11,6 +11,7 @@ export default class Request extends Component {
             description: '',
             token: '',
             request: false,
+            workflow: false,
             errorGettingReq: false,
             errorForm: false,
             notShow: true
@@ -18,6 +19,7 @@ export default class Request extends Component {
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.retrieveItem = this.retrieveItem.bind(this);
+        this.searchLastRequest = this.searchLastRequest.bind(this);
     }
 
     onChangeText = (key, val) => {
@@ -35,19 +37,27 @@ export default class Request extends Component {
         }
     }
 
+    searchLastRequest() {
+        while(this.state.workflow.nextWorkflow !== null){
+            this.setState({request: this.state.workflow.nextWorkflow})
+        }
+    }
+
+
     componentDidMount() {
         this.retrieveItem('token')
             .then(r => {
                 getRequestEdit(this.state.token)
                     .then((request) => {
                         this.setState({request: request})
+                        this.setState({workflow: request.workflow})
                         this.setState({notShow: false})
+                        this.searchLastRequest()
                     })
                     .catch((error) => {
                         this.setState({errorGettingReq: error.message})
                     })
             })
-
     }
 
     handleSubmit() {
@@ -88,9 +98,9 @@ export default class Request extends Component {
                     <View style={styles.containerRequestExist}>
                         <Text h4>A request already exists</Text>
                         <Text style={styles.containerRequestExistContent}>
-                            Description: {this.state.request.description}
+                            Description: {this.state.workflow.description}
                             {'\n'}{'\n'}
-                            Status: {this.state.request.workflow.status}
+                            Status: {this.state.workflow.status}
                         </Text>
                     </View> :
                     <View style={styles.containerRequest}>
@@ -139,6 +149,7 @@ export default class Request extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        padding: 20
         //justifyContent: 'center',
     },
     containerTitle: {

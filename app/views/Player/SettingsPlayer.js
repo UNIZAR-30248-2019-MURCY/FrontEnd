@@ -68,6 +68,19 @@ export default class SettingsPlayer extends Component {
                             });
                             this.props.navigation.dispatch(toEditor);
                         }}/>
+                    <Button
+                        className='enter-button'
+                        type="clear"
+                        buttonStyle={styles.button}
+                        title="Reviewer Mode"
+                        titleStyle={styles.buttonText}
+                        onPress={() => {
+                            const toEditor = StackActions.reset({
+                                index: 0,
+                                actions: [NavigationActions.navigate({routeName: 'Reviewer'})],
+                            });
+                            this.props.navigation.dispatch(toEditor);
+                        }}/>
                 </View>
                 <View style={styles.buttonSO}>
                     <Button

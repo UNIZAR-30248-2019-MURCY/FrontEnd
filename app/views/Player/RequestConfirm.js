@@ -51,7 +51,7 @@ export default class RequestConfirm extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
+        padding: 20
     },
     cross: {
         marginTop: 50,
