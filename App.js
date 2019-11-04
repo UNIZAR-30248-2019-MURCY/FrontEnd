@@ -19,6 +19,8 @@ import RequestConfirm from "./app/views/Player/RequestConfirm";
 import RequestList from "./app/views/Reviewer/RequestList";
 import RequestDetails from "./app/views/Reviewer/RequestDetails";
 import SettingsReviewer from "./app/views/Reviewer/SettingsReviewer";
+import EditRemoveQuestion from "./app/views/Editor/EditRemoveQuestion";
+
 
 
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
@@ -235,6 +237,7 @@ const RootStack = createStackNavigator(
         Editor: editorNavigator,
         Reviewer: reviewerNavigator,
         CreateQuestion: CreateQuestion,
+        EditRemoveQuestion: EditRemoveQuestion,
     },
     {
       initialRouteName: 'Welcome',

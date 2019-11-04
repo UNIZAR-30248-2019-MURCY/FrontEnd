@@ -12,6 +12,7 @@ import {logInUser, } from "../../services/user/userFuncs";
 import {saveData} from "../../services/AsyncStorage/save";
 import {NavigationActions, StackActions} from "react-navigation";
 
+
 export default class LogIn extends Component {
 
     constructor(props) {
