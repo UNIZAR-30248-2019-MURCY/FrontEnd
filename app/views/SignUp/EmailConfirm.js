@@ -18,6 +18,7 @@ export default class EmailConfirm extends Component {
             <View style={styles.container}>
                 <View style={styles.cross}>
                     <Button
+                        className='close-button'
                         type="clear"
                         icon={
                             <Icon

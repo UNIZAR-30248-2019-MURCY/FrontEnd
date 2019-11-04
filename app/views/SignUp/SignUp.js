@@ -7,7 +7,7 @@ import {
     Text,
     ScrollView
 } from 'react-native'
-import {Button, CheckBox } from 'react-native-elements';
+import {Button, CheckBox} from 'react-native-elements';
 import {signUpUser} from '../../services/user/userFuncs';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -29,24 +29,27 @@ export default class SignUp extends Component {
     }
 
 
-
     onChangeText = (key, val) => {
         this.setState({[key]: val})
     }
 
     handleSubmit() {
         if (this.state.username !== '' && this.state.password !== '' && this.state.email !== '' && this.state.fullName !== '') {
-            signUpUser(this.state.username, this.state.password, this.state.email, this.state.fullName)
-                .then((data) => {
-                    this.props.navigation.replace('EmailConfirm');
-                })
-                .catch((error) => {
-                    this.setState({error: error.message})
-                })
-        } else if (!this.state.checked) {
-            this.setState({error: 'You must accept the terms and conditions '})
-        } else if (this.state.password !== this.state.password2) {
-            this.setState({error: 'Passwords must be the same '})
+            if (this.state.checked) {
+                if (this.state.password === this.state.password2) {
+                    signUpUser(this.state.username, this.state.password, this.state.email, this.state.fullName)
+                        .then((data) => {
+                            this.props.navigation.replace('EmailConfirm');
+                        })
+                        .catch((error) => {
+                            this.setState({error: error.message})
+                        })
+                } else {
+                    this.setState({error: 'Passwords must be the same '})
+                }
+            } else {
+                this.setState({error: 'You must accept the terms and conditions '})
+            }
         } else {
             this.setState({error: 'Introduzca todos los campos '})
         }
@@ -55,7 +58,7 @@ export default class SignUp extends Component {
     render() {
         let showErr = (
             this.state.error ?
-                <View style={styles.error}>
+                <View style={styles.error} className='errorShow'>
                     <Text style={{color: 'red'}}>
                         {this.state.error}
                     </Text>
@@ -63,104 +66,110 @@ export default class SignUp extends Component {
                 <View></View>
         );
 
-
         return (
             <View style={styles.container}>
                 <ScrollView>
-                <View style={styles.cross}>
-                    <Button
-                        type="clear"
-                        icon={
-                            <Icon
-                                name="times"
-                                size={30}
-                                color="grey"
-                            />
-                        }
-                        onPress={() => {
-                            this.props.navigation.goBack();
-                        }
-                        }
-                    />
-                </View>
+                    <View style={styles.cross}>
+                        <Button
+                            className='close-button'
+                            type="clear"
+                            icon={
+                                <Icon
+                                    name="times"
+                                    size={30}
+                                    color="grey"
+                                />
+                            }
+                            onPress={() => {
+                                this.props.navigation.goBack();
+                            }
+                            }
+                        />
+                    </View>
 
-                <View style={styles.login}>
-                    <Image
-                        style={styles.logo}
-                        source={require('../../assets/images/murcy.png')}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Username'
-                        value={this.state.username}
-                        autoCapitalize="none"
-                        placeholderTextColor='darkgrey'
-                        onChangeText={val => this.onChangeText('username', val)}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Email'
-                        keyboardType='email-address'
-                        autoCapitalize="none"
-                        placeholderTextColor='darkgrey'
-                        onChangeText={val => this.onChangeText('email', val)}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Password'
-                        secureTextEntry={true}
-                        autoCapitalize="none"
-                        placeholderTextColor='darkgrey'
-                        onChangeText={val => this.onChangeText('password', val)}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Repeat password'
-                        secureTextEntry={true}
-                        autoCapitalize="none"
-                        placeholderTextColor='darkgrey'
-                        onChangeText={val => this.onChangeText('password', val)}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Full Name'
-                        value={this.state.fullName}
-                        autoCapitalize="none"
-                        placeholderTextColor='darkgrey'
-                        onChangeText={val => this.onChangeText('fullName', val)}
-                    />
-                    <CheckBox
-                        center
-                        containerStyle={styles.checkBox}
-                        title={<Text style={{color: 'black'}}
-                        onPress={() => {
-                            this.props.navigation.navigate('TermsConditions');
-                        }}>I have read and I accept the Terms and Conditions </Text>}
-                        checked={this.state.checked}
-                        onPress={() => this.setState({ checked: !this.state.checked })}
-                    />
+                    <View style={styles.login}>
+                        <Image
+                            style={styles.logo}
+                            source={require('../../assets/images/murcy.png')}
+                        />
+                        <TextInput
+                            className='userInput'
+                            style={styles.input}
+                            placeholder='Username'
+                            value={this.state.username}
+                            autoCapitalize="none"
+                            placeholderTextColor='darkgrey'
+                            onChangeText={val => this.onChangeText('username', val)}
+                        />
+                        <TextInput
+                            className='emailInput'
+                            style={styles.input}
+                            placeholder='Email'
+                            keyboardType='email-address'
+                            autoCapitalize="none"
+                            placeholderTextColor='darkgrey'
+                            onChangeText={val => this.onChangeText('email', val)}
+                        />
+                        <TextInput
+                            className='passInput'
+                            style={styles.input}
+                            placeholder='Password'
+                            secureTextEntry={true}
+                            autoCapitalize="none"
+                            placeholderTextColor='darkgrey'
+                            onChangeText={val => this.onChangeText('password', val)}
+                        />
+                        <TextInput
+                            className='passrepInput'
+                            style={styles.input}
+                            placeholder='Repeat password'
+                            secureTextEntry={true}
+                            autoCapitalize="none"
+                            placeholderTextColor='darkgrey'
+                            onChangeText={val => this.onChangeText('password2', val)}
+                        />
+                        <TextInput
+                            className='nameInput'
+                            style={styles.input}
+                            placeholder='Full Name'
+                            value={this.state.fullName}
+                            autoCapitalize="none"
+                            placeholderTextColor='darkgrey'
+                            onChangeText={val => this.onChangeText('fullName', val)}
+                        />
+                        <CheckBox
+                            center
+                            containerStyle={styles.checkBox}
+                            title={<Text style={{color: 'black'}}
+                                         onPress={() => {
+                                             this.props.navigation.navigate('TermsConditions');
+                                         }}>I have read and I accept the Terms and Conditions </Text>}
+                            checked={this.state.checked}
+                            onPress={() => this.setState({checked: !this.state.checked})}
+                        />
 
-                    {showErr}
+                        {showErr}
 
-                    <Button
-                        buttonStyle={styles.button}
-                        title="Sign Up"
-                        onPress={() => {
-                            this.handleSubmit()
-                        }}/>
+                        <Button
+                            className='signup-button'
+                            buttonStyle={styles.button}
+                            title="Sign Up"
+                            onPress={() => {
+                                this.handleSubmit()
+                            }}/>
 
 
-                    <Button
-                        className='login-button'
-                        type="clear"
-                        buttonStyle={styles.button2}
-                        title="Log In"
-                        titleStyle={{color: 'grey'}}
-                        onPress={() => {
-                            this.props.navigation.replace('LogIn');
-                        }
-                        }/>
-                </View>
+                        <Button
+                            className='login-button'
+                            type="clear"
+                            buttonStyle={styles.button2}
+                            title="Log In"
+                            titleStyle={{color: 'grey'}}
+                            onPress={() => {
+                                this.props.navigation.replace('LogIn');
+                            }
+                            }/>
+                    </View>
                 </ScrollView>
             </View>
         )

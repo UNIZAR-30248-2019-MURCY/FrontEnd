@@ -5,11 +5,11 @@ import {
     StyleSheet,
     Image,
     Text,
-    AsyncStorage
 } from 'react-native'
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {logInUser, signUpUser} from "../../services/user/userFuncs";
+import {logInUser, } from "../../services/user/userFuncs";
+import {saveData} from "../../services/AsyncStorage/save";
 import {NavigationActions, StackActions} from "react-navigation";
 
 export default class LogIn extends Component {
@@ -31,16 +31,6 @@ export default class LogIn extends Component {
     }
 
     handleSubmit() {
-
-        const saveToken = async token => {
-            try {
-                await AsyncStorage.setItem('token', JSON.stringify(token));
-                console.log('token stored');
-            } catch (error) {
-                // Error retrieving data
-                console.log(error.message);
-            }
-        };
         const toApp = StackActions.reset({
             index: 0,
             actions: [NavigationActions.navigate({ routeName: 'Player' })],
@@ -49,25 +39,23 @@ export default class LogIn extends Component {
         if(this.state.username !== '' && this.state.password !== ''){
             logInUser(this.state.username, this.state.password)
                 .then((data) => {
-                    saveToken(data).then(r =>
+                    saveData('token',data).then(r =>
                         this.props.navigation.dispatch(toApp)
                     );
                 })
                 .catch((error) => {
                     this.setState( {error: error.message})
                 });
-
         }
         else{
             this.setState({error: 'Introduzca todos los campos'})
         }
-
     }
 
     render() {
         let showErr = (
             this.state.error ?
-                <View style={styles.error}>
+                <View style={styles.error}  className='errorShow'>
                     <Text style={{color: 'red'}}>
                         {this.state.error}
                     </Text>
@@ -76,9 +64,10 @@ export default class LogIn extends Component {
         );
 
         return (
-            <View style={styles.container}>
+            <View style={styles.container} >
                 <View style={styles.cross}>
                     <Button
+                        className='close-button'
                         type="clear"
                         icon={
                             <Icon
@@ -100,6 +89,7 @@ export default class LogIn extends Component {
                     source={require('../../assets/images/murcy.png')}
                 />
                 <TextInput
+                    className='userInput'
                     style={styles.input}
                     placeholder='Username'
                     autoCapitalize="none"
@@ -107,6 +97,7 @@ export default class LogIn extends Component {
                     onChangeText={val => this.onChangeText('username', val)}
                 />
                 <TextInput
+                    className='passInput'
                     style={styles.input}
                     placeholder='Password'
                     secureTextEntry={true}
@@ -118,6 +109,7 @@ export default class LogIn extends Component {
                 {showErr}
 
                 <Button
+                    className='login-button'
                     buttonStyle={styles.button}
                     title="Log In"
                     onPress={() => {

@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import {AsyncStorage, FlatList, StyleSheet, TextInput, View,} from 'react-native'
 import {Button, ListItem, Text} from 'react-native-elements';
-import {getRequestEdit, requestEdit} from "../../services/user/userFuncs";
-import {reviewerReqList} from "../../services/user/reviewerFuncs";
 
 export default class RequestDetails extends Component {
 
@@ -12,11 +10,16 @@ export default class RequestDetails extends Component {
             workflow: false
         }
     }
-
-
     componentDidMount() {
-        this.setState({workflow: this.props.navigation.getParam('workflow', 'default value')})
+        if (this.props.navigation) {
+            this.setState({workflow: this.props.navigation.getParam('workflow', 'default value')});
+        }
+    }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.navigation.state.params.lastName) {
+            this.setState({lastName:nextProps.navigation.state.params.lastName});
+        }
     }
 
     render() {
