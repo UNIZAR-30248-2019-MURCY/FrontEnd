@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {logInUser, signUpUser} from "../../services/user/userFuncs";
 import {NavigationActions, StackActions} from "react-navigation";
 
+
 export default class LogIn extends Component {
 
     constructor(props) {

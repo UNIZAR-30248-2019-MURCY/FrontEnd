@@ -30,6 +30,19 @@ export default class QuestionsEdit extends Component {
         }
     }
 
+    componentDidMount(){
+        /*
+        listQuestion()
+                .then((data) => {
+                    console.log(data);
+                    //this.setState(data);
+                })
+                .catch((error) => {
+                    this.setState( {error: error.message})
+                });
+                */
+    }
+
 
     render() {
         return (
@@ -49,7 +62,7 @@ export default class QuestionsEdit extends Component {
                                     subtitle={item.subtitle}
                                     bottomDivider
                                     onPress={() => {
-                                        this.props.navigation.navigate('CreateQuestion');
+                                        this.props.navigation.navigate('EditRemoveQuestion', { info: item.name });
                                     }}
                                 />
                             )}

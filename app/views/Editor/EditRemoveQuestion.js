@@ -9,32 +9,31 @@ import {Button, Text} from 'react-native-elements';
 
 import { RadioButton } from 'react-native-paper';
 
+import {editQuestion, deleteQuestion, infoQuestion} from "../../services/quiz/questionFuncs";
 
-export default class CreateQuestion extends Component {
+
+
+export default class EditRemoveQuestion extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            question: '',
-            answer1: '',
-            answer2: '',
-            answer3: '',
-            answer4: '',
-            value: '1',
+            id: this.props.navigation.state.params.info,
+            question: 'Cual es la capital de España?',
+            answer1: '1',
+            answer2: '2',
+            answer3: '3',
+            answer4: '4',
+            value: '3',
+            //data: [],
             error: false
         }
         this.onChangeText = this.onChangeText.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    onChangeText = (key, val) => {
-        this.setState({[key]: val})
-    }
-
-    handleSubmit() {
-        if(this.state.question !== '' && this.state.answer1 !== ''){
-            /*
-            createQuestion(this.state.question, this.state.answer1, this.state.answer2, this.state.answer3, this.state.answer4, this.state.value)
+    componentDidMount(){
+        /*
+        infoQuestion(this.state.id)
                 .then((data) => {
                     console.log(data);
                     //this.setState(data);
@@ -43,12 +42,36 @@ export default class CreateQuestion extends Component {
                     this.setState( {error: error.message})
                 });
                 */
-               this.props.navigation.replace('QuestionsEdit');
-        }
-        else{
-            this.setState({error: 'Introduzca todos los campos'})
-        }
+    }
 
+    onChangeText = (key, val) => {
+        this.setState({[key]: val})
+    }
+
+    editQuestion() {
+        /*
+        editQuestion(this.state.id, this.state.question, this.state.answer1, this.state.answer2, this.state.answer3, this.state.answer4, this.state.value)
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                this.setState( {error: error.message})
+            });
+            */
+            this.props.navigation.goBack();
+    }
+
+    deleteQuestion() {
+        /*
+        deleteQuestion(this.state.id)
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((error) => {
+                this.setState( {error: error.message})
+            });
+            */
+            this.props.navigation.goBack();
     }
 
     render() {
@@ -56,7 +79,7 @@ export default class CreateQuestion extends Component {
             <ScrollView>
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
-                    <Text h2>New Question</Text>
+                    <Text h2>Question</Text>
                 </View>
                 <View style={styles.containerCreate}>
                     <TextInput
@@ -64,6 +87,7 @@ export default class CreateQuestion extends Component {
                         placeholder='Question'
                         autoCapitalize="none"
                         placeholderTextColor='darkgrey'
+                        value={this.state.question}
                         onChangeText={val => this.onChangeText('question', val)}
                     />
                     <Text>----------------------------</Text>
@@ -77,6 +101,7 @@ export default class CreateQuestion extends Component {
                             style={styles.input}
                             placeholder='Answer 1'
                             placeholderTextColor='darkgrey'
+                            value={this.state.answer1}
                             onChangeText={val => this.onChangeText('answer1', val)}
                         />
                         <RadioButton value="1" />
@@ -86,6 +111,7 @@ export default class CreateQuestion extends Component {
                             style={styles.input}
                             placeholder='Answer 2'
                             placeholderTextColor='darkgrey'
+                            value={this.state.answer2}
                             onChangeText={val => this.onChangeText('answer2', val)}
                         />
                         <RadioButton value="2" />
@@ -95,6 +121,7 @@ export default class CreateQuestion extends Component {
                             style={styles.input}
                             placeholder='Answer 3'
                             placeholderTextColor='darkgrey'
+                            value={this.state.answer3}
                             onChangeText={val => this.onChangeText('answer3', val)}
                         />
                         <RadioButton value="3" />
@@ -104,6 +131,7 @@ export default class CreateQuestion extends Component {
                             style={styles.input}
                             placeholder='Answer 4'
                             placeholderTextColor='darkgrey'
+                            value={this.state.answer4}
                             onChangeText={val => this.onChangeText('answer4', val)}
                         />
                         <RadioButton value="4" />
@@ -112,13 +140,18 @@ export default class CreateQuestion extends Component {
                     </View>
                     <Button
                     buttonStyle={styles.button}
-                    className='create-button'
-                    title="Create"
+                    title="Edit"
                     onPress={() => {
-                        this.handleSubmit()
+                        this.editQuestion()
                     }}/>
                     <Button
-                        className='return-button'
+                    buttonStyle={styles.button1}
+                    title="Delete"
+                    onPress={() => {
+                        this.deleteQuestion()
+                    }}/>
+                    <Button
+                        className='login-button'
                         type="clear"
                         buttonStyle={styles.button2}
                         title="Return"
@@ -176,6 +209,14 @@ const styles = StyleSheet.create({
         marginTop: 20,
         margin: 10,
         backgroundColor: 'grey',
+        borderRadius: 14
+    },
+    button1: {
+        width: 120,
+        height: 45,
+        marginTop: 15,
+        margin: 10,
+        backgroundColor: 'red',
         borderRadius: 14
     },
     button2: {
