@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import CreateQuestion from "../../app/views/Editor/CreateQuestion";
+import CreateQuestion from "../../../app/views/Editor/CreateQuestion";
 
 describe('<CreateQuestion />', () => {
     it('CreateQuestion renders without crashing', () => {
