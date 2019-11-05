@@ -80,6 +80,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
         <TextInput
           allowFontScaling={true}
           autoCapitalize="none"
+          className="questionInput"
           onChangeText={[Function]}
           placeholder="Title"
           placeholderTextColor="darkgrey"
@@ -102,6 +103,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
         <TextInput
           allowFontScaling={true}
           autoCapitalize="none"
+          className="description"
           onChangeText={[Function]}
           placeholder="Description"
           placeholderTextColor="darkgrey"
@@ -208,6 +210,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
         <View>
           <TextInput
             allowFontScaling={true}
+            className="title1"
             onChangeText={[Function]}
             placeholder="Answer 1"
             placeholderTextColor="darkgrey"
@@ -316,6 +319,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
         <View>
           <TextInput
             allowFontScaling={true}
+            className="title2"
             onChangeText={[Function]}
             placeholder="Answer 2"
             placeholderTextColor="darkgrey"
@@ -424,6 +428,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
         <View>
           <TextInput
             allowFontScaling={true}
+            className="title3"
             onChangeText={[Function]}
             placeholder="Answer 3"
             placeholderTextColor="darkgrey"
@@ -532,6 +537,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
         <View>
           <TextInput
             allowFontScaling={true}
+            className="title4"
             onChangeText={[Function]}
             placeholder="Answer 4"
             placeholderTextColor="darkgrey"

@@ -72,7 +72,7 @@ export default class EditRemoveQuestion extends Component {
 
         let showErr = (
             this.state.error ?
-                <View style={styles.error}>
+                <View style={styles.error} className='errorShow'>
                     <Text style={{color: 'red'}}>
                         {this.state.error}
                     </Text>

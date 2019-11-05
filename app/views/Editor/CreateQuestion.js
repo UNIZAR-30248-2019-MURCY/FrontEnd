@@ -71,7 +71,7 @@ export default class CreateQuestion extends Component {
     render() {
         let showErr = (
             this.state.error ?
-                <View style={styles.error}>
+                <View style={styles.error} className='errorShow'>
                     <Text style={{color: 'red'}}>
                         {this.state.error}
                     </Text>
@@ -87,6 +87,7 @@ export default class CreateQuestion extends Component {
                 </View>
                 <View style={styles.containerCreate}>
                     <TextInput
+                        className='questionInput'
                         style={styles.input}
                         placeholder='Title'
                         autoCapitalize="none"
@@ -94,6 +95,7 @@ export default class CreateQuestion extends Component {
                         onChangeText={val => this.onChangeText('title', val)}
                     />
                     <TextInput
+                        className='description'
                         style={styles.input}
                         placeholder='Description'
                         autoCapitalize="none"
@@ -104,12 +106,14 @@ export default class CreateQuestion extends Component {
                     <Text>Fill in at least 2 answers</Text> 
                     <View>
                         <TextInput
+                            className='title1'
                             style={styles.input}
                             placeholder='Answer 1'
                             placeholderTextColor='darkgrey'
                             onChangeText={val => this.onChangeText('title1', val)}
                         />
                         <CheckBox value="1"
+                        className='correct1' 
                         title='Mark as correct'
                         containerStyle={styles.checkBoxC}
                         checked={this.state.correct1}
@@ -117,12 +121,14 @@ export default class CreateQuestion extends Component {
                         </View>
                         <View>
                         <TextInput
+                            className='title2'
                             style={styles.input}
                             placeholder='Answer 2'
                             placeholderTextColor='darkgrey'
                             onChangeText={val => this.onChangeText('title2', val)}
                         />
                         <CheckBox value="2" 
+                        className='correct2' 
                         title='Mark as correct'
                         containerStyle={styles.checkBoxC}
                         checked={this.state.correct2}
@@ -130,12 +136,14 @@ export default class CreateQuestion extends Component {
                         </View>
                         <View>
                         <TextInput
+                            className='title3'
                             style={styles.input}
                             placeholder='Answer 3'
                             placeholderTextColor='darkgrey'
                             onChangeText={val => this.onChangeText('title3', val)}
                         />
-                        <CheckBox value="3" 
+                        <CheckBox value="3"
+                        className='correct3' 
                         title='Mark as correct'
                         containerStyle={styles.checkBoxC}
                         checked={this.state.correct3}
@@ -143,12 +151,14 @@ export default class CreateQuestion extends Component {
                         </View>
                         <View>
                         <TextInput
+                            className='title4'
                             style={styles.input}
                             placeholder='Answer 4'
                             placeholderTextColor='darkgrey'
                             onChangeText={val => this.onChangeText('title4', val)}
                         />
                         <CheckBox value="4" 
+                        className='correct4' 
                         title='Mark as correct'
                         containerStyle={styles.checkBoxC}
                         checked={this.state.correct4}

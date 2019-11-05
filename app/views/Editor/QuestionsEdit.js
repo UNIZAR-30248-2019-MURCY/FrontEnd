@@ -99,6 +99,7 @@ export default class QuestionsEdit extends Component {
                     </SafeAreaView>
                 </ScrollView>
                 <ActionButton
+                    className='create-button'
                     hideShadow={true}
                     buttonColor="grey"
                     onPress={() => {
