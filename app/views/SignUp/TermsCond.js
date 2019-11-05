@@ -49,7 +49,7 @@ export default class Terms extends Component {
                             the application of the exclusive responsibility of the user.</Text>
                         </View>
                     <Button
-                        className='enter-button'
+                        className='back-button'
                         type="clear"
                         buttonStyle={styles.button}
                         title="Return"

@@ -2,19 +2,18 @@ import React, {Component} from 'react';
 import {
     View,
     StyleSheet,
-    AsyncStorage
+    Image, AsyncStorage,
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
-import {NavigationActions, StackActions} from 'react-navigation';
+import {NavigationActions, StackActions} from "react-navigation";
 import {removeItem} from "../../services/AsyncStorage/remove";
 
-export default class SettingsPlayer extends Component {
+export default class SettingsReviewer extends Component {
 
     constructor(props) {
         super(props);
         this.signOff = this.signOff.bind(this);
     }
-
 
     signOff() {
         removeItem('token')
@@ -38,41 +37,20 @@ export default class SettingsPlayer extends Component {
 
                 <View style={styles.containerSettings}>
                     <Button
-                        className='request-button'
+                        className='player-button'
                         type="clear"
                         buttonStyle={styles.button}
-                        title="Request to be Editor"
+                        title="Player Mode"
                         titleStyle={styles.buttonText}
                         onPress={() => {
-                            this.props.navigation.navigate('Request');
-                        }}/>
-                    <Button
-                        className='editor-button'
-                        type="clear"
-                        buttonStyle={styles.button}
-                        title="Editor Mode"
-                        titleStyle={styles.buttonText}
-                        onPress={() => {
-                            const toEditor = StackActions.reset({
+                            const toPlayer = StackActions.reset({
                                 index: 0,
-                                actions: [NavigationActions.navigate({routeName: 'Editor'})],
+                                actions: [NavigationActions.navigate({ routeName: 'Player' })],
                             });
-                            this.props.navigation.dispatch(toEditor);
-                        }}/>
-                    <Button
-                        className='reviewer-button'
-                        type="clear"
-                        buttonStyle={styles.button}
-                        title="Reviewer Mode"
-                        titleStyle={styles.buttonText}
-                        onPress={() => {
-                            const toEditor = StackActions.reset({
-                                index: 0,
-                                actions: [NavigationActions.navigate({routeName: 'Reviewer'})],
-                            });
-                            this.props.navigation.dispatch(toEditor);
+                            this.props.navigation.dispatch(toPlayer);
                         }}/>
                 </View>
+
                 <View style={styles.buttonSO}>
                     <Button
                         className='signoff-button'
@@ -91,8 +69,8 @@ export default class SettingsPlayer extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        //justifyContent: 'center',
         alignItems: 'center',
+        //justifyContent: 'center',
         padding: 20
     },
     containerTitle: {

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {AsyncStorage, StyleSheet, TextInput, View,} from 'react-native'
 import {Button, Text} from 'react-native-elements';
 import {getRequestEdit, requestEdit} from "../../services/user/userFuncs";
+import {retrieveItem} from "../../services/AsyncStorage/retrieve";
 
 export default class Request extends Component {
 
@@ -18,23 +19,11 @@ export default class Request extends Component {
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.retrieveItem = this.retrieveItem.bind(this);
         this.searchLastRequest = this.searchLastRequest.bind(this);
     }
 
     onChangeText = (key, val) => {
         this.setState({[key]: val})
-    }
-
-    async retrieveItem(key) {
-        try {
-            console.log('retrieveItem')
-            let data = await AsyncStorage.getItem(key)
-            let token = JSON.parse(data).token;
-            this.setState({token: token})
-        } catch (error) {
-            console.log(error.message);
-        }
     }
 
     searchLastRequest() {
@@ -43,10 +32,10 @@ export default class Request extends Component {
         }
     }
 
-
     componentDidMount() {
-        this.retrieveItem('token')
-            .then(r => {
+        retrieveItem('token')
+            .then(data => {
+                this.setState({token: data})
                 getRequestEdit(this.state.token)
                     .then((request) => {
                         this.setState({request: request})
@@ -79,7 +68,7 @@ export default class Request extends Component {
     render() {
         let showErr = (
             this.state.errorForm ?
-                <View style={styles.error}>
+                <View style={styles.error} className='errorShow'>
                     <Text style={{color: 'red'}}>
                         {this.state.errorForm}
                     </Text>
@@ -95,7 +84,7 @@ export default class Request extends Component {
                     </Text>
                 </View> :
                 this.state.request ?
-                    <View style={styles.containerRequestExist}>
+                    <View style={styles.containerRequestExist} className='requestShow'>
                         <Text h4>A request already exists</Text>
                         <Text style={styles.containerRequestExistContent}>
                             Description: {this.state.workflow.description}
@@ -105,6 +94,7 @@ export default class Request extends Component {
                     </View> :
                     <View style={styles.containerRequest}>
                         <TextInput
+                            className='descriptionInput'
                             style={styles.input}
                             multiline={true}
                             placeholder='Description'
@@ -116,6 +106,7 @@ export default class Request extends Component {
                         {showErr}
 
                         <Button
+                            className='send-button'
                             buttonStyle={styles.button}
                             title="Send"
                             onPress={() => {
@@ -123,7 +114,7 @@ export default class Request extends Component {
                             }}/>
 
                         <Button
-                            className='signup-button'
+                            className='cancel-button'
                             type="clear"
                             buttonStyle={styles.button2}
                             title="Cancelar"

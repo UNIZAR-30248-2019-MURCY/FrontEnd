@@ -6,26 +6,17 @@ import {
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
 import {NavigationActions, StackActions} from "react-navigation";
+import {removeItem} from "../../services/AsyncStorage/remove";
 
 export default class SettingScreen extends Component {
 
     constructor(props) {
         super(props);
-        this.removeToken = this.removeToken.bind(this);
         this.signOff = this.signOff.bind(this);
     }
 
-    async removeToken() {
-        try {
-            await AsyncStorage.removeItem('token');
-            return true;
-        } catch (exception) {
-            return false;
-        }
-    }
-
     signOff() {
-        this.removeToken()
+        removeItem('token')
             .then((r) => {
                 if (r) {
                     const toWelcome = StackActions.reset({
@@ -46,7 +37,7 @@ export default class SettingScreen extends Component {
 
                 <View style={styles.containerSettings}>
                     <Button
-                        className='enter-button'
+                        className='player-button'
                         type="clear"
                         buttonStyle={styles.button}
                         title="Player Mode"
@@ -62,7 +53,7 @@ export default class SettingScreen extends Component {
 
                 <View style={styles.buttonSO}>
                     <Button
-                        className='enter-button'
+                        className='signoff-button'
                         type="clear"
                         title="Sign off"
                         titleStyle={styles.buttonText}

@@ -81,6 +81,7 @@ exports[`<LogIn /> LogIn test against snapshot 1`] = `
     <TextInput
       allowFontScaling={true}
       autoCapitalize="none"
+      className="userInput"
       onChangeText={[Function]}
       placeholder="Username"
       placeholderTextColor="darkgrey"
@@ -103,6 +104,7 @@ exports[`<LogIn /> LogIn test against snapshot 1`] = `
     <TextInput
       allowFontScaling={true}
       autoCapitalize="none"
+      className="passInput"
       onChangeText={[Function]}
       placeholder="Password"
       placeholderTextColor="darkgrey"

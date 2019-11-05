@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.6.4",
+    "@react-native-community/async-storage": "^1.6.2",
     "expo": "^35.0.0",
     "react": "16.8.6",
     "react-art": "^16.10.2",

@@ -3,6 +3,7 @@ import {AsyncStorage, FlatList, StyleSheet, TextInput, View,} from 'react-native
 import {Button, ListItem, Text} from 'react-native-elements';
 import {getRequestEdit, requestEdit} from "../../services/user/userFuncs";
 import {reviewerReqList} from "../../services/user/reviewerFuncs";
+import {retrieveItem} from "../../services/AsyncStorage/retrieve";
 
 export default class RequestList extends Component {
 
@@ -15,23 +16,12 @@ export default class RequestList extends Component {
             errorGettingReq: false,
             notShow: true
         }
-        this.retrieveItem = this.retrieveItem.bind(this);
-    }
-
-    async retrieveItem(key) {
-        try {
-            console.log('retrieveItem')
-            let data = await AsyncStorage.getItem(key)
-            let token = JSON.parse(data).token;
-            this.setState({token: token})
-        } catch (error) {
-            console.log(error.message);
-        }
     }
 
     componentDidMount() {
-        this.retrieveItem('token')
-            .then(r => {
+        retrieveItem('token')
+            .then(data => {
+                this.setState({token: data})
                 reviewerReqList(this.state.token)
                     .then((data) => {
                         this.setState({requests: data})
@@ -42,25 +32,24 @@ export default class RequestList extends Component {
                         this.setState({errorGettingReq: error.message})
                     })
             })
-
     }
-
-
 
     render() {
         let showReq = (
             this.state.notShow || this.state.errorGettingReq ?
-                <View style={styles.error}>
+                <View style={styles.error} className='errorGettingReq'>
                     <Text style={{color: 'red'}}>
                         {this.state.errorGettingReq}
                     </Text>
                 </View> :
-                    <View style={styles.containerRequestExist}>
+                    <View style={styles.containerRequestExist} className='reqList'>
                         <FlatList
+                            className='flatList'
                             data={this.state.requests}
                             keyExtractor={item => item.id.toString()}
                             renderItem={({item}) => (
                                 <ListItem
+                                    className='detail-button'
                                     title={item.description}
                                     titleStyle={{fontSize: 18}}
                                     bottomDivider

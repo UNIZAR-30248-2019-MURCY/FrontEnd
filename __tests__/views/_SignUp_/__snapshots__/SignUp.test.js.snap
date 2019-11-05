@@ -83,6 +83,7 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
         <TextInput
           allowFontScaling={true}
           autoCapitalize="none"
+          className="userInput"
           onChangeText={[Function]}
           placeholder="Username"
           placeholderTextColor="darkgrey"
@@ -106,6 +107,7 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
         <TextInput
           allowFontScaling={true}
           autoCapitalize="none"
+          className="emailInput"
           keyboardType="email-address"
           onChangeText={[Function]}
           placeholder="Email"
@@ -129,6 +131,7 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
         <TextInput
           allowFontScaling={true}
           autoCapitalize="none"
+          className="passInput"
           onChangeText={[Function]}
           placeholder="Password"
           placeholderTextColor="darkgrey"
@@ -152,6 +155,7 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
         <TextInput
           allowFontScaling={true}
           autoCapitalize="none"
+          className="passrepInput"
           onChangeText={[Function]}
           placeholder="Repeat password"
           placeholderTextColor="darkgrey"
@@ -175,6 +179,7 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
         <TextInput
           allowFontScaling={true}
           autoCapitalize="none"
+          className="nameInput"
           onChangeText={[Function]}
           placeholder="Full Name"
           placeholderTextColor="darkgrey"

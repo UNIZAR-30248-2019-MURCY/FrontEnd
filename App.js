@@ -6,7 +6,7 @@ import Welcome from './app/views/Welcome';
 import LogIn from './app/views/LogIn/LogIn';
 import SignUp from './app/views/SignUp/SignUp';
 import EmailConfirm from './app/views/SignUp/EmailConfirm';
-import TermsConditions from './app/views/SignUp/Terms&Cond';
+import TermsConditions from './app/views/SignUp/TermsCond';
 import CreateQuestion from './app/views/Editor/CreateQuestion';
 import QuizzesScreen from "./app/views/Player/QuizzesScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -18,7 +18,9 @@ import Request from "./app/views/Player/Request";
 import RequestConfirm from "./app/views/Player/RequestConfirm";
 import RequestList from "./app/views/Reviewer/RequestList";
 import RequestDetails from "./app/views/Reviewer/RequestDetails";
+import SettingsReviewer from "./app/views/Reviewer/SettingsReviewer";
 import EditRemoveQuestion from "./app/views/Editor/EditRemoveQuestion";
+
 
 
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
@@ -163,6 +165,7 @@ const editorNavigator = createMaterialBottomTabNavigator(
     }
 );
 
+
 const RequestListStack = createStackNavigator(
     {
         RequestList: RequestList,
@@ -178,6 +181,19 @@ const RequestListStack = createStackNavigator(
 );
 
 
+const SettingsReviewerStack = createStackNavigator(
+    {
+        SettingsReviewer: SettingsReviewer,
+    },
+    {
+        initialRouteName: 'SettingsReviewer',
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
+    }
+);
+
 const reviewerNavigator = createMaterialBottomTabNavigator(
     {
         Requests: {
@@ -190,7 +206,7 @@ const reviewerNavigator = createMaterialBottomTabNavigator(
             }
         },
         Settings: {
-            screen: SettingsEditorStack,
+            screen: SettingsReviewerStack,
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
                     <Icon name="cogs" size={22} color={tintColor} />
@@ -224,7 +240,6 @@ const RootStack = createStackNavigator(
         EditRemoveQuestion: EditRemoveQuestion,
     },
     {
-
       initialRouteName: 'Welcome',
       headerMode: 'none',
       navigationOptions: {
