@@ -1,4 +1,4 @@
-export const createQuestion = (question, answer1, answer2, answer3, answer4, value) => {
+export const createQuestion = (title, description, options) => {
     const URL = `https://murcy.com/quiz/`;
     return fetch(URL, {
         method: 'POST',
@@ -7,12 +7,9 @@ export const createQuestion = (question, answer1, answer2, answer3, answer4, val
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            question: question,
-            answer1: answer1,
-            answer2: answer2,
-            answer3: answer3,
-            answer4: answer4,
-            value: value
+            title: title,
+            description: description,
+            options: options
         }),
     })
         .then((response) => {
@@ -33,7 +30,7 @@ export const createQuestion = (question, answer1, answer2, answer3, answer4, val
         });
 }
 
-export const editQuestion = (id, question, answer1, answer2, answer3, answer4, value) => {
+export const editQuestion = (id, title, description, options) => {
     const URL = `https://murcy.com/quiz/`;
     return fetch(URL, {
         method: 'POST',
@@ -43,12 +40,9 @@ export const editQuestion = (id, question, answer1, answer2, answer3, answer4, v
         },
         body: JSON.stringify({
             id: id,
-            question: question,
-            answer1: answer1,
-            answer2: answer2,
-            answer3: answer3,
-            answer4: answer4,
-            value: value
+            title: title,
+            description: description,
+            options: options
         }),
     })
         .then((response) => {
@@ -108,12 +102,7 @@ export const listQuestions = () => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            question: question,
-            answer1: answer1,
-            answer2: answer2,
-            answer3: answer3,
-            answer4: answer4,
-            value: value
+            
         }),
     })
         .then((response) => {

@@ -8,6 +8,7 @@ import {
 } from 'react-native'
 import {Button, Text, ListItem} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 export default class QuestionsEdit extends Component {
@@ -15,17 +16,38 @@ export default class QuestionsEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: [
+            data: [
                 {
-                    key: '1',
-                    name: '¿Cual es la capital de España?',
-                    subtitle: 'Puedo poner mas cosas'
+                    id: 1,
+                    title: '¿Cual es la capital de España?',
+                    description: 'Hey q pasa',
+                    options: [
+                        {
+                            title: 'Madrid',
+                            correct: true
+                        },
+                        {
+                            title: 'Zgz',
+                            correct: false
+                        },
+                        
+                    ]
                 },
                 {
-                    key: '2',
-                    name: '¿Quién invento el teléfono?',
-                    subtitle: 'Pulse para abrir'
-                },
+                    id: 2,
+                    title: '¿Cual edddds la capital de España?',
+                    description: 'Hey q pasa',
+                    options: [
+                        {
+                            title: 'Madrid',
+                            correct: true
+                        },
+                        {
+                            title: 'Zgz',
+                            correct: false
+                        },
+                    ]
+                }
             ]
         }
     }
@@ -54,15 +76,21 @@ export default class QuestionsEdit extends Component {
                 <ScrollView>
                     <SafeAreaView style={styles.containerQuestions}>
                         <FlatList
-                            data={this.state.list}
+                            data={this.state.data}
+                            keyExtractor={item => item.id.toString()}
                             renderItem={({item}) => (
                                 <ListItem
-                                    keyExtractor={item => item.key}
-                                    title={item.name}
-                                    subtitle={item.subtitle}
+                                    title={item.title}
+                                    rightIcon={
+                                        <Icon
+                                            name="chevron-right"
+                                            size={12}
+                                            color="grey"
+                                        />
+                                    }
                                     bottomDivider
                                     onPress={() => {
-                                        this.props.navigation.navigate('EditRemoveQuestion', { info: item.name });
+                                        this.props.navigation.navigate('EditRemoveQuestion', { info: item });
                                     }}
                                 />
                             )}

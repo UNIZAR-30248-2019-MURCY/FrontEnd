@@ -3,11 +3,11 @@ import {
     View,
     StyleSheet,
     TextInput,
-    ScrollView
+    ScrollView,
+    FlatList,
+    SafeAreaView
 } from 'react-native'
-import {Button, Text} from 'react-native-elements';
-
-import { RadioButton } from 'react-native-paper';
+import {Button, Text, CheckBox, ListItem} from 'react-native-elements';
 
 import {editQuestion, deleteQuestion, infoQuestion} from "../../services/quiz/questionFuncs";
 
@@ -18,20 +18,14 @@ export default class EditRemoveQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            id: this.props.navigation.state.params.info,
-            question: 'Cual es la capital de España?',
-            answer1: '1',
-            answer2: '2',
-            answer3: '3',
-            answer4: '4',
-            value: '3',
-            //data: [],
+            data: this.props.navigation.state.params.info,
             error: false
         }
         this.onChangeText = this.onChangeText.bind(this);
     }
 
     componentDidMount(){
+
         /*
         infoQuestion(this.state.id)
                 .then((data) => {
@@ -75,6 +69,17 @@ export default class EditRemoveQuestion extends Component {
     }
 
     render() {
+
+        let showErr = (
+            this.state.error ?
+                <View style={styles.error}>
+                    <Text style={{color: 'red'}}>
+                        {this.state.error}
+                    </Text>
+                </View> :
+                <View></View>
+        );
+
         return (
             <ScrollView>
             <View style={styles.container}>
@@ -87,57 +92,84 @@ export default class EditRemoveQuestion extends Component {
                         placeholder='Question'
                         autoCapitalize="none"
                         placeholderTextColor='darkgrey'
-                        value={this.state.question}
-                        onChangeText={val => this.onChangeText('question', val)}
+                        value={this.state.data.title}
+                        onChangeText={val => this.onChangeText('data.title', val)}
                     />
-                    <Text>----------------------------</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder='Description'
+                        autoCapitalize="none"
+                        placeholderTextColor='darkgrey'
+                        value={this.state.data.description}
+                        onChangeText={val => this.onChangeText('data.description', val)}
+                    />
+                    <Text>--------------------------</Text>
+                    <Text>Fill in at least 2 answers</Text> 
+
+                        <FlatList
+                            data={this.state.data.options}
+                            keyExtractor={item => item.title}
+                            renderItem={({item}) => (
+                                <ListItem
+                                    title={item.title}
+                                    bottomDivider
+                                />
+                            )}
+                        />
+
                     <View>
-                    <RadioButton.Group
-                        onValueChange={value => this.setState({ value })}
-                        value={this.state.value}
-                    >
-                        <View>
                         <TextInput
                             style={styles.input}
                             placeholder='Answer 1'
                             placeholderTextColor='darkgrey'
-                            value={this.state.answer1}
-                            onChangeText={val => this.onChangeText('answer1', val)}
+                            onChangeText={val => this.onChangeText('title1', val)}
                         />
-                        <RadioButton value="1" />
+                        <CheckBox value="1"
+                        title='Mark as correct'
+                        containerStyle={styles.checkBoxC}
+                        checked={this.state.correct1}
+                        onPress={() => this.setState({correct1: !this.state.correct1})} />
                         </View>
                         <View>
                         <TextInput
                             style={styles.input}
                             placeholder='Answer 2'
                             placeholderTextColor='darkgrey'
-                            value={this.state.answer2}
-                            onChangeText={val => this.onChangeText('answer2', val)}
+                            onChangeText={val => this.onChangeText('title2', val)}
                         />
-                        <RadioButton value="2" />
+                        <CheckBox value="2" 
+                        title='Mark as correct'
+                        containerStyle={styles.checkBoxC}
+                        checked={this.state.correct2}
+                        onPress={() => this.setState({correct2: !this.state.correct2})} />
                         </View>
                         <View>
                         <TextInput
                             style={styles.input}
                             placeholder='Answer 3'
                             placeholderTextColor='darkgrey'
-                            value={this.state.answer3}
-                            onChangeText={val => this.onChangeText('answer3', val)}
+                            onChangeText={val => this.onChangeText('title3', val)}
                         />
-                        <RadioButton value="3" />
+                        <CheckBox value="3" 
+                        title='Mark as correct'
+                        containerStyle={styles.checkBoxC}
+                        checked={this.state.correct3}
+                        onPress={() => this.setState({correct3: !this.state.correct3})} />
                         </View>
                         <View>
                         <TextInput
                             style={styles.input}
                             placeholder='Answer 4'
                             placeholderTextColor='darkgrey'
-                            value={this.state.answer4}
-                            onChangeText={val => this.onChangeText('answer4', val)}
+                            onChangeText={val => this.onChangeText('title4', val)}
                         />
-                        <RadioButton value="4" />
-                        </View>
-                    </RadioButton.Group>
+                        <CheckBox value="4" 
+                        title='Mark as correct'
+                        containerStyle={styles.checkBoxC}
+                        checked={this.state.correct4}
+                        onPress={() => this.setState({correct4: !this.state.correct4})} />
                     </View>
+                    {showErr}
                     <Button
                     buttonStyle={styles.button}
                     title="Edit"

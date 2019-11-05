@@ -31,7 +31,6 @@ export default class Welcome extends Component {
                             this.props.navigation.navigate('LogIn');
                         }}/>
                 </View>
-
             </View>
         )
     }
