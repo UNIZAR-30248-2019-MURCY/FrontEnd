@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {AsyncStorage, StyleSheet, TextInput, View,} from 'react-native'
 import {Button, Text} from 'react-native-elements';
-import {getRequestEdit, requestEdit} from "../../services/user/userFuncs";
+import {getRequestEdit, requestEditor, editRequestEditor} from "../../services/user/userFuncs";
 import {retrieveItem} from "../../services/AsyncStorage/retrieve";
 
 export default class Request extends Component {
@@ -15,7 +15,9 @@ export default class Request extends Component {
             workflow: false,
             errorGettingReq: false,
             errorForm: false,
-            notShow: true
+            notShow: true,
+            editing: false,
+            reRequest: false
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +29,7 @@ export default class Request extends Component {
     }
 
     searchLastRequest() {
-        while(this.state.workflow.nextWorkflow !== null){
+        while (this.state.workflow.nextWorkflow !== null) {
             this.setState({request: this.state.workflow.nextWorkflow})
         }
     }
@@ -35,7 +37,7 @@ export default class Request extends Component {
     componentDidMount() {
         retrieveItem('token')
             .then(data => {
-                this.setState({token: data})
+                this.setState({token: JSON.parse(data).token})
                 getRequestEdit(this.state.token)
                     .then((request) => {
                         this.setState({request: request})
@@ -51,14 +53,23 @@ export default class Request extends Component {
 
     handleSubmit() {
         if (this.state.description !== '') {
-            requestEdit(this.state.description, this.state.token)
-                .then((data) => {
-                    this.props.navigation.replace('RequestConfirm');
-                })
-                .catch((error) => {
-                    this.setState({errorForm: error.message})
-                })
-
+            if (!this.state.editing) {
+                requestEditor(this.state.description, this.state.token)
+                    .then((data) => {
+                        this.props.navigation.replace('RequestConfirm');
+                    })
+                    .catch((error) => {
+                        this.setState({errorForm: error.message})
+                    })
+            } else {
+                editRequestEditor(this.state.description, this.state.token)
+                    .then((data) => {
+                        this.props.navigation.replace('RequestConfirm');
+                    })
+                    .catch((error) => {
+                        this.setState({errorForm: error.message})
+                    })
+            }
         } else {
             this.setState({errorForm: 'Introduzca todos los campos'})
         }
@@ -76,7 +87,102 @@ export default class Request extends Component {
                 <View></View>
         );
 
-        let showReq = (
+        let reqNotExist = (
+            <View style={styles.containerRequest}>
+                <TextInput
+                    className='descriptionInput'
+                    style={styles.input}
+                    multiline={true}
+                    placeholder='Description'
+                    autoCapitalize="none"
+                    placeholderTextColor='darkgrey'
+                    onChangeText={val => this.onChangeText('description', val)}
+                />
+
+                {showErr}
+
+                <Button
+                    className='send-button'
+                    buttonStyle={styles.button}
+                    title="Send"
+                    onPress={() => {
+                        this.handleSubmit()
+                    }}/>
+
+                <Button
+                    className='cancel-button'
+                    type="clear"
+                    buttonStyle={styles.button2}
+                    title="Cancelar"
+                    titleStyle={{color: 'grey'}}
+                    onPress={() => {
+                        this.props.navigation.goBack();
+                    }
+                    }/>
+            </View>
+        );
+
+        let editReq = (
+            !this.state.editing ?
+                <View style={styles.containerEdit} className='editShow'>
+                    <Button
+                        className='edit-button'
+                        buttonStyle={styles.buttonEdit}
+                        title="Edit request"
+                        onPress={() => {
+                            this.setState({editing: true})
+                        }}/>
+                </View>
+                : reqNotExist
+        );
+
+        let reReq = (
+            !this.state.reRequest ?
+                <View style={styles.containerEdit} className='reReqShow'>
+                    <Button
+                        className='edit-button'
+                        buttonStyle={styles.buttonEdit}
+                        title="Request Again"
+                        onPress={() => {
+                            this.setState({reRequest: true})
+                        }}/>
+                </View>
+                : reqNotExist
+        );
+
+        let reqExist = (
+            this.state.request.closed && !this.state.request.approved ?
+                <View style={styles.containerRequestExist} className='requestShow'>
+                    <Text h4>A request has been denied</Text>
+                    <Text style={styles.containerRequestExistContent}>
+                        Description: {this.state.workflow.description}
+                        {'\n'}{'\n'}
+                        Status: {this.state.workflow.status}
+                    </Text>
+                    {reReq}
+                </View>
+                :
+                this.state.request.closed && this.state.request.approved ?
+                    <View style={styles.containerRequestExist} className='requestShow'>
+                        <Text h4>A request has been accepted</Text>
+                        <Text style={styles.containerRequestExistContent}>
+                            Description: {this.state.workflow.description}
+                            {'\n'}{'\n'}
+                            Status: {this.state.workflow.status}
+                        </Text>
+                    </View>
+                    : <View style={styles.containerRequestExist} className='requestShow'>
+                        <Text h4>A request already exists</Text>
+                        <Text style={styles.containerRequestExistContent}>
+                            Description: {this.state.workflow.description}
+                            {'\n'}{'\n'}
+                            Status: {this.state.workflow.status}
+                        </Text>
+                        {editReq}
+                    </View>
+        );
+
+        let show = (
             this.state.notShow || this.state.errorGettingReq ?
                 <View style={styles.error}>
                     <Text style={{color: 'red'}}>
@@ -84,46 +190,8 @@ export default class Request extends Component {
                     </Text>
                 </View> :
                 this.state.request ?
-                    <View style={styles.containerRequestExist} className='requestShow'>
-                        <Text h4>A request already exists</Text>
-                        <Text style={styles.containerRequestExistContent}>
-                            Description: {this.state.workflow.description}
-                            {'\n'}{'\n'}
-                            Status: {this.state.workflow.status}
-                        </Text>
-                    </View> :
-                    <View style={styles.containerRequest}>
-                        <TextInput
-                            className='descriptionInput'
-                            style={styles.input}
-                            multiline={true}
-                            placeholder='Description'
-                            autoCapitalize="none"
-                            placeholderTextColor='darkgrey'
-                            onChangeText={val => this.onChangeText('description', val)}
-                        />
-
-                        {showErr}
-
-                        <Button
-                            className='send-button'
-                            buttonStyle={styles.button}
-                            title="Send"
-                            onPress={() => {
-                                this.handleSubmit()
-                            }}/>
-
-                        <Button
-                            className='cancel-button'
-                            type="clear"
-                            buttonStyle={styles.button2}
-                            title="Cancelar"
-                            titleStyle={{color: 'grey'}}
-                            onPress={() => {
-                                this.props.navigation.goBack();
-                            }
-                            }/>
-                    </View>
+                    reqExist
+                    : reqNotExist
         );
 
         return (
@@ -131,7 +199,7 @@ export default class Request extends Component {
                 <View style={styles.containerTitle}>
                     <Text h2>Request</Text>
                 </View>
-                {showReq}
+                {show}
             </View>
         )
     }
@@ -151,15 +219,13 @@ const styles = StyleSheet.create({
     containerRequest: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 20,
+        marginTop: 25,
     },
     containerRequestExist: {
         flex: 1,
-        alignItems: 'flex-start',
         padding: 30
     },
     containerRequestExistContent: {
-        flex: 1,
         alignItems: 'flex-start',
         marginTop: 20,
         fontSize: 18,
@@ -205,6 +271,18 @@ const styles = StyleSheet.create({
     error: {
         margin: 10,
         alignItems: 'center',
+    },
+    containerEdit: {
+        margin: 30,
+        alignItems: 'center',
+    },
+    buttonEdit: {
+        width: 150,
+        height: 50,
+        marginTop: 20,
+        margin: 10,
+        backgroundColor: 'grey',
+        borderRadius: 14
     },
 
 })

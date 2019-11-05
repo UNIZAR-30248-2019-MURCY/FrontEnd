@@ -7,7 +7,7 @@ import {
 import {Button, colors, Text} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class EmailConfirm extends Component {
+export default class EmailVerif extends Component {
 
     constructor(props) {
         super(props);
@@ -28,7 +28,7 @@ export default class EmailConfirm extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.navigation.goBack();
+                            this.props.navigation.replace('Welcome');
                         }
                         }
                     />
@@ -40,7 +40,7 @@ export default class EmailConfirm extends Component {
                         size={100}
                     />
                     <Text style={{color: 'grey', fontSize: 19, marginTop:20, textAlign:'center'}} >
-                        Check your inbox to verify your email
+                        Your email has been successfully verified
                     </Text>
                 </View>
 

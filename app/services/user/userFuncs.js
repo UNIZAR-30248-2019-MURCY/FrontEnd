@@ -57,10 +57,72 @@ export const logInUser = (username, password) => {
         });
 }
 
-export const requestEdit = (description, token) => {
+export const userInfo = (token) => {
+    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/user/info`;
+    return fetch(URL, {
+        method: 'GET',
+        headers: {
+            Authorization: 'Bearer ' + token,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(async (response) => {
+            if (response.status === 200) {
+                const responseJSON = await response.json();
+                console.log(responseJSON)
+                return responseJSON
+            } else {
+                console.log(response.status)
+                throw new Error("Request Not authorized")
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            console.log(error.message)
+            throw error;
+        });
+}
+
+export const requestEditor = (description, token) => {
     const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/request/editor`;
     return fetch(URL, {
         method: 'POST',
+        headers: {
+            Authorization: 'Bearer ' + token,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            description: description
+        }),
+    })
+        .then(async (response) => {
+            if (response.status === 201) {
+                const responseJSON = await response.json();
+                console.log(responseJSON)
+                return responseJSON
+            } else if (response.status === 409) {
+                console.log(response.status)
+                throw new Error("Currently, there is one request")
+            } else {
+                console.log(response.status)
+                throw new Error("Request Not authorized")
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            console.log(error.message)
+            throw error;
+        });
+}
+
+
+
+export const editRequestEditor = (description, token) => {
+    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/request/editor`;
+    return fetch(URL, {
+        method: 'PUT',
         headers: {
             Authorization: 'Bearer ' + token,
             Accept: 'application/json',

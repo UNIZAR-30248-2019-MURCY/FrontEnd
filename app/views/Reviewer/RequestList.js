@@ -21,7 +21,7 @@ export default class RequestList extends Component {
     componentDidMount() {
         retrieveItem('token')
             .then(data => {
-                this.setState({token: data})
+                this.setState({token: JSON.parse(data).token})
                 reviewerReqList(this.state.token)
                     .then((data) => {
                         this.setState({requests: data})
