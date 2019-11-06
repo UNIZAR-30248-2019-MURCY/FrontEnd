@@ -81,57 +81,19 @@ exports[`<Welcome /> Welcome test against snapshot 1`] = `
     <View
       style={
         Object {
-          "borderRadius": 3,
+          "flexDirection": "row",
+          "justifyContent": "space-around",
+          "marginTop": 50,
+          "padding": 10,
         }
       }
     >
-      <View
-        accessible={true}
-        isTVSelectable={true}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "opacity": 1,
-          }
-        }
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "transparent",
-              "borderColor": "#2089dc",
-              "borderRadius": 3,
-              "borderWidth": 0,
-              "flexDirection": "row",
-              "height": 55,
-              "justifyContent": "center",
-              "marginTop": 70,
-              "padding": 8,
-              "width": 150,
-            }
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "grey",
-                "fontSize": 25,
-                "paddingBottom": 1,
-                "paddingTop": 2,
-                "textAlign": "center",
-              }
-            }
-          >
-            Enter
-          </Text>
-        </View>
-      </View>
+      <ActivityIndicator
+        animating={true}
+        color="grey"
+        hidesWhenStopped={true}
+        size="large"
+      />
     </View>
   </View>
 </View>

@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
+import React, {Component} from 'react';
+import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {createAppContainer, NavigationActions, StackActions, createSwitchNavigator} from 'react-navigation';
+import {createStackNavigator,} from 'react-navigation-stack';
 import Welcome from './app/views/Welcome';
 import LogIn from './app/views/LogIn/LogIn';
 import SignUp from './app/views/SignUp/SignUp';
@@ -21,12 +21,15 @@ import RequestList from "./app/views/Reviewer/RequestList";
 import RequestDetails from "./app/views/Reviewer/RequestDetails";
 import SettingsReviewer from "./app/views/Reviewer/SettingsReviewer";
 import EditRemoveQuestion from "./app/views/Editor/EditRemoveQuestion";
-import { Linking } from "expo";
+import {Linking} from "expo";
 
-import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+import {retrieveItem} from "./app/services/AsyncStorage/retrieve";
+import {getRequestEdit} from "./app/services/user/userFuncs";
 
 const URL = 'https://murcy.netlify.com/';
 
+var HomePage = 'Welcome';
 /*
   Player
  */
@@ -64,16 +67,16 @@ const playerNavigator = createMaterialBottomTabNavigator(
             screen: QuizzesPlayerStack,
             navigationOptions: {
                 showLabel: false,
-                tabBarIcon: ({ tintColor }) => (
-                    <Icon name="gamepad" size={22} color={tintColor} />
+                tabBarIcon: ({tintColor}) => (
+                    <Icon name="gamepad" size={22} color={tintColor}/>
                 )
             }
         },
         Settings: {
             screen: SettingsPlayerStack,
             navigationOptions: {
-                tabBarIcon: ({ tintColor }) => (
-                    <Icon name="cogs" size={22} color={tintColor} />
+                tabBarIcon: ({tintColor}) => (
+                    <Icon name="cogs" size={22} color={tintColor}/>
                 )
             }
         }
@@ -82,7 +85,7 @@ const playerNavigator = createMaterialBottomTabNavigator(
         initialRouteName: 'Quizzes',
         activeColor: '#f0edf6',
         inactiveColor: 'gray',
-        barStyle: { backgroundColor: 'black' },
+        barStyle: {backgroundColor: 'black'},
     }
 );
 
@@ -136,8 +139,8 @@ const editorNavigator = createMaterialBottomTabNavigator(
             screen: QuestionsEditStack,
             navigationOptions: {
                 showLabel: false,
-                tabBarIcon: ({ tintColor }) => (
-                    <Icon name="question-circle" size={22} color={tintColor} />
+                tabBarIcon: ({tintColor}) => (
+                    <Icon name="question-circle" size={22} color={tintColor}/>
                 )
             }
         },
@@ -145,16 +148,16 @@ const editorNavigator = createMaterialBottomTabNavigator(
             screen: QuizzesEditStack,
             navigationOptions: {
                 showLabel: false,
-                tabBarIcon: ({ tintColor }) => (
-                    <Icon name="gamepad" size={22} color={tintColor} />
+                tabBarIcon: ({tintColor}) => (
+                    <Icon name="gamepad" size={22} color={tintColor}/>
                 )
             }
         },
         Settings: {
             screen: SettingsEditorStack,
             navigationOptions: {
-                tabBarIcon: ({ tintColor }) => (
-                    <Icon name="cogs" size={22} color={tintColor} />
+                tabBarIcon: ({tintColor}) => (
+                    <Icon name="cogs" size={22} color={tintColor}/>
                 )
             }
         }
@@ -163,7 +166,7 @@ const editorNavigator = createMaterialBottomTabNavigator(
         initialRouteName: 'Questions',
         activeColor: '#f0edf6',
         inactiveColor: 'gray',
-        barStyle: { backgroundColor: 'black' },
+        barStyle: {backgroundColor: 'black'},
     }
 );
 
@@ -202,16 +205,16 @@ const reviewerNavigator = createMaterialBottomTabNavigator(
             screen: RequestListStack,
             navigationOptions: {
                 showLabel: false,
-                tabBarIcon: ({ tintColor }) => (
-                    <Icon name="edit" size={22} color={tintColor} />
+                tabBarIcon: ({tintColor}) => (
+                    <Icon name="edit" size={22} color={tintColor}/>
                 )
             }
         },
         Settings: {
             screen: SettingsReviewerStack,
             navigationOptions: {
-                tabBarIcon: ({ tintColor }) => (
-                    <Icon name="cogs" size={22} color={tintColor} />
+                tabBarIcon: ({tintColor}) => (
+                    <Icon name="cogs" size={22} color={tintColor}/>
                 )
             }
         }
@@ -220,57 +223,81 @@ const reviewerNavigator = createMaterialBottomTabNavigator(
         initialRouteName: 'Requests',
         activeColor: '#f0edf6',
         inactiveColor: 'gray',
-        barStyle: { backgroundColor: 'black' },
+        barStyle: {backgroundColor: 'black'},
     }
 );
 
-/*
-  Root
- */
 
-const RootStack = createStackNavigator(
+const AppStack = createStackNavigator(
     {
-        Welcome: Welcome,
-        LogIn: LogIn,
-        SignUp: SignUp,
-        EmailConfirm: EmailConfirm,
-        TermsConditions: TermsConditions,
         Player: playerNavigator,
         Editor: editorNavigator,
         Reviewer: reviewerNavigator,
         CreateQuestion: CreateQuestion,
         EditRemoveQuestion: EditRemoveQuestion,
-        EmailVerif: {
-            screen: EmailVerif,
-            path: URL+'check',
-        },
     },
     {
-      initialRouteName: 'Welcome',
-      headerMode: 'none',
-      navigationOptions: {
-        headerVisible: false,
-      }
+        initialRouteName: 'Player',
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
     }
 );
 
-const AppContainer = createAppContainer(RootStack);
+
+const AuthStack = createStackNavigator(
+    {
+        LogIn: LogIn,
+        SignUp: SignUp,
+        EmailConfirm: EmailConfirm,
+        TermsConditions: TermsConditions,
+        EmailVerif: {
+            screen: EmailVerif,
+            path: URL + 'check'}
+    },
+    {
+        initialRouteName: 'LogIn',
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
+    }
+);
+
+
+const AppContainer = createAppContainer(
+    createSwitchNavigator(
+        {
+            AuthLoading: Welcome,
+            App: AppStack,
+            Auth: AuthStack,
+        },
+        {
+            initialRouteName: 'AuthLoading',
+            headerMode: 'none',
+            navigationOptions: {
+                headerVisible: false,
+            }
+        }
+    )
+);
 
 const uriPrefix = Linking.makeUrl("/");
 
 class App extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <AppContainer uriPrefix={uriPrefix}/>
-      </View>
-    );
-  }
+    render() {
+        return (
+            <View style={styles.container}>
+                <AppContainer uriPrefix={uriPrefix}/>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  }
+    container: {
+        flex: 1,
+    }
 });
 export default App;

@@ -48,21 +48,21 @@ export default class LogIn extends Component {
                     saveData('token', data).then(r =>
                         userInfo(data.token).then((dataUser) => {
                                 saveData('role', dataUser.role).then(r =>
-                                    console.log(dataUser.role),
+                                        console.log(dataUser.role),
                                     this.setState({loading: false}),
-                                    this.props.navigation.dispatch(toApp)
+                                    this.props.navigation.navigate('App')
                                 )
                             }
                         )
-                        .catch((error) => {
-                            this.setState({error: error.message}),
-                            this.setState({loading: false})
-                        })
+                            .catch((error) => {
+                                this.setState({error: error.message}),
+                                    this.setState({loading: false})
+                            })
                     );
                 })
                 .catch((error) => {
                     this.setState({error: error.message}),
-                    this.setState({loading: false})
+                        this.setState({loading: false})
                 });
         } else {
             this.setState({error: 'Introduzca todos los campos'})
@@ -81,9 +81,9 @@ export default class LogIn extends Component {
         );
         let showLoading = (
             this.state.loading ?
-                <View style={[styles.containerLoading, styles.horizontal]}>
-                    <ActivityIndicator animating={this.state.loading} size="large" color="grey" />
-                </View>:
+                <View style={[styles.containerLoading]}>
+                    <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
+                </View> :
                 <View></View>
         );
 
@@ -102,7 +102,7 @@ export default class LogIn extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.navigation.goBack();
+                            this.props.navigation.navigate('AuthLoading')
                         }
                         }
                     />
@@ -131,6 +131,7 @@ export default class LogIn extends Component {
                         onChangeText={val => this.onChangeText('password', val)}
                     />
                     {showErr}
+                    {showLoading}
                     <Button
                         className='login-button'
                         buttonStyle={styles.button}
@@ -149,7 +150,7 @@ export default class LogIn extends Component {
                         }
                         }/>
                 </View>
-                {showLoading}
+
             </View>
         )
     }
@@ -160,10 +161,6 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     containerLoading: {
-        flex: 1,
-        justifyContent: 'center'
-    },
-    horizontal: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         padding: 10
@@ -175,9 +172,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
     },
     login: {
-        flex: 1,
         alignItems: 'center',
-        //justifyContent: 'center',
     },
     logo: {
         marginBottom: 30,

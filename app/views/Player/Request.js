@@ -62,8 +62,8 @@ export default class Request extends Component {
             if (!this.state.editing) {
                 requestEditor(this.state.description, this.state.token)
                     .then((data) => {
-                        this.props.navigation.replace('RequestConfirm');
                         this.setState({loading: false})
+                        this.props.navigation.replace('RequestConfirm');
                     })
                     .catch((error) => {
                         this.setState({errorForm: error.message}),
@@ -227,7 +227,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20
-        //justifyContent: 'center',
     },
     horizontal: {
         flexDirection: 'row',

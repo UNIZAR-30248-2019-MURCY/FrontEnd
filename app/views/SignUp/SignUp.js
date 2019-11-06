@@ -43,11 +43,11 @@ export default class SignUp extends Component {
                     signUpUser(this.state.username, this.state.password, this.state.email, this.state.fullName)
                         .then((data) => {
                             this.setState({loading: false}),
-                            this.props.navigation.replace('EmailConfirm');
+                                this.props.navigation.replace('EmailConfirm');
                         })
                         .catch((error) => {
                             this.setState({error: error.message}),
-                            this.setState({loading: false})
+                                this.setState({loading: false})
                         })
                 } else {
                     this.setState({error: 'Passwords must be the same '})
@@ -73,8 +73,8 @@ export default class SignUp extends Component {
         let showLoading = (
             this.state.loading ?
                 <View style={[styles.containerLoading, styles.horizontal]}>
-                    <ActivityIndicator animating={this.state.loading} size="large" color="grey" />
-                </View>:
+                    <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
+                </View> :
                 <View></View>
         );
 
@@ -93,7 +93,7 @@ export default class SignUp extends Component {
                                 />
                             }
                             onPress={() => {
-                                this.props.navigation.goBack();
+                                this.props.navigation.navigate('AuthLoading')
                             }
                             }
                         />

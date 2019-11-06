@@ -63,7 +63,6 @@ exports[`<LogIn /> LogIn test against snapshot 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "flex": 1,
       }
     }
   >
@@ -125,6 +124,7 @@ exports[`<LogIn /> LogIn test against snapshot 1`] = `
       }
       underlineColorAndroid="transparent"
     />
+    <View />
     <View />
     <View
       style={
@@ -237,6 +237,5 @@ exports[`<LogIn /> LogIn test against snapshot 1`] = `
       </View>
     </View>
   </View>
-  <View />
 </View>
 `;
