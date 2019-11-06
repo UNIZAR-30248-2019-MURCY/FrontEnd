@@ -6,6 +6,7 @@ import {
     ScrollView
 } from 'react-native'
 import {Button, Text, CheckBox } from 'react-native-elements';
+import {retrieveItem} from "../../services/AsyncStorage/retrieve";
 
 
 export default class CreateQuestion extends Component {
@@ -13,6 +14,7 @@ export default class CreateQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            token: '',
             title: '',
             description: '',
             options: [],
@@ -35,6 +37,15 @@ export default class CreateQuestion extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    /*
+    componentDidMount() {
+        retrieveItem('token')
+            .then(data => {
+                this.setState({token: data})
+            })
+    }
+    */
+
     onChangeText = (key, val) => {
         this.setState({[key]: val})
     }
@@ -51,10 +62,9 @@ export default class CreateQuestion extends Component {
                 this.state.options.push({title : this.state.title4, correct  : this.state.correct4})
             }
             /*
-            createQuestion(this.state.title, this.state.description, this.state.options)
+            createQuestion(this.state.title, this.state.description, this.state.options, this.state.token)
                 .then((data) => {
                     console.log(data);
-                    //this.setState(data);
                 })
                 .catch((error) => {
                     this.setState( {error: error.message})

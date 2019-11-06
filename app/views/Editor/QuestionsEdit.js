@@ -9,6 +9,7 @@ import {
 import {Button, Text, ListItem} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {retrieveItem} from "../../services/AsyncStorage/retrieve";
 
 
 export default class QuestionsEdit extends Component {
@@ -16,6 +17,8 @@ export default class QuestionsEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            token: '',
+            error: '',
             data: [
                 {
                     id: 1,
@@ -52,18 +55,21 @@ export default class QuestionsEdit extends Component {
         }
     }
 
-    componentDidMount(){
-        /*
-        listQuestion()
-                .then((data) => {
-                    console.log(data);
-                    //this.setState(data);
-                })
-                .catch((error) => {
-                    this.setState( {error: error.message})
-                });
-                */
-    }
+    /*
+    componentDidMount() {
+        retrieveItem('token')
+            .then(data => {
+                this.setState({token: data})
+                listQuestion(this.state.token)
+                    .then((data) => {
+                        console.log(data);
+                        this.setState(data);
+                    })
+                    .catch((error) => {
+                        this.setState( {error: error.message})
+                    })
+            })
+    }*/
 
 
     render() {

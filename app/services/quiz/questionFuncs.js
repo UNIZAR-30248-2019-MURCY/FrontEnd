@@ -1,8 +1,9 @@
-export const createQuestion = (title, description, options) => {
-    const URL = `https://murcy.com/quiz/`;
+export const createQuestion = (title, description, options, token) => {
+    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/question`;
     return fetch(URL, {
         method: 'POST',
         headers: {
+            Authorization: 'Bearer ' + token,
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
@@ -12,143 +13,101 @@ export const createQuestion = (title, description, options) => {
             options: options
         }),
     })
-        .then((response) => {
-            if(response.statusText === "OK" && response.status >= 200 && response.status < 300) {
-                return response.json()
-            } else {
-                throw new Error("Server can't be reached!")
-            }
-        })
-        .then((json) => {
-            console.log("json!")
-            console.log(json)
-        })
-        .catch((error) => {
-            console.log(error)
-            console.log(error.message)
-            throw error;
-        });
+    .then(async (response) => {
+        if (response.status === 200) {
+            const responseJSON = await response.json();
+            console.log(responseJSON)
+            return responseJSON
+        } else {
+            throw new Error("Create question error")
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        console.log(error.message)
+        throw error;
+    });
 }
 
-export const editQuestion = (id, title, description, options) => {
-    const URL = `https://murcy.com/quiz/`;
+export const editQuestion = (id, title, description, options, token) => {
+    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/question/` + id;
     return fetch(URL, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
+            Authorization: 'Bearer ' + token,
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            id: id,
             title: title,
             description: description,
             options: options
         }),
     })
-        .then((response) => {
-            if(response.statusText === "OK" && response.status >= 200 && response.status < 300) {
-                return response.json()
-            } else {
-                throw new Error("Server can't be reached!")
-            }
-        })
-        .then((json) => {
-            console.log("json!")
-            console.log(json)
-        })
-        .catch((error) => {
-            console.log(error)
-            console.log(error.message)
-            throw error;
-        });
+    .then(async (response) => {
+        if (response.status === 200) {
+            const responseJSON = await response.json();
+            console.log(responseJSON)
+            return responseJSON
+        } else {
+            throw new Error("Edit question error")
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        console.log(error.message)
+        throw error;
+    });
 }
 
-export const deleteQuestion = (id) => {
-    const URL = `https://murcy.com/quiz/`;
+export const deleteQuestion = (id, token) => {
+    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/question/` + id;
     return fetch(URL, {
-        method: 'POST',
+        method: 'DELETE',
         headers: {
+            Authorization: 'Bearer ' + token,
             Accept: 'application/json',
             'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            id: id
-        }),
+        }
     })
-        .then((response) => {
-            if(response.statusText === "OK" && response.status >= 200 && response.status < 300) {
-                return response.json()
-            } else {
-                throw new Error("Server can't be reached!")
-            }
-        })
-        .then((json) => {
-            console.log("json!")
-            console.log(json)
-        })
-        .catch((error) => {
-            console.log(error)
-            console.log(error.message)
-            throw error;
-        });
+    .then(async (response) => {
+        if (response.status === 200) {
+            const responseJSON = await response.json();
+            console.log(responseJSON)
+            return responseJSON
+        } else {
+            throw new Error("Delete question error")
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        console.log(error.message)
+        throw error;
+    });
 }
 
-export const listQuestions = () => {
-    const URL = `https://murcy.com/quiz/`;
+export const listQuestions = (id, token) => {
+    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/question/` + id;
     return fetch(URL, {
         method: 'GET',
         headers: {
+            Authorization: 'Bearer ' + token,
             Accept: 'application/json',
             'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            
-        }),
+        }
     })
-        .then((response) => {
-            if(response.statusText === "OK" && response.status >= 200 && response.status < 300) {
-                return response.json()
-            } else {
-                throw new Error("Server can't be reached!")
-            }
-        })
-        .then((json) => {
-            console.log("json!")
-            console.log(json)
-        })
-        .catch((error) => {
-            console.log(error)
-            console.log(error.message)
-            throw error;
-        });
-}
-
-export const infoQuestions = (id) => {
-    const URL = `https://murcy.com/quiz/`;
-    return fetch(URL, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            id: id
-        }),
+    .then(async (response) => {
+        if (response.status === 200) {
+            const responseJSON = await response.json();
+            console.log(responseJSON)
+            return responseJSON
+        } else {
+            throw new Error("List questions error")
+        }
     })
-        .then((response) => {
-            if(response.statusText === "OK" && response.status >= 200 && response.status < 300) {
-                return response.json()
-            } else {
-                throw new Error("Server can't be reached!")
-            }
-        })
-        .then((json) => {
-            console.log("json!")
-            console.log(json)
-        })
-        .catch((error) => {
-            console.log(error)
-            console.log(error.message)
-            throw error;
-        });
+    .catch((error) => {
+        console.log(error)
+        console.log(error.message)
+        throw error;
+    });
 }
