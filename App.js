@@ -6,6 +6,7 @@ import Welcome from './app/views/Welcome';
 import LogIn from './app/views/LogIn/LogIn';
 import SignUp from './app/views/SignUp/SignUp';
 import EmailConfirm from './app/views/SignUp/EmailConfirm';
+import EmailVerif from './app/views/SignUp/EmailVerif';
 import TermsConditions from './app/views/SignUp/TermsCond';
 import CreateQuestion from './app/views/Editor/CreateQuestion';
 import QuizzesScreen from "./app/views/Player/QuizzesScreen";
@@ -20,10 +21,11 @@ import RequestList from "./app/views/Reviewer/RequestList";
 import RequestDetails from "./app/views/Reviewer/RequestDetails";
 import SettingsReviewer from "./app/views/Reviewer/SettingsReviewer";
 import EditRemoveQuestion from "./app/views/Editor/EditRemoveQuestion";
-
-
+import { Linking } from "expo";
 
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
+
+const URL = 'https://murcy.netlify.com/';
 
 /*
   Player
@@ -238,6 +240,10 @@ const RootStack = createStackNavigator(
         Reviewer: reviewerNavigator,
         CreateQuestion: CreateQuestion,
         EditRemoveQuestion: EditRemoveQuestion,
+        EmailVerif: {
+            screen: EmailVerif,
+            path: URL+'check',
+        },
     },
     {
       initialRouteName: 'Welcome',
@@ -250,12 +256,13 @@ const RootStack = createStackNavigator(
 
 const AppContainer = createAppContainer(RootStack);
 
+const uriPrefix = Linking.makeUrl("/");
 
 class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <AppContainer />
+        <AppContainer uriPrefix={uriPrefix}/>
       </View>
     );
   }

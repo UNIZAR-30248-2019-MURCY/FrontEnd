@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {logInUser, } from "../../services/user/userFuncs";
+import {logInUser, userInfo} from "../../services/user/userFuncs";
 import {saveData} from "../../services/AsyncStorage/save";
 import {NavigationActions, StackActions} from "react-navigation";
 
@@ -21,7 +21,8 @@ export default class LogIn extends Component {
             username: '',
             password: '',
             token: '',
-            error: false
+            error: false,
+            userData: ''
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,21 +35,29 @@ export default class LogIn extends Component {
     handleSubmit() {
         const toApp = StackActions.reset({
             index: 0,
-            actions: [NavigationActions.navigate({ routeName: 'Player' })],
+            actions: [NavigationActions.navigate({routeName: 'Player'})],
         });
 
-        if(this.state.username !== '' && this.state.password !== ''){
+        if (this.state.username !== '' && this.state.password !== '') {
             logInUser(this.state.username, this.state.password)
                 .then((data) => {
-                    saveData('token',data).then(r =>
-                        this.props.navigation.dispatch(toApp)
+                    saveData('token', data).then(r =>
+                        userInfo(data.token).then((dataUser) => {
+                                saveData('role', dataUser.role).then(r =>
+                                    console.log(dataUser.role),
+                                    this.props.navigation.dispatch(toApp)
+                                )
+                            }
+                        )
+                        .catch((error) => {
+                            this.setState({error: error.message})
+                        })
                     );
                 })
                 .catch((error) => {
-                    this.setState( {error: error.message})
+                    this.setState({error: error.message})
                 });
-        }
-        else{
+        } else {
             this.setState({error: 'Introduzca todos los campos'})
         }
     }
@@ -56,7 +65,7 @@ export default class LogIn extends Component {
     render() {
         let showErr = (
             this.state.error ?
-                <View style={styles.error}  className='errorShow'>
+                <View style={styles.error} className='errorShow'>
                     <Text style={{color: 'red'}}>
                         {this.state.error}
                     </Text>
@@ -65,7 +74,7 @@ export default class LogIn extends Component {
         );
 
         return (
-            <View style={styles.container} >
+            <View style={styles.container}>
                 <View style={styles.cross}>
                     <Button
                         className='close-button'
@@ -85,48 +94,48 @@ export default class LogIn extends Component {
                 </View>
 
                 <View style={styles.login}>
-                <Image
-                    style={styles.logo}
-                    source={require('../../assets/images/murcy.png')}
-                />
-                <TextInput
-                    className='userInput'
-                    style={styles.input}
-                    placeholder='Username'
-                    autoCapitalize="none"
-                    placeholderTextColor='darkgrey'
-                    onChangeText={val => this.onChangeText('username', val)}
-                />
-                <TextInput
-                    className='passInput'
-                    style={styles.input}
-                    placeholder='Password'
-                    secureTextEntry={true}
-                    autoCapitalize="none"
-                    placeholderTextColor='darkgrey'
-                    onChangeText={val => this.onChangeText('password', val)}
-                />
+                    <Image
+                        style={styles.logo}
+                        source={require('../../assets/images/murcy.png')}
+                    />
+                    <TextInput
+                        className='userInput'
+                        style={styles.input}
+                        placeholder='Username'
+                        autoCapitalize="none"
+                        placeholderTextColor='darkgrey'
+                        onChangeText={val => this.onChangeText('username', val)}
+                    />
+                    <TextInput
+                        className='passInput'
+                        style={styles.input}
+                        placeholder='Password'
+                        secureTextEntry={true}
+                        autoCapitalize="none"
+                        placeholderTextColor='darkgrey'
+                        onChangeText={val => this.onChangeText('password', val)}
+                    />
 
-                {showErr}
+                    {showErr}
 
-                <Button
-                    className='login-button'
-                    buttonStyle={styles.button}
-                    title="Log In"
-                    onPress={() => {
-                        this.handleSubmit()
-                    }}/>
+                    <Button
+                        className='login-button'
+                        buttonStyle={styles.button}
+                        title="Log In"
+                        onPress={() => {
+                            this.handleSubmit()
+                        }}/>
 
-                <Button
-                    className='signup-button'
-                    type="clear"
-                    buttonStyle={styles.button2}
-                    title="Sign Up"
-                    titleStyle={{color: 'grey'}}
-                    onPress={() => {
-                        this.props.navigation.replace('SignUp');
-                    }
-                    }/>
+                    <Button
+                        className='signup-button'
+                        type="clear"
+                        buttonStyle={styles.button2}
+                        title="Sign Up"
+                        titleStyle={{color: 'grey'}}
+                        onPress={() => {
+                            this.props.navigation.replace('SignUp');
+                        }
+                        }/>
 
                 </View>
             </View>

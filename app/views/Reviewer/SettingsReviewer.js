@@ -7,12 +7,17 @@ import {
 import {Button, colors, Text} from 'react-native-elements';
 import {NavigationActions, StackActions} from "react-navigation";
 import {removeItem} from "../../services/AsyncStorage/remove";
+import {retrieveItem} from "../../services/AsyncStorage/retrieve";
 
 export default class SettingsReviewer extends Component {
 
     constructor(props) {
         super(props);
         this.signOff = this.signOff.bind(this);
+        this.state = {
+            editor: false,
+            player: false
+        }
     }
 
     signOff() {
@@ -28,7 +33,57 @@ export default class SettingsReviewer extends Component {
             });
     }
 
+    componentDidMount() {
+        retrieveItem('role')
+            .then(data => {
+                console.log(data)
+                if(data.includes("USER")){
+                    this.setState({player: true})
+                }
+                if(data.includes("EDITOR")){
+                    this.setState({editor: true})
+                }
+            })
+    }
+
     render() {
+
+        let player = (
+            this.state.player ?
+                <Button
+                    className='player-button'
+                    type="clear"
+                    buttonStyle={styles.button}
+                    title="Player Mode"
+                    titleStyle={styles.buttonText}
+                    onPress={() => {
+                        const toEditor = StackActions.reset({
+                            index: 0,
+                            actions: [NavigationActions.navigate({routeName: 'Player'})],
+                        });
+                        this.props.navigation.dispatch(toEditor);
+                    }}/> :
+                <View></View>
+        );
+
+        let editor = (
+            this.state.editor ?
+                <Button
+                    className='editor-button'
+                    type="clear"
+                    buttonStyle={styles.button}
+                    title="Editor Mode"
+                    titleStyle={styles.buttonText}
+                    onPress={() => {
+                        const toEditor = StackActions.reset({
+                            index: 0,
+                            actions: [NavigationActions.navigate({routeName: 'Editor'})],
+                        });
+                        this.props.navigation.dispatch(toEditor);
+                    }}/> :
+                <View></View>
+        );
+
         return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
@@ -36,19 +91,8 @@ export default class SettingsReviewer extends Component {
                 </View>
 
                 <View style={styles.containerSettings}>
-                    <Button
-                        className='player-button'
-                        type="clear"
-                        buttonStyle={styles.button}
-                        title="Player Mode"
-                        titleStyle={styles.buttonText}
-                        onPress={() => {
-                            const toPlayer = StackActions.reset({
-                                index: 0,
-                                actions: [NavigationActions.navigate({ routeName: 'Player' })],
-                            });
-                            this.props.navigation.dispatch(toPlayer);
-                        }}/>
+                    {player}
+                    {editor}
                 </View>
 
                 <View style={styles.buttonSO}>

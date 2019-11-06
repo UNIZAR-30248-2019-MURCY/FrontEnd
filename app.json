@@ -2,6 +2,7 @@
   "expo": {
     "name": "Murcy",
     "slug": "murcy",
+    "scheme": "murcy",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [

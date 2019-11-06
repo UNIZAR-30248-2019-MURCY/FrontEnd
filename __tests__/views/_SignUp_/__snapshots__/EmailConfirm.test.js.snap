@@ -117,7 +117,7 @@ exports[`<EmailConfirm /> EmailConfirm test against snapshot 1`] = `
         }
       }
     >
-      Consulte su bandeja de entrada para verificar su email
+      Check your inbox to verify your email
     </Text>
   </View>
 </View>
