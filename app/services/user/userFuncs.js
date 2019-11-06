@@ -99,9 +99,7 @@ export const requestEditor = (description, token) => {
     })
         .then(async (response) => {
             if (response.status === 201) {
-                const responseJSON = await response.json();
-                console.log(responseJSON)
-                return responseJSON
+                return response
             } else if (response.status === 409) {
                 console.log(response.status)
                 throw new Error("Currently, there is one request")
@@ -134,12 +132,7 @@ export const editRequestEditor = (description, token) => {
     })
         .then(async (response) => {
             if (response.status === 201) {
-                const responseJSON = await response.json();
-                console.log(responseJSON)
-                return responseJSON
-            } else if (response.status === 409) {
-                console.log(response.status)
-                throw new Error("Currently, there is one request")
+                return response
             } else {
                 console.log(response.status)
                 throw new Error("Request Not authorized")

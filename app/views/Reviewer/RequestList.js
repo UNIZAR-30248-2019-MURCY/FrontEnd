@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {AsyncStorage, FlatList, StyleSheet, TextInput, View,} from 'react-native'
+import {ActivityIndicator, AsyncStorage, FlatList, StyleSheet, TextInput, View,} from 'react-native'
 import {Button, ListItem, Text} from 'react-native-elements';
-import {getRequestEdit, requestEdit} from "../../services/user/userFuncs";
 import {reviewerReqList} from "../../services/user/reviewerFuncs";
 import {retrieveItem} from "../../services/AsyncStorage/retrieve";
 
@@ -14,34 +13,43 @@ export default class RequestList extends Component {
             token: '',
             requests: false,
             errorGettingReq: false,
-            notShow: true
+            loading: false
         }
     }
 
     componentDidMount() {
+        this.setState({loading: true})
         retrieveItem('token')
             .then(data => {
                 this.setState({token: JSON.parse(data).token})
                 reviewerReqList(this.state.token)
                     .then((data) => {
                         this.setState({requests: data})
-                        this.setState({notShow: false})
                         console.log(this.state.requests)
+                        this.setState({loading: false})
                     })
                     .catch((error) => {
                         this.setState({errorGettingReq: error.message})
+                        this.setState({loading: false})
                     })
             })
     }
 
     render() {
+        let showLoading = (
+            <View style={ styles.horizontal}>
+                <ActivityIndicator animating={this.state.loading} size="large" color="grey" />
+            </View>
+        );
+
         let showReq = (
-            this.state.notShow || this.state.errorGettingReq ?
+            this.state.errorGettingReq ?
                 <View style={styles.error} className='errorGettingReq'>
                     <Text style={{color: 'red'}}>
                         {this.state.errorGettingReq}
                     </Text>
                 </View> :
+                !this.state.loading ?
                     <View style={styles.containerRequestExist} className='reqList'>
                         <FlatList
                             className='flatList'
@@ -68,8 +76,8 @@ export default class RequestList extends Component {
                             )}
                         />
                     </View>
+                    : showLoading
         );
-
         return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
@@ -86,6 +94,12 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20
         //justifyContent: 'center',
+    },
+    horizontal: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10,
+        marginTop: 50,
     },
     containerTitle: {
         alignItems: 'center',

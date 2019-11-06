@@ -41,13 +41,14 @@ export default class RequestDetails extends Component {
                             buttonStyle={styles.button}
                             title="Accept"
                             onPress={() => {
-                                console.log(this.state.workflow)
+                                this.props.navigation.goBack();
                             }}/>
 
                         <Button
-                            buttonStyle={styles.button}
+                            buttonStyle={styles.buttonDen}
                             title="Deny"
                             onPress={() => {
+                                this.props.navigation.goBack();
                             }}/>
                     </View>
                 </View>
@@ -69,7 +70,7 @@ const styles = StyleSheet.create({
     },
     containerRequest: {
         flex: 1,
-        alignItems: 'flex-start',
+        alignItems: 'center',
         padding: 25
     },
     containerRequestDetails: {
@@ -85,6 +86,14 @@ const styles = StyleSheet.create({
         marginTop: 20,
         margin: 10,
         backgroundColor: 'grey',
+        borderRadius: 14
+    },
+    buttonDen: {
+        width: 150,
+        height: 55,
+        marginTop: 20,
+        margin: 10,
+        backgroundColor: 'red',
         borderRadius: 14
     },
     button2: {

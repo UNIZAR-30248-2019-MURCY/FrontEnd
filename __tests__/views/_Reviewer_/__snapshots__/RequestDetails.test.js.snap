@@ -68,7 +68,7 @@ exports[`<RequestDetails /> RequestDetails test against snapshot 1`] = `
   <View
     style={
       Object {
-        "alignItems": "flex-start",
+        "alignItems": "center",
         "flex": 1,
         "padding": 25,
       }
@@ -263,7 +263,7 @@ exports[`<RequestDetails /> RequestDetails test against snapshot 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": "grey",
+                "backgroundColor": "red",
                 "borderColor": "#2089dc",
                 "borderRadius": 14,
                 "borderWidth": 0,

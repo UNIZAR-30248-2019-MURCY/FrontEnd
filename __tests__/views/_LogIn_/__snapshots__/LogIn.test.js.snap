@@ -237,5 +237,6 @@ exports[`<LogIn /> LogIn test against snapshot 1`] = `
       </View>
     </View>
   </View>
+  <View />
 </View>
 `;

@@ -5,7 +5,7 @@ import {
     StyleSheet,
     Image,
     Text,
-    ScrollView
+    ScrollView, ActivityIndicator
 } from 'react-native'
 import {Button, CheckBox} from 'react-native-elements';
 import {signUpUser} from '../../services/user/userFuncs';
@@ -22,7 +22,8 @@ export default class SignUp extends Component {
             email: '',
             fullName: '',
             checked: false,
-            error: false
+            error: false,
+            loading: false
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,12 +38,16 @@ export default class SignUp extends Component {
         if (this.state.username !== '' && this.state.password !== '' && this.state.email !== '' && this.state.fullName !== '') {
             if (this.state.checked) {
                 if (this.state.password === this.state.password2) {
+                    this.setState({loading: true})
+                    this.setState({error: false})
                     signUpUser(this.state.username, this.state.password, this.state.email, this.state.fullName)
                         .then((data) => {
+                            this.setState({loading: false}),
                             this.props.navigation.replace('EmailConfirm');
                         })
                         .catch((error) => {
-                            this.setState({error: error.message})
+                            this.setState({error: error.message}),
+                            this.setState({loading: false})
                         })
                 } else {
                     this.setState({error: 'Passwords must be the same '})
@@ -63,6 +68,13 @@ export default class SignUp extends Component {
                         {this.state.error}
                     </Text>
                 </View> :
+                <View></View>
+        );
+        let showLoading = (
+            this.state.loading ?
+                <View style={[styles.containerLoading, styles.horizontal]}>
+                    <ActivityIndicator animating={this.state.loading} size="large" color="grey" />
+                </View>:
                 <View></View>
         );
 
@@ -149,7 +161,7 @@ export default class SignUp extends Component {
                         />
 
                         {showErr}
-
+                        {showLoading}
                         <Button
                             className='signup-button'
                             buttonStyle={styles.button}
@@ -170,6 +182,7 @@ export default class SignUp extends Component {
                             }
                             }/>
                     </View>
+
                 </ScrollView>
             </View>
         )
@@ -181,6 +194,15 @@ const
         container: {
             flex: 1,
             //justifyContent: 'center',
+        },
+        containerLoading: {
+            flex: 1,
+            justifyContent: 'center'
+        },
+        horizontal: {
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            padding: 10
         },
         cross: {
             marginTop: 50,

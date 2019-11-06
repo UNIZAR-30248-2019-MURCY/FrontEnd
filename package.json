@@ -25,7 +25,8 @@
       "!**/node_modules/**",
       "!**/babel.config.js",
       "!**/jest.setup.js",
-      "!**/App.js"
+      "!**/App.js",
+      "!**/register-service-worker.js"
     ]
   },
   "dependencies": {

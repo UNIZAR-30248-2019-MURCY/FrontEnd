@@ -249,6 +249,7 @@ exports[`<SignUp /> SignUp test against snapshot 1`] = `
           </View>
         </View>
         <View />
+        <View />
         <View
           style={
             Object {

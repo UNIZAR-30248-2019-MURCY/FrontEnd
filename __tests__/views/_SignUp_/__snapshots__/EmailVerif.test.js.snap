@@ -1,27 +1,82 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<Request /> Request test against snapshot 1`] = `
+exports[`<EmailVerif /> EmailVerif test against snapshot 1`] = `
 <View
   style={
     Object {
       "flex": 1,
-      "padding": 20,
     }
   }
 >
   <View
     style={
       Object {
-        "alignItems": "center",
+        "alignItems": "flex-end",
+        "marginBottom": 40,
+        "marginRight": 10,
         "marginTop": 50,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "borderRadius": 3,
+        }
+      }
+    >
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#2089dc",
+              "borderRadius": 3,
+              "borderWidth": 0,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 8,
+            }
+          }
+        >
+          <Text />
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "marginTop": 100,
         "padding": 20,
       }
     }
   >
+    <Text />
     <Text
       style={
         Object {
-          "fontSize": 42.5,
+          "color": "grey",
+          "fontSize": 19,
+          "marginTop": 20,
+          "textAlign": "center",
         }
       }
       theme={
@@ -62,25 +117,8 @@ exports[`<Request /> Request test against snapshot 1`] = `
         }
       }
     >
-      Request
+      Your email has been successfully verified
     </Text>
-  </View>
-  <View
-    style={
-      Object {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-        "marginTop": 50,
-        "padding": 10,
-      }
-    }
-  >
-    <ActivityIndicator
-      animating={true}
-      color="grey"
-      hidesWhenStopped={true}
-      size="large"
-    />
   </View>
 </View>
 `;

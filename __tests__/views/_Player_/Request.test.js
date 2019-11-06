@@ -19,7 +19,8 @@ describe('<Request />', () => {
     it('handleSubmit', async () => {
         await retrieveItem();
         let wrapper = shallow(<Request/>);
-        wrapper.setState({ notShow: false });
+        wrapper.setState({ errorGettingReq: false });
+        wrapper.setState({ loading: false });
         wrapper.setState({ request: false });
         wrapper.instance().handleSubmit = jest.fn();
         wrapper.update();
@@ -30,7 +31,8 @@ describe('<Request />', () => {
         await retrieveItem();
         const navigationMock = { goBack: jest.fn() };
         const wrapper = shallow(<Request navigation={navigationMock} />);
-        wrapper.setState({ notShow: false });
+        wrapper.setState({ errorGettingReq: false });
+        wrapper.setState({ loading: false });
         wrapper.setState({ request: false });
         wrapper.find('.cancel-button').simulate('press');
         expect(navigationMock.goBack.mock.calls.length).toEqual(1);
@@ -40,7 +42,8 @@ describe('<Request />', () => {
         let wrapper = shallow(<Request/>);
         wrapper.instance().onChangeText = jest.fn();
         let event = 'This is just for test description';
-        wrapper.setState({ notShow: false });
+        wrapper.setState({ errorGettingReq: false });
+        wrapper.setState({ loading: false });
         wrapper.setState({ request: false });
         wrapper.find('.descriptionInput').simulate('changeText', event)
         expect(wrapper.instance().onChangeText).toBeCalledWith('description','This is just for test description');
@@ -48,7 +51,8 @@ describe('<Request />', () => {
     it('should render the Error component if state.errorForm is true', async() => {
         await retrieveItem();
         let wrapper = shallow(<Request />);
-        wrapper.setState({ notShow: false });
+        wrapper.setState({ errorGettingReq: false });
+        wrapper.setState({ loading: false });
         wrapper.setState({ request: false });
         wrapper.setState({ errorForm: true });
         expect(wrapper.find('.errorShow').length).toBe(1);
@@ -56,7 +60,8 @@ describe('<Request />', () => {
     it('should  render the request if state.request is true', async() => {
         await retrieveItem();
         let wrapper = shallow(<Request />);
-        wrapper.setState({ notShow: false });
+        wrapper.setState({ errorGettingReq: false });
+        wrapper.setState({ loading: false });
         wrapper.setState({ request: true });
         expect(wrapper.find('.requestShow').length).toBe(1);
     });
