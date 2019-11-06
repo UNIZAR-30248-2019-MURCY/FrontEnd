@@ -86,6 +86,7 @@ export default class CreateQuestion extends Component {
                     <Text h2>New Question</Text>
                 </View>
                 <View style={styles.containerCreate}>
+                    <Text style={styles.subTitle}>Question and description</Text>
                     <TextInput
                         className='questionInput'
                         style={styles.input}
@@ -102,8 +103,8 @@ export default class CreateQuestion extends Component {
                         placeholderTextColor='darkgrey'
                         onChangeText={val => this.onChangeText('description', val)}
                     />
-                    <Text>--------------------------</Text>
-                    <Text>Fill in at least 2 answers</Text> 
+                    <Text style={styles.subTitle2}>Answers</Text>
+                    <Text style={styles.subTitle3}>Fill in at least 2 answers</Text>
                     <View>
                         <TextInput
                             className='title1'
@@ -113,7 +114,7 @@ export default class CreateQuestion extends Component {
                             onChangeText={val => this.onChangeText('title1', val)}
                         />
                         <CheckBox value="1"
-                        className='correct1' 
+                        className='correct1'
                         title='Mark as correct'
                         containerStyle={styles.checkBoxC}
                         checked={this.state.correct1}
@@ -127,8 +128,8 @@ export default class CreateQuestion extends Component {
                             placeholderTextColor='darkgrey'
                             onChangeText={val => this.onChangeText('title2', val)}
                         />
-                        <CheckBox value="2" 
-                        className='correct2' 
+                        <CheckBox value="2"
+                        className='correct2'
                         title='Mark as correct'
                         containerStyle={styles.checkBoxC}
                         checked={this.state.correct2}
@@ -143,7 +144,7 @@ export default class CreateQuestion extends Component {
                             onChangeText={val => this.onChangeText('title3', val)}
                         />
                         <CheckBox value="3"
-                        className='correct3' 
+                        className='correct3'
                         title='Mark as correct'
                         containerStyle={styles.checkBoxC}
                         checked={this.state.correct3}
@@ -157,8 +158,8 @@ export default class CreateQuestion extends Component {
                             placeholderTextColor='darkgrey'
                             onChangeText={val => this.onChangeText('title4', val)}
                         />
-                        <CheckBox value="4" 
-                        className='correct4' 
+                        <CheckBox value="4"
+                        className='correct4'
                         title='Mark as correct'
                         containerStyle={styles.checkBoxC}
                         checked={this.state.correct4}
@@ -203,12 +204,26 @@ const styles = StyleSheet.create({
     containerCreate: {
         flex: 1,
         alignItems: 'center',
-        //justifyContent: 'center',
-        marginTop: 10,
         padding: 20
     },
+    subTitle: {
+        flex: 1,
+        fontSize: 22,
+        color: 'grey',
+    },
+    subTitle2: {
+        flex: 1,
+        fontSize: 22,
+        color: 'grey',
+        marginTop: 30,
+    },
+    subTitle3: {
+        flex: 1,
+        fontSize: 17,
+        color: 'grey',
+    },
     checkBoxC: {
-        backgroundColor: "white", 
+        backgroundColor: "white",
         borderColor: "white"
     },
     logo: {
@@ -232,7 +247,7 @@ const styles = StyleSheet.create({
     button: {
         width: 150,
         height: 55,
-        marginTop: 20,
+        marginTop: 45,
         margin: 10,
         backgroundColor: 'grey',
         borderRadius: 14

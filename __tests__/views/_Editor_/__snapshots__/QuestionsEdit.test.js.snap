@@ -99,15 +99,19 @@ exports[`<CreateQuestion /> QuestionsEdit test against snapshot 1`] = `
                 "id": 2,
                 "options": Array [
                   Object {
+                    "correct": false,
+                    "title": "Huesca",
+                  },
+                  Object {
                     "correct": true,
-                    "title": "Madrid",
+                    "title": "Zgz",
                   },
                   Object {
                     "correct": false,
-                    "title": "Zgz",
+                    "title": "Teruel",
                   },
                 ],
-                "title": "¿Cual edddds la capital de España?",
+                "title": "¿Cual es la capital de Aragón?",
               },
             ]
           }
@@ -307,7 +311,7 @@ exports[`<CreateQuestion /> QuestionsEdit test against snapshot 1`] = `
                         }
                       }
                     >
-                      ¿Cual edddds la capital de España?
+                      ¿Cual es la capital de Aragón?
                     </Text>
                   </View>
                   <View

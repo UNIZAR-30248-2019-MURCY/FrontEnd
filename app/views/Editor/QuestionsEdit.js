@@ -30,20 +30,24 @@ export default class QuestionsEdit extends Component {
                             title: 'Zgz',
                             correct: false
                         },
-                        
+
                     ]
                 },
                 {
                     id: 2,
-                    title: '¿Cual edddds la capital de España?',
+                    title: '¿Cual es la capital de Aragón?',
                     description: 'Hey q pasa',
                     options: [
                         {
-                            title: 'Madrid',
-                            correct: true
+                            title: 'Huesca',
+                            correct: false
                         },
                         {
                             title: 'Zgz',
+                            correct: true
+                        },
+                        {
+                            title: 'Teruel',
                             correct: false
                         },
                     ]

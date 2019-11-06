@@ -12,7 +12,6 @@ import {Button, Text, CheckBox, ListItem} from 'react-native-elements';
 import {editQuestion, deleteQuestion, infoQuestion} from "../../services/quiz/questionFuncs";
 
 
-
 export default class EditRemoveQuestion extends Component {
 
     constructor(props) {
@@ -24,7 +23,7 @@ export default class EditRemoveQuestion extends Component {
         this.onChangeText = this.onChangeText.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
 
         /*
         infoQuestion(this.state.id)
@@ -52,7 +51,7 @@ export default class EditRemoveQuestion extends Component {
                 this.setState( {error: error.message})
             });
             */
-            this.props.navigation.goBack();
+        this.props.navigation.goBack();
     }
 
     deleteQuestion() {
@@ -65,7 +64,7 @@ export default class EditRemoveQuestion extends Component {
                 this.setState( {error: error.message})
             });
             */
-            this.props.navigation.goBack();
+        this.props.navigation.goBack();
     }
 
     render() {
@@ -82,118 +81,77 @@ export default class EditRemoveQuestion extends Component {
 
         return (
             <ScrollView>
-            <View style={styles.container}>
-                <View style={styles.containerTitle}>
-                    <Text h2>Question</Text>
-                </View>
-                <View style={styles.containerCreate}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Question'
-                        autoCapitalize="none"
-                        placeholderTextColor='darkgrey'
-                        value={this.state.data.title}
-                        onChangeText={val => this.onChangeText('data.title', val)}
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder='Description'
-                        autoCapitalize="none"
-                        placeholderTextColor='darkgrey'
-                        value={this.state.data.description}
-                        onChangeText={val => this.onChangeText('data.description', val)}
-                    />
-                    <Text>--------------------------</Text>
-                    <Text>Fill in at least 2 answers</Text> 
+                <View style={styles.container}>
+                    <View style={styles.containerTitle}>
+                        <Text h2>Question</Text>
+                    </View>
+                    <View style={styles.containerCreate}>
+                        <Text style={styles.subTitle}>Question and description</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Question'
+                            autoCapitalize="none"
+                            placeholderTextColor='darkgrey'
+                            value={this.state.data.title}
+                            onChangeText={val => this.onChangeText('data.title', val)}
+                        />
+                        <TextInput
+                            style={styles.input}
+                            placeholder='Description'
+                            autoCapitalize="none"
+                            placeholderTextColor='darkgrey'
+                            value={this.state.data.description}
+                            onChangeText={val => this.onChangeText('data.description', val)}
+                        />
+
+                        <Text style={styles.subTitle2}>Answers</Text>
+                        <Text style={styles.subTitle3}>Fill in at least 2 answers</Text>
 
                         <FlatList
                             data={this.state.data.options}
                             keyExtractor={item => item.title}
                             renderItem={({item}) => (
-                                <ListItem
-                                    title={item.title}
-                                    bottomDivider
-                                />
+                                <View>
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder={item.title}
+                                        placeholderTextColor='darkgrey'
+                                        onChangeText={val => this.onChangeText('title1', val)}
+                                    />
+                                    <CheckBox value="1"
+                                              title='Mark as correct'
+                                              containerStyle={styles.checkBoxC}
+                                              checked={item.correct}
+                                              onPress={() => this.setState({correct1: !this.state.correct1})}/>
+                                </View>
                             )}
                         />
 
-                    <View>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Answer 1'
-                            placeholderTextColor='darkgrey'
-                            onChangeText={val => this.onChangeText('title1', val)}
-                        />
-                        <CheckBox value="1"
-                        title='Mark as correct'
-                        containerStyle={styles.checkBoxC}
-                        checked={this.state.correct1}
-                        onPress={() => this.setState({correct1: !this.state.correct1})} />
-                        </View>
-                        <View>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Answer 2'
-                            placeholderTextColor='darkgrey'
-                            onChangeText={val => this.onChangeText('title2', val)}
-                        />
-                        <CheckBox value="2" 
-                        title='Mark as correct'
-                        containerStyle={styles.checkBoxC}
-                        checked={this.state.correct2}
-                        onPress={() => this.setState({correct2: !this.state.correct2})} />
-                        </View>
-                        <View>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Answer 3'
-                            placeholderTextColor='darkgrey'
-                            onChangeText={val => this.onChangeText('title3', val)}
-                        />
-                        <CheckBox value="3" 
-                        title='Mark as correct'
-                        containerStyle={styles.checkBoxC}
-                        checked={this.state.correct3}
-                        onPress={() => this.setState({correct3: !this.state.correct3})} />
-                        </View>
-                        <View>
-                        <TextInput
-                            style={styles.input}
-                            placeholder='Answer 4'
-                            placeholderTextColor='darkgrey'
-                            onChangeText={val => this.onChangeText('title4', val)}
-                        />
-                        <CheckBox value="4" 
-                        title='Mark as correct'
-                        containerStyle={styles.checkBoxC}
-                        checked={this.state.correct4}
-                        onPress={() => this.setState({correct4: !this.state.correct4})} />
+                        {showErr}
+                        <Button
+                            buttonStyle={styles.button}
+                            title="Edit"
+                            onPress={() => {
+                                this.editQuestion()
+                            }}/>
+                        <Button
+                            buttonStyle={styles.button1}
+                            title="Delete"
+                            onPress={() => {
+                                this.deleteQuestion()
+                            }}/>
+                        <Button
+                            className='login-button'
+                            type="clear"
+                            buttonStyle={styles.button2}
+                            title="Return"
+                            titleStyle={{color: 'grey'}}
+                            onPress={() => {
+                                this.props.navigation.goBack();
+                            }
+                            }/>
                     </View>
-                    {showErr}
-                    <Button
-                    buttonStyle={styles.button}
-                    title="Edit"
-                    onPress={() => {
-                        this.editQuestion()
-                    }}/>
-                    <Button
-                    buttonStyle={styles.button1}
-                    title="Delete"
-                    onPress={() => {
-                        this.deleteQuestion()
-                    }}/>
-                    <Button
-                        className='login-button'
-                        type="clear"
-                        buttonStyle={styles.button2}
-                        title="Return"
-                        titleStyle={{color: 'grey'}}
-                        onPress={() => {
-                            this.props.navigation.goBack();
-                        }
-                        }/>
                 </View>
-            </View>
             </ScrollView>
         )
     }
@@ -202,19 +160,39 @@ export default class EditRemoveQuestion extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         //justifyContent: 'center',
         padding: 20
     },
     containerTitle: {
+        flex: 1,
+        alignItems: 'center',
         marginTop: 50,
         padding: 20
+    },
+    subTitle: {
+        flex: 1,
+        fontSize: 22,
+        color: 'grey',
+    },
+    subTitle2: {
+        flex: 1,
+        fontSize: 22,
+        color: 'grey',
+        marginTop: 30,
+    },
+    subTitle3: {
+        flex: 1,
+        fontSize: 17,
+        color: 'grey',
+    },
+    checkBoxC: {
+        backgroundColor: "white",
+        borderColor: "white"
     },
     containerCreate: {
         flex: 1,
         alignItems: 'center',
         //justifyContent: 'center',
-        marginTop: 10,
         padding: 20
     },
     logo: {
@@ -238,7 +216,7 @@ const styles = StyleSheet.create({
     button: {
         width: 150,
         height: 55,
-        marginTop: 20,
+        marginTop: 50,
         margin: 10,
         backgroundColor: 'grey',
         borderRadius: 14
