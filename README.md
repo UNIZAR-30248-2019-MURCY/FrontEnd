@@ -99,11 +99,11 @@ cache:
 before_script:
   - npm install -g npm@latest
 script:
-  - npm ci
+  - yarn install
   - npx jest --ci
 ```
 
-## Continuous Delivery (CD)
+## Continuous Deployment (CD)
 
 ### Deploy to Expo
 
