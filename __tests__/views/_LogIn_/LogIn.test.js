@@ -20,10 +20,10 @@ describe('<LogIn />', () => {
         expect(navigationMock.replace.mock.calls[0]).toEqual(['SignUp']);
     })
     it('should navigate to Welcome', () => {
-        const navigationMock = { goBack: jest.fn() };
+        const navigationMock = { navigate: jest.fn() };
         const wrapper = shallow(<LogIn navigation={navigationMock} />);
         wrapper.find('.close-button').simulate('press');
-        expect(navigationMock.goBack.mock.calls.length).toEqual(1);
+        expect(navigationMock.navigate.mock.calls[0]).toEqual(['AuthLoading']);
     })
     it('handleSubmit', () => {
         let wrapper = shallow(<LogIn/>);

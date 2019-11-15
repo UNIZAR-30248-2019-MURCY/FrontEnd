@@ -26,7 +26,8 @@ describe('<RequestList />', () => {
     it('should render the List if state.notShow is false', async () => {
         await retrieveItem();
         let wrapper = shallow(<RequestList/>);
-        wrapper.setState({notShow: false});
+        wrapper.setState({ errorGettingReq: false });
+        wrapper.setState({ loading: false });
         expect(wrapper.find('.reqList').length).toBe(1);
     });
 });

@@ -12,7 +12,6 @@ import {retrieveItem} from "../../services/AsyncStorage/retrieve";
 import {editQuestion, deleteQuestion, infoQuestion} from "../../services/quiz/questionFuncs";
 
 
-
 export default class EditRemoveQuestion extends Component {
 
     constructor(props) {
@@ -101,7 +100,7 @@ export default class EditRemoveQuestion extends Component {
                 this.setState( {error: error.message})
             });
             */
-            this.props.navigation.goBack();
+        this.props.navigation.goBack();
     }
 
     render() {
@@ -233,7 +232,7 @@ export default class EditRemoveQuestion extends Component {
                         }
                         }/>
                 </View>
-            </View>
+                </View>
             </ScrollView>
         )
     }
@@ -242,19 +241,39 @@ export default class EditRemoveQuestion extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         //justifyContent: 'center',
         padding: 20
     },
     containerTitle: {
+        flex: 1,
+        alignItems: 'center',
         marginTop: 50,
         padding: 20
+    },
+    subTitle: {
+        flex: 1,
+        fontSize: 22,
+        color: 'grey',
+    },
+    subTitle2: {
+        flex: 1,
+        fontSize: 22,
+        color: 'grey',
+        marginTop: 30,
+    },
+    subTitle3: {
+        flex: 1,
+        fontSize: 17,
+        color: 'grey',
+    },
+    checkBoxC: {
+        backgroundColor: "white",
+        borderColor: "white"
     },
     containerCreate: {
         flex: 1,
         alignItems: 'center',
         //justifyContent: 'center',
-        marginTop: 10,
         padding: 20
     },
     logo: {
@@ -278,7 +297,7 @@ const styles = StyleSheet.create({
     button: {
         width: 150,
         height: 55,
-        marginTop: 20,
+        marginTop: 50,
         margin: 10,
         backgroundColor: 'grey',
         borderRadius: 14

@@ -6,7 +6,7 @@ import {
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
 import {NavigationActions, StackActions} from 'react-navigation';
-import {removeItem} from "../../services/AsyncStorage/remove";
+import {removeAll, removeItem} from "../../services/AsyncStorage/remove";
 import {retrieveItem} from "../../services/AsyncStorage/retrieve";
 import {getRequestEdit} from "../../services/user/userFuncs";
 
@@ -22,14 +22,10 @@ export default class SettingsPlayer extends Component {
     }
 
     signOff() {
-        removeItem('token')
+        removeAll()
             .then((r) => {
                 if (r) {
-                    const toWelcome = StackActions.reset({
-                        index: 0,
-                        actions: [NavigationActions.navigate({routeName: 'Welcome'})],
-                    });
-                    this.props.navigation.dispatch(toWelcome);
+                    this.props.navigation.navigate('Auth');
                 }
             });
     }

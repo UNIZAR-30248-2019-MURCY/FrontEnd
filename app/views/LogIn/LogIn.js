@@ -5,6 +5,7 @@ import {
     StyleSheet,
     Image,
     Text,
+    ActivityIndicator
 } from 'react-native'
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -22,7 +23,8 @@ export default class LogIn extends Component {
             password: '',
             token: '',
             error: false,
-            userData: ''
+            userData: '',
+            loading: false
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,23 +41,28 @@ export default class LogIn extends Component {
         });
 
         if (this.state.username !== '' && this.state.password !== '') {
+            this.setState({loading: true})
+            this.setState({error: false})
             logInUser(this.state.username, this.state.password)
                 .then((data) => {
                     saveData('token', data).then(r =>
                         userInfo(data.token).then((dataUser) => {
                                 saveData('role', dataUser.role).then(r =>
-                                    console.log(dataUser.role),
-                                    this.props.navigation.dispatch(toApp)
+                                        console.log(dataUser.role),
+                                    this.setState({loading: false}),
+                                    this.props.navigation.navigate('App')
                                 )
                             }
                         )
-                        .catch((error) => {
-                            this.setState({error: error.message})
-                        })
+                            .catch((error) => {
+                                this.setState({error: error.message}),
+                                    this.setState({loading: false})
+                            })
                     );
                 })
                 .catch((error) => {
-                    this.setState({error: error.message})
+                    this.setState({error: error.message}),
+                        this.setState({loading: false})
                 });
         } else {
             this.setState({error: 'Introduzca todos los campos'})
@@ -72,8 +79,16 @@ export default class LogIn extends Component {
                 </View> :
                 <View></View>
         );
+        let showLoading = (
+            this.state.loading ?
+                <View style={[styles.containerLoading]}>
+                    <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
+                </View> :
+                <View></View>
+        );
 
         return (
+
             <View style={styles.container}>
                 <View style={styles.cross}>
                     <Button
@@ -87,7 +102,7 @@ export default class LogIn extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.navigation.goBack();
+                            this.props.navigation.navigate('AuthLoading')
                         }
                         }
                     />
@@ -115,9 +130,8 @@ export default class LogIn extends Component {
                         placeholderTextColor='darkgrey'
                         onChangeText={val => this.onChangeText('password', val)}
                     />
-
                     {showErr}
-
+                    {showLoading}
                     <Button
                         className='login-button'
                         buttonStyle={styles.button}
@@ -125,7 +139,6 @@ export default class LogIn extends Component {
                         onPress={() => {
                             this.handleSubmit()
                         }}/>
-
                     <Button
                         className='signup-button'
                         type="clear"
@@ -136,8 +149,8 @@ export default class LogIn extends Component {
                             this.props.navigation.replace('SignUp');
                         }
                         }/>
-
                 </View>
+
             </View>
         )
     }
@@ -146,7 +159,11 @@ export default class LogIn extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        //justifyContent: 'center',
+    },
+    containerLoading: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10
     },
     cross: {
         marginTop: 50,
@@ -155,9 +172,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
     },
     login: {
-        flex: 1,
         alignItems: 'center',
-        //justifyContent: 'center',
     },
     logo: {
         marginBottom: 30,

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {AsyncStorage, StyleSheet, TextInput, View,} from 'react-native'
+import {ActivityIndicator, AsyncStorage, StyleSheet, TextInput, View,} from 'react-native'
 import {Button, Text} from 'react-native-elements';
 import {getRequestEdit, requestEditor, editRequestEditor} from "../../services/user/userFuncs";
 import {retrieveItem} from "../../services/AsyncStorage/retrieve";
@@ -15,9 +15,9 @@ export default class Request extends Component {
             workflow: false,
             errorGettingReq: false,
             errorForm: false,
-            notShow: true,
             editing: false,
-            reRequest: false
+            reRequest: false,
+            loading: false
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -35,39 +35,49 @@ export default class Request extends Component {
     }
 
     componentDidMount() {
+        this.setState({loading: true})
         retrieveItem('token')
             .then(data => {
                 this.setState({token: JSON.parse(data).token})
                 getRequestEdit(this.state.token)
                     .then((request) => {
-                        this.setState({request: request})
-                        this.setState({workflow: request.workflow})
-                        this.setState({notShow: false})
-                        this.searchLastRequest()
+                        if(request)
+                        {
+                            this.setState({request: request})
+                            this.setState({workflow: request.workflow})
+                            this.searchLastRequest()
+                        }
+                        this.setState({loading: false})
                     })
                     .catch((error) => {
-                        this.setState({errorGettingReq: error.message})
+                        this.setState({errorGettingReq: error.message}),
+                            this.setState({loading: false})
                     })
             })
     }
 
     handleSubmit() {
+        this.setState({loading: true})
         if (this.state.description !== '') {
             if (!this.state.editing) {
                 requestEditor(this.state.description, this.state.token)
                     .then((data) => {
+                        this.setState({loading: false})
                         this.props.navigation.replace('RequestConfirm');
                     })
                     .catch((error) => {
-                        this.setState({errorForm: error.message})
+                        this.setState({errorForm: error.message}),
+                        this.setState({loading: false})
                     })
             } else {
                 editRequestEditor(this.state.description, this.state.token)
                     .then((data) => {
+                        this.setState({loading: false})
                         this.props.navigation.replace('RequestConfirm');
                     })
                     .catch((error) => {
-                        this.setState({errorForm: error.message})
+                        this.setState({errorForm: error.message}),
+                            this.setState({loading: false})
                     })
             }
         } else {
@@ -85,6 +95,12 @@ export default class Request extends Component {
                     </Text>
                 </View> :
                 <View></View>
+        );
+
+        let showLoading = (
+            <View style={ styles.horizontal}>
+                <ActivityIndicator animating={this.state.loading} size="large" color="grey" />
+            </View>
         );
 
         let reqNotExist = (
@@ -183,15 +199,17 @@ export default class Request extends Component {
         );
 
         let show = (
-            this.state.notShow || this.state.errorGettingReq ?
+            this.state.errorGettingReq ?
                 <View style={styles.error}>
                     <Text style={{color: 'red'}}>
                         {this.state.errorGettingReq}
                     </Text>
                 </View> :
-                this.state.request ?
+                !this.state.loading ?
+                    this.state.request ?
                     reqExist
-                    : reqNotExist
+                     :reqNotExist
+                : showLoading
         );
 
         return (
@@ -209,7 +227,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20
-        //justifyContent: 'center',
+    },
+    horizontal: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10,
+        marginTop: 50,
     },
     containerTitle: {
         alignItems: 'center',
@@ -223,7 +246,8 @@ const styles = StyleSheet.create({
     },
     containerRequestExist: {
         flex: 1,
-        padding: 30
+        padding: 30,
+        alignItems: 'center',
     },
     containerRequestExistContent: {
         alignItems: 'flex-start',
@@ -237,7 +261,6 @@ const styles = StyleSheet.create({
         marginRight: 10,
         alignItems: 'flex-end',
     },
-
     logo: {
         marginBottom: 30,
         padding: 8,

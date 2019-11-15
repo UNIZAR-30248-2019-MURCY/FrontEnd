@@ -10,3 +10,15 @@ export const removeItem = async (key) => {
         return false;
     }
 }
+
+export const removeAll= async () => {
+    try {
+        await AsyncStorage.clear();
+        console.log('all data removed');
+        return true;
+    } catch (error) {
+        console.log(error.message);
+        return false;
+    }
+}
+

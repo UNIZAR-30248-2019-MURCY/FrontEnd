@@ -72,11 +72,58 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
           Object {
             "alignItems": "center",
             "flex": 1,
-            "marginTop": 10,
             "padding": 20,
           }
         }
       >
+        <Text
+          style={
+            Object {
+              "color": "grey",
+              "flex": 1,
+              "fontSize": 22,
+            }
+          }
+          theme={
+            Object {
+              "colors": Object {
+                "disabled": "hsl(208, 8%, 90%)",
+                "divider": "#bcbbc1",
+                "error": "#ff190c",
+                "grey0": "#393e42",
+                "grey1": "#43484d",
+                "grey2": "#5e6977",
+                "grey3": "#86939e",
+                "grey4": "#bdc6cf",
+                "grey5": "#e1e8ee",
+                "greyOutline": "#bbb",
+                "platform": Object {
+                  "android": Object {
+                    "error": "#f44336",
+                    "primary": "#2196f3",
+                    "secondary": "#9C27B0",
+                    "success": "#4caf50",
+                    "warning": "#ffeb3b",
+                  },
+                  "ios": Object {
+                    "error": "#ff3b30",
+                    "primary": "#007aff",
+                    "secondary": "#5856d6",
+                    "success": "#4cd964",
+                    "warning": "#ffcc00",
+                  },
+                },
+                "primary": "#2089dc",
+                "searchBg": "#303337",
+                "secondary": "#8F0CE8",
+                "success": "#52c41a",
+                "warning": "#faad14",
+              },
+            }
+          }
+        >
+          Question and description
+        </Text>
         <TextInput
           allowFontScaling={true}
           autoCapitalize="none"
@@ -124,7 +171,14 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
           underlineColorAndroid="transparent"
         />
         <Text
-          style={Object {}}
+          style={
+            Object {
+              "color": "grey",
+              "flex": 1,
+              "fontSize": 22,
+              "marginTop": 30,
+            }
+          }
           theme={
             Object {
               "colors": Object {
@@ -163,10 +217,16 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
             }
           }
         >
-          --------------------------
+          Answers
         </Text>
         <Text
-          style={Object {}}
+          style={
+            Object {
+              "color": "grey",
+              "flex": 1,
+              "fontSize": 17,
+            }
+          }
           theme={
             Object {
               "colors": Object {
@@ -678,7 +738,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
                   "height": 55,
                   "justifyContent": "center",
                   "margin": 10,
-                  "marginTop": 20,
+                  "marginTop": 45,
                   "padding": 8,
                   "width": 150,
                 }
