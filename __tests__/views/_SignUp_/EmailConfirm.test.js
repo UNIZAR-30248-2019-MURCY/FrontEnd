@@ -13,9 +13,9 @@ describe('<EmailConfirm />', () => {
         expect(page).toMatchSnapshot();
     });
     it('should navigate to Welcome', () => {
-        const navigationMock = { goBack: jest.fn() };
+        const navigationMock = { navigate: jest.fn() };
         const wrapper = shallow(<EmailConfirm navigation={navigationMock} />);
         wrapper.find('.close-button').simulate('press');
-        expect(navigationMock.goBack.mock.calls.length).toEqual(1);
+        expect(navigationMock.navigate.mock.calls.length).toEqual(1);
     })
 });

@@ -26,8 +26,7 @@ import {Linking} from "expo";
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 import {retrieveItem} from "./app/services/AsyncStorage/retrieve";
 import {getRequestEdit} from "./app/services/user/userFuncs";
-
-const URL = 'https://murcy.netlify.com/';
+import WEB from './app/config/web';
 
 var HomePage = 'Welcome';
 /*
@@ -252,9 +251,6 @@ const AuthStack = createStackNavigator(
         SignUp: SignUp,
         EmailConfirm: EmailConfirm,
         TermsConditions: TermsConditions,
-        EmailVerif: {
-            screen: EmailVerif,
-            path: URL + 'check'}
     },
     {
         initialRouteName: 'LogIn',
@@ -272,6 +268,9 @@ const AppContainer = createAppContainer(
             AuthLoading: Welcome,
             App: AppStack,
             Auth: AuthStack,
+            EmailVerif: {
+                screen: EmailVerif,
+                path: WEB.URL + 'check'}
         },
         {
             initialRouteName: 'AuthLoading',
