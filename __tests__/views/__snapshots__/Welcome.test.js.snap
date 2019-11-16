@@ -15,7 +15,7 @@ exports[`<Welcome /> Welcome test against snapshot 1`] = `
       Object {
         "alignItems": "center",
         "flex": 1,
-        "marginTop": 160,
+        "marginTop": 200,
         "padding": 20,
       }
     }

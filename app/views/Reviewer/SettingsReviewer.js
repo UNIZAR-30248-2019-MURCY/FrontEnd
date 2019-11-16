@@ -33,11 +33,13 @@ export default class SettingsReviewer extends Component {
         retrieveItem('role')
             .then(data => {
                 console.log(data)
-                if(data.includes("USER")){
-                    this.setState({player: true})
-                }
-                if(data.includes("EDITOR")){
-                    this.setState({editor: true})
+                if(data){
+                    if(data.includes("USER")){
+                        this.setState({player: true})
+                    }
+                    if(data.includes("EDITOR")){
+                        this.setState({editor: true})
+                    }
                 }
             })
     }
