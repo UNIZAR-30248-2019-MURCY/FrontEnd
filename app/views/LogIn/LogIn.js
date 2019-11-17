@@ -128,6 +128,9 @@ export default class LogIn extends Component {
                         secureTextEntry={true}
                         autoCapitalize="none"
                         placeholderTextColor='darkgrey'
+                        onSubmitEditing={() => {
+                            this.handleSubmit()
+                        }}
                         onChangeText={val => this.onChangeText('password', val)}
                     />
                     {showErr}

@@ -37,6 +37,16 @@ describe('<Request />', () => {
         wrapper.find('.cancel-button').simulate('press');
         expect(navigationMock.goBack.mock.calls.length).toEqual(1);
     });
+    it('should go back', async () => {
+        await retrieveItem();
+        const navigationMock = { goBack: jest.fn() };
+        const wrapper = shallow(<Request navigation={navigationMock} />);
+        wrapper.setState({ errorGettingReq: false });
+        wrapper.setState({ loading: false });
+        wrapper.setState({ request: true });
+        wrapper.find('.return-button').simulate('press');
+        expect(navigationMock.goBack.mock.calls.length).toEqual(1);
+    });
     it('onChangeText', async () => {
         await retrieveItem();
         let wrapper = shallow(<Request/>);

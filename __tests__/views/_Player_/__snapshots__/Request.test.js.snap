@@ -65,22 +65,26 @@ exports[`<Request /> Request test against snapshot 1`] = `
       Request
     </Text>
   </View>
-  <View
-    style={
-      Object {
-        "flexDirection": "row",
-        "justifyContent": "space-around",
-        "marginTop": 50,
-        "padding": 10,
-      }
-    }
-  >
-    <ActivityIndicator
-      animating={true}
-      color="grey"
-      hidesWhenStopped={true}
-      size="large"
-    />
-  </View>
+  <RCTScrollView>
+    <View>
+      <View
+        style={
+          Object {
+            "flexDirection": "row",
+            "justifyContent": "space-around",
+            "marginTop": 50,
+            "padding": 10,
+          }
+        }
+      >
+        <ActivityIndicator
+          animating={true}
+          color="grey"
+          hidesWhenStopped={true}
+          size="large"
+        />
+      </View>
+    </View>
+  </RCTScrollView>
 </View>
 `;

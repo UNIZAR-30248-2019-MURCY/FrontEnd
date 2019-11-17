@@ -10,6 +10,7 @@ export default class RequestDetails extends Component {
             workflow: false
         }
     }
+
     componentDidMount() {
         if (this.props.navigation) {
             this.setState({workflow: this.props.navigation.getParam('workflow', 'default value')});
@@ -18,19 +19,15 @@ export default class RequestDetails extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (nextProps.navigation.state.params.lastName) {
-            this.setState({lastName:nextProps.navigation.state.params.lastName});
+            this.setState({lastName: nextProps.navigation.state.params.lastName});
         }
     }
 
     render() {
-        return (
-            <View style={styles.container}>
-                <View style={styles.containerTitle}>
-                    <Text h2>Details</Text>
-                </View>
-
+        let showDetails = (
+            this.state.workflow ?
                 <View style={styles.containerRequest}>
-                    <Text h4>{this.state.workflow.title}</Text>
+                    <Text h4 style={styles.containerSubTitle}>{this.state.workflow.title}</Text>
                     <Text style={styles.containerRequestDetails}>
                         Description: {this.state.workflow.description}
                         {'\n'}{'\n'}
@@ -51,6 +48,30 @@ export default class RequestDetails extends Component {
                                 this.props.navigation.goBack();
                             }}/>
                     </View>
+                </View> :
+                <View></View>
+
+        );
+
+        return (
+            <View style={styles.container}>
+                <View style={styles.containerTitle}>
+                    <Text h2>Details</Text>
+                </View>
+                <View style={styles.containerRequest2}>
+                    {showDetails}
+                    <View style={styles.containerRequest3}>
+                        <Button
+                            className='return-button'
+                            type="clear"
+                            buttonStyle={styles.button2}
+                            title="Return"
+                            titleStyle={{color: 'grey'}}
+                            onPress={() => {
+                                this.props.navigation.goBack();
+                            }
+                            }/>
+                    </View>
                 </View>
             </View>
         )
@@ -68,18 +89,26 @@ const styles = StyleSheet.create({
         marginTop: 50,
         padding: 20
     },
+    containerSubTitle: {
+        marginTop: 25
+    },
     containerRequest: {
         flex: 1,
         alignItems: 'center',
-        padding: 25
+    },
+    containerRequest2: {
+        flex: 1,
+    },
+    containerRequest3: {
+        alignItems: 'center',
     },
     containerRequestDetails: {
         flex: 1,
         marginTop: 25,
         fontSize: 18,
         color: 'grey',
+        textAlign: 'center',
     },
-
     button: {
         width: 150,
         height: 55,
@@ -97,6 +126,7 @@ const styles = StyleSheet.create({
         borderRadius: 14
     },
     button2: {
+        marginBottom: 10,
         width: 150,
         height: 55,
         borderRadius: 14
