@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
 import {retrieveItem} from "../services/AsyncStorage/retrieve";
-import {getRequestEdit} from "../services/user/userFuncs";
+import {emailVerif, getRequestEdit} from "../services/user/userFuncs";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class Welcome extends Component {
@@ -18,8 +18,14 @@ export default class Welcome extends Component {
             loading: true
         }
     }
-
     componentDidMount() {
+        if (this.props.navigation) {
+            if(this.props.navigation.getParam('token')){
+                this.props.navigation.navigate('EmailVerif', {
+                    token: this.props.navigation.getParam('token')
+                });
+            }
+        }
         this._bootstrapAsync();
     }
 

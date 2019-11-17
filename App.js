@@ -265,12 +265,16 @@ const AuthStack = createStackNavigator(
 const AppContainer = createAppContainer(
     createSwitchNavigator(
         {
-            AuthLoading: Welcome,
+            AuthLoading: {
+                screen: Welcome,
+                path: WEB.URL + ':token'
+            },
             App: AppStack,
             Auth: AuthStack,
             EmailVerif: {
                 screen: EmailVerif,
-                path: WEB.URL + 'check'}
+                path: WEB.URL
+            },
         },
         {
             initialRouteName: 'AuthLoading',
