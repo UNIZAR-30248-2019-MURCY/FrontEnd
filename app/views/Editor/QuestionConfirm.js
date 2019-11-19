@@ -7,10 +7,21 @@ import {
 import {Button, colors, Text} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class EmailConfirm extends Component {
+export default class QuestionConfirm extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            type: ''
+        }
+    }
+
+    componentDidMount() {
+        if (this.props.navigation) {
+            if(this.props.navigation.getParam('type')){
+                this.setState({type: this.props.navigation.getParam('type')})
+            }
+        }
     }
 
     render() {
@@ -28,7 +39,7 @@ export default class EmailConfirm extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.navigation.navigate('Auth');
+                            this.props.navigation.goBack();
                         }
                         }
                     />
@@ -36,12 +47,11 @@ export default class EmailConfirm extends Component {
 
                 <View style={styles.containerMessage}>
                     <Icon
-                        className='confirm-email'
                         name='check'
                         size={100}
                     />
                     <Text style={{color: 'grey', fontSize: 19, marginTop:20, textAlign:'center'}} >
-                        Check your inbox to verify your email
+                        The question was successfully {this.state.type}
                     </Text>
                 </View>
 
@@ -53,7 +63,7 @@ export default class EmailConfirm extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-
+        padding: 20
     },
     cross: {
         marginTop: 50,

@@ -105,7 +105,7 @@ export default class Request extends Component {
         );
 
         let reqNotExist = (
-            <View style={styles.containerRequest}>
+            <View style={styles.containerRequest}  className='editCreateReq'>
                 <TextInput
                     className='descriptionInput'
                     style={styles.input}
@@ -157,7 +157,7 @@ export default class Request extends Component {
             !this.state.reRequest ?
                 <View style={styles.containerEdit} className='reReqShow'>
                     <Button
-                        className='edit-button'
+                        className='reReq-button'
                         buttonStyle={styles.buttonEdit}
                         title="Request Again"
                         onPress={() => {
@@ -169,7 +169,7 @@ export default class Request extends Component {
 
         let reqExist = (
             this.state.request.closed && !this.state.request.approved ?
-                <View>
+                <View className='requesDenied'>
                     <Text h4>A request has been denied</Text>
                     <Text style={styles.containerRequestExistContent}>
                         Description: {this.state.workflow.description}
@@ -180,15 +180,15 @@ export default class Request extends Component {
                 </View>
                 :
                 this.state.request.closed && this.state.request.approved ?
-                    <View >
+                    <View className='requesApproved'>
                         <Text h4>A request has been accepted</Text>
                         <Text style={styles.containerRequestExistContent}>
                             Description: {this.state.workflow.description}
                             {'\n'}{'\n'}
                             Status: {this.state.workflow.status}
                         </Text>
-                    </View>
-                    : <View style={styles.containerInfo}>
+                    </View >
+                    : <View style={styles.containerInfo} className='editMode'>
                         <Text h4>A request already exists</Text>
                         <Text style={styles.containerRequestExistContent}>
                             Description: {this.state.workflow.description}
@@ -201,7 +201,7 @@ export default class Request extends Component {
 
         let show = (
             this.state.errorGettingReq ?
-                <View style={styles.error}>
+                <View style={styles.error} className='errorGettingReq'>
                     <Text style={{color: 'red'}}>
                         {this.state.errorGettingReq}
                     </Text>

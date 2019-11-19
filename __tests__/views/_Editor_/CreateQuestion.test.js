@@ -30,6 +30,11 @@ describe('<CreateQuestion />', () => {
         createComponent.setState({ error: true });
         expect(createComponent.find('.errorShow').length).toBe(1);
     });
+    it('should render the Loading component if state.loading is true', () => {
+        let createComponent = shallow(<CreateQuestion />);
+        createComponent.setState({ loading: true });
+        expect(createComponent.find('.loadingShow').length).toBe(1);
+    });
     it('onChangeText and CheckBox', () => {
         let wrapper = shallow(<CreateQuestion/>);
         wrapper.instance().onChangeText = jest.fn();
@@ -44,7 +49,7 @@ describe('<CreateQuestion />', () => {
 
         event = 'Madrid';
         wrapper.find('.title1').simulate('changeText', event)
-        expect(wrapper.instance().onChangeText).toBeCalledWith('title1','Madrid'); 
+        expect(wrapper.instance().onChangeText).toBeCalledWith('title1','Madrid');
         wrapper.find('.correct1').prop('onPress')();
         expect(wrapper.find('.correct1').prop('checked')).toBe(true);
 
@@ -63,6 +68,17 @@ describe('<CreateQuestion />', () => {
         expect(wrapper.instance().onChangeText).toBeCalledWith('title4','Dublin');
         expect(wrapper.find('.correct4').prop('checked')).toBe(false);
 
+    });
+    it('CheckBoxes', () => {
+        let wrapper = shallow(<CreateQuestion/>);
+        wrapper.find('.correct1').prop('onPress')();
+        expect(wrapper.find('.correct1').prop('checked')).toBe(true);
+        wrapper.find('.correct2').prop('onPress')();
+        expect(wrapper.find('.correct2').prop('checked')).toBe(true);
+        wrapper.find('.correct3').prop('onPress')();
+        expect(wrapper.find('.correct3').prop('checked')).toBe(true);
+        wrapper.find('.correct4').prop('onPress')();
+        expect(wrapper.find('.correct4').prop('checked')).toBe(true);
     });
 
 });

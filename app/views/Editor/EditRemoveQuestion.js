@@ -5,7 +5,7 @@ import {
     TextInput,
     ScrollView,
     FlatList,
-    SafeAreaView
+    SafeAreaView, ActivityIndicator
 } from 'react-native'
 import {Button, Text, CheckBox, ListItem} from 'react-native-elements';
 
@@ -17,24 +17,19 @@ export default class EditRemoveQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: this.props.navigation.state.params.info,
-            error: false
+            data: [],
+            loading: false,
+            error: false,
         }
         this.onChangeText = this.onChangeText.bind(this);
     }
 
     componentDidMount() {
-
-        /*
-        infoQuestion(this.state.id)
-                .then((data) => {
-                    console.log(data);
-                    //this.setState(data);
-                })
-                .catch((error) => {
-                    this.setState( {error: error.message})
-                });
-                */
+        if (this.props.navigation) {
+            if(this.props.navigation.getParam('info')){
+                this.setState({data: this.props.navigation.getParam('info')})
+            }
+        }
     }
 
     onChangeText = (key, val) => {
@@ -42,29 +37,37 @@ export default class EditRemoveQuestion extends Component {
     }
 
     editQuestion() {
+        this.setState({loading: true})
+        this.setState({error: false})
         /*
         editQuestion(this.state.id, this.state.question, this.state.answer1, this.state.answer2, this.state.answer3, this.state.answer4, this.state.value)
             .then((data) => {
                 console.log(data);
+                this.setState({loading: false})
             })
             .catch((error) => {
                 this.setState( {error: error.message})
+                this.setState({loading: false})
             });
             */
-        this.props.navigation.goBack();
+        this.props.navigation.replace('QuestionConfirm', { type: 'modified' });
     }
 
     deleteQuestion() {
+        this.setState({loading: true})
+        this.setState({error: false})
         /*
         deleteQuestion(this.state.id)
             .then((data) => {
                 console.log(data);
+                this.setState({loading: false})
             })
             .catch((error) => {
                 this.setState( {error: error.message})
+                this.setState({loading: false})
             });
             */
-        this.props.navigation.goBack();
+        this.props.navigation.replace('QuestionConfirm', { type: 'deleted' });
     }
 
     render() {
@@ -78,6 +81,13 @@ export default class EditRemoveQuestion extends Component {
                 </View> :
                 <View></View>
         );
+        let showLoading = (
+            this.state.loading ?
+                <View style={[styles.containerLoading]} className='loadingShow'>
+                    <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
+                </View> :
+                <View></View>
+        );
 
         return (
             <ScrollView>
@@ -88,6 +98,7 @@ export default class EditRemoveQuestion extends Component {
                     <View style={styles.containerCreate}>
                         <Text style={styles.subTitle}>Question and description</Text>
                         <TextInput
+                            className='questionInput'
                             style={styles.input}
                             placeholder='Question'
                             autoCapitalize="none"
@@ -96,6 +107,7 @@ export default class EditRemoveQuestion extends Component {
                             onChangeText={val => this.onChangeText('data.title', val)}
                         />
                         <TextInput
+                            className='description'
                             style={styles.input}
                             placeholder='Description'
                             autoCapitalize="none"
@@ -111,15 +123,14 @@ export default class EditRemoveQuestion extends Component {
                             data={this.state.data.options}
                             keyExtractor={item => item.title}
                             renderItem={({item}) => (
-                                <View>
+                                <View style={styles.containerButtons}>
                                     <TextInput
-                                        style={styles.input}
+                                        style={styles.inputAns}
                                         placeholder={item.title}
                                         placeholderTextColor='darkgrey'
                                         onChangeText={val => this.onChangeText('title1', val)}
                                     />
                                     <CheckBox value="1"
-                                              title='Mark as correct'
                                               containerStyle={styles.checkBoxC}
                                               checked={item.correct}
                                               onPress={() => this.setState({correct1: !this.state.correct1})}/>
@@ -128,20 +139,23 @@ export default class EditRemoveQuestion extends Component {
                         />
 
                         {showErr}
+                        {showLoading}
                         <Button
+                            className='edit-button'
                             buttonStyle={styles.button}
                             title="Edit"
                             onPress={() => {
                                 this.editQuestion()
                             }}/>
                         <Button
+                            className='delete-button'
                             buttonStyle={styles.button1}
                             title="Delete"
                             onPress={() => {
                                 this.deleteQuestion()
                             }}/>
                         <Button
-                            className='login-button'
+                            className='return-button'
                             type="clear"
                             buttonStyle={styles.button2}
                             title="Return"
@@ -186,6 +200,9 @@ const styles = StyleSheet.create({
         color: 'grey',
     },
     checkBoxC: {
+        padding: 0,
+        marginTop: 25,
+        alignItems: 'center',
         backgroundColor: "white",
         borderColor: "white"
     },
@@ -204,6 +221,17 @@ const styles = StyleSheet.create({
     },
     input: {
         width: 300,
+        height: 55,
+        backgroundColor: 'whitesmoke',
+        margin: 10,
+        padding: 8,
+        color: 'grey',
+        borderRadius: 14,
+        fontSize: 18,
+        fontWeight: '500',
+    },
+    inputAns: {
+        width: 260,
         height: 55,
         backgroundColor: 'whitesmoke',
         margin: 10,
@@ -233,5 +261,13 @@ const styles = StyleSheet.create({
         width: 150,
         height: 55,
         borderRadius: 14
-    }
+    },
+    containerLoading: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10
+    },
+    containerButtons: {
+        flexDirection: 'row'
+    },
 })
