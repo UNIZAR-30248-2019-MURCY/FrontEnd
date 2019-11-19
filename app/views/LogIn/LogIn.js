@@ -35,18 +35,13 @@ export default class LogIn extends Component {
     }
 
     handleSubmit() {
-        const toApp = StackActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate({routeName: 'Player'})],
-        });
-
         if (this.state.username !== '' && this.state.password !== '') {
             this.setState({loading: true})
             this.setState({error: false})
             logInUser(this.state.username, this.state.password)
                 .then((data) => {
                     saveData('token', data).then(r =>
-                        userInfo(data.token).then((dataUser) => {
+                        userInfo(data.jsonWebToken).then((dataUser) => {
                                 saveData('role', dataUser.role).then(r =>
                                         console.log(dataUser.role),
                                     this.setState({loading: false}),

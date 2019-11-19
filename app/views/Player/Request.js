@@ -38,7 +38,7 @@ export default class Request extends Component {
         this.setState({loading: true})
         retrieveItem('token')
             .then(data => {
-                this.setState({token: JSON.parse(data).token})
+                this.setState({token: JSON.parse(data).jsonWebToken})
                 getRequestEdit(this.state.token)
                     .then((request) => {
                         if(request)
