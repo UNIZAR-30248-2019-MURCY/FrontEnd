@@ -1,12 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
+exports[`<EditRemoveQuestion /> CreateQuestion test against snapshot 1`] = `
 <RCTScrollView>
   <View>
     <View
       style={
         Object {
-          "alignItems": "center",
           "flex": 1,
           "padding": 20,
         }
@@ -15,6 +14,8 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
       <View
         style={
           Object {
+            "alignItems": "center",
+            "flex": 1,
             "marginTop": 50,
             "padding": 20,
           }
@@ -64,7 +65,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
             }
           }
         >
-          New Question
+          Question
         </Text>
       </View>
       <View
@@ -129,7 +130,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
           autoCapitalize="none"
           className="questionInput"
           onChangeText={[Function]}
-          placeholder="Title"
+          placeholder="Question"
           placeholderTextColor="darkgrey"
           rejectResponderTermination={true}
           style={
@@ -225,7 +226,6 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
               "color": "grey",
               "flex": 1,
               "fontSize": 17,
-              "marginBottom": 5,
             }
           }
           theme={
@@ -268,266 +268,32 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
         >
           Fill in at least 2 answers
         </Text>
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-            }
-          }
+        <RCTScrollView
+          disableVirtualization={false}
+          getItem={[Function]}
+          getItemCount={[Function]}
+          horizontal={false}
+          initialNumToRender={10}
+          keyExtractor={[Function]}
+          maxToRenderPerBatch={10}
+          numColumns={1}
+          onContentSizeChange={[Function]}
+          onEndReachedThreshold={2}
+          onLayout={[Function]}
+          onMomentumScrollEnd={[Function]}
+          onScroll={[Function]}
+          onScrollBeginDrag={[Function]}
+          onScrollEndDrag={[Function]}
+          removeClippedSubviews={false}
+          renderItem={[Function]}
+          scrollEventThrottle={50}
+          stickyHeaderIndices={Array []}
+          updateCellsBatchingPeriod={50}
+          viewabilityConfigCallbackPairs={Array []}
+          windowSize={21}
         >
-          <TextInput
-            allowFontScaling={true}
-            className="title1"
-            onChangeText={[Function]}
-            placeholder="Answer 1"
-            placeholderTextColor="darkgrey"
-            rejectResponderTermination={true}
-            style={
-              Object {
-                "backgroundColor": "whitesmoke",
-                "borderRadius": 14,
-                "color": "grey",
-                "fontSize": 18,
-                "fontWeight": "500",
-                "height": 55,
-                "margin": 10,
-                "padding": 8,
-                "width": 260,
-              }
-            }
-            underlineColorAndroid="transparent"
-          />
-          <View
-            accessible={true}
-            isTVSelectable={true}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "white",
-                "borderColor": "white",
-                "margin": 5,
-                "marginLeft": 10,
-                "marginRight": 10,
-                "marginTop": 25,
-                "opacity": 1,
-                "padding": 0,
-              }
-            }
-            testID="checkbox"
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                }
-              }
-            >
-              <Text />
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <TextInput
-            allowFontScaling={true}
-            className="title2"
-            onChangeText={[Function]}
-            placeholder="Answer 2"
-            placeholderTextColor="darkgrey"
-            rejectResponderTermination={true}
-            style={
-              Object {
-                "backgroundColor": "whitesmoke",
-                "borderRadius": 14,
-                "color": "grey",
-                "fontSize": 18,
-                "fontWeight": "500",
-                "height": 55,
-                "margin": 10,
-                "padding": 8,
-                "width": 260,
-              }
-            }
-            underlineColorAndroid="transparent"
-          />
-          <View
-            accessible={true}
-            isTVSelectable={true}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "white",
-                "borderColor": "white",
-                "margin": 5,
-                "marginLeft": 10,
-                "marginRight": 10,
-                "marginTop": 25,
-                "opacity": 1,
-                "padding": 0,
-              }
-            }
-            testID="checkbox"
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                }
-              }
-            >
-              <Text />
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <TextInput
-            allowFontScaling={true}
-            className="title3"
-            onChangeText={[Function]}
-            placeholder="Answer 3"
-            placeholderTextColor="darkgrey"
-            rejectResponderTermination={true}
-            style={
-              Object {
-                "backgroundColor": "whitesmoke",
-                "borderRadius": 14,
-                "color": "grey",
-                "fontSize": 18,
-                "fontWeight": "500",
-                "height": 55,
-                "margin": 10,
-                "padding": 8,
-                "width": 260,
-              }
-            }
-            underlineColorAndroid="transparent"
-          />
-          <View
-            accessible={true}
-            isTVSelectable={true}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "white",
-                "borderColor": "white",
-                "margin": 5,
-                "marginLeft": 10,
-                "marginRight": 10,
-                "marginTop": 25,
-                "opacity": 1,
-                "padding": 0,
-              }
-            }
-            testID="checkbox"
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                }
-              }
-            >
-              <Text />
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "flexDirection": "row",
-            }
-          }
-        >
-          <TextInput
-            allowFontScaling={true}
-            className="title4"
-            onChangeText={[Function]}
-            placeholder="Answer 4"
-            placeholderTextColor="darkgrey"
-            rejectResponderTermination={true}
-            style={
-              Object {
-                "backgroundColor": "whitesmoke",
-                "borderRadius": 14,
-                "color": "grey",
-                "fontSize": 18,
-                "fontWeight": "500",
-                "height": 55,
-                "margin": 10,
-                "padding": 8,
-                "width": 260,
-              }
-            }
-            underlineColorAndroid="transparent"
-          />
-          <View
-            accessible={true}
-            isTVSelectable={true}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "white",
-                "borderColor": "white",
-                "margin": 5,
-                "marginLeft": 10,
-                "marginRight": 10,
-                "marginTop": 25,
-                "opacity": 1,
-                "padding": 0,
-              }
-            }
-            testID="checkbox"
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                }
-              }
-            >
-              <Text />
-            </View>
-          </View>
-        </View>
+          <View />
+        </RCTScrollView>
         <View />
         <View />
         <View
@@ -564,7 +330,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
                   "height": 55,
                   "justifyContent": "center",
                   "margin": 10,
-                  "marginTop": 45,
+                  "marginTop": 50,
                   "padding": 8,
                   "width": 150,
                 }
@@ -581,7 +347,63 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
                   }
                 }
               >
-                Create
+                Edit
+              </Text>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "borderRadius": 14,
+            }
+          }
+        >
+          <View
+            accessible={true}
+            isTVSelectable={true}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "alignItems": "center",
+                  "backgroundColor": "red",
+                  "borderColor": "#2089dc",
+                  "borderRadius": 14,
+                  "borderWidth": 0,
+                  "flexDirection": "row",
+                  "height": 45,
+                  "justifyContent": "center",
+                  "margin": 10,
+                  "marginTop": 15,
+                  "padding": 8,
+                  "width": 120,
+                }
+              }
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "white",
+                    "fontSize": 18,
+                    "paddingBottom": 1,
+                    "paddingTop": 2,
+                    "textAlign": "center",
+                  }
+                }
+              >
+                Delete
               </Text>
             </View>
           </View>

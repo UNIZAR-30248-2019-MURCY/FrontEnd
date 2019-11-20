@@ -170,7 +170,6 @@ export default class SignUp extends Component {
                                 this.handleSubmit()
                             }}/>
 
-
                         <Button
                             className='login-button'
                             type="clear"

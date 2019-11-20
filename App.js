@@ -21,15 +21,15 @@ import RequestList from "./app/views/Reviewer/RequestList";
 import RequestDetails from "./app/views/Reviewer/RequestDetails";
 import SettingsReviewer from "./app/views/Reviewer/SettingsReviewer";
 import EditRemoveQuestion from "./app/views/Editor/EditRemoveQuestion";
+import QuestionConfirm from "./app/views/Editor/QuestionConfirm";
 import {Linking} from "expo";
 
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
 import {retrieveItem} from "./app/services/AsyncStorage/retrieve";
 import {getRequestEdit} from "./app/services/user/userFuncs";
+import WEB from './app/config/web';
 
-const URL = 'https://murcy.netlify.com/';
 
-var HomePage = 'Welcome';
 /*
   Player
  */
@@ -97,6 +97,9 @@ const playerNavigator = createMaterialBottomTabNavigator(
 const QuestionsEditStack = createStackNavigator(
     {
         QuestionsEdit: QuestionsEdit,
+        CreateQuestion: CreateQuestion,
+        EditRemoveQuestion: EditRemoveQuestion,
+        QuestionConfirm: QuestionConfirm,
     },
     {
         initialRouteName: 'QuestionsEdit',
@@ -170,7 +173,9 @@ const editorNavigator = createMaterialBottomTabNavigator(
     }
 );
 
-
+/*
+  Reviewer
+ */
 const RequestListStack = createStackNavigator(
     {
         RequestList: RequestList,
@@ -228,13 +233,14 @@ const reviewerNavigator = createMaterialBottomTabNavigator(
 );
 
 
+/*
+  Global
+ */
 const AppStack = createStackNavigator(
     {
         Player: playerNavigator,
         Editor: editorNavigator,
         Reviewer: reviewerNavigator,
-        CreateQuestion: CreateQuestion,
-        EditRemoveQuestion: EditRemoveQuestion,
     },
     {
         initialRouteName: 'Player',
@@ -252,9 +258,6 @@ const AuthStack = createStackNavigator(
         SignUp: SignUp,
         EmailConfirm: EmailConfirm,
         TermsConditions: TermsConditions,
-        EmailVerif: {
-            screen: EmailVerif,
-            path: URL + 'check'}
     },
     {
         initialRouteName: 'LogIn',
@@ -269,9 +272,16 @@ const AuthStack = createStackNavigator(
 const AppContainer = createAppContainer(
     createSwitchNavigator(
         {
-            AuthLoading: Welcome,
+            AuthLoading: {
+                screen: Welcome,
+                path: WEB.URL + ':token'
+            },
             App: AppStack,
             Auth: AuthStack,
+            EmailVerif: {
+                screen: EmailVerif,
+                path: WEB.URL
+            },
         },
         {
             initialRouteName: 'AuthLoading',

@@ -105,6 +105,7 @@ exports[`<LogIn /> LogIn test against snapshot 1`] = `
       autoCapitalize="none"
       className="passInput"
       onChangeText={[Function]}
+      onSubmitEditing={[Function]}
       placeholder="Password"
       placeholderTextColor="darkgrey"
       rejectResponderTermination={true}

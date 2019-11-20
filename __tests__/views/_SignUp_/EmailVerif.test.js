@@ -12,10 +12,4 @@ describe('<EmailVerif />', () => {
         const page = renderer.create(<EmailVerif />).toJSON();
         expect(page).toMatchSnapshot();
     });
-    it('should navigate to Welcome', () => {
-        const navigationMock = { replace: jest.fn() };
-        const wrapper = shallow(<EmailVerif navigation={navigationMock} />);
-        wrapper.find('.close-button').simulate('press');
-        expect(navigationMock.replace.mock.calls[0]).toEqual(['Welcome']);
-    })
 });

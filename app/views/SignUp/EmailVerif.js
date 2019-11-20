@@ -2,48 +2,93 @@ import React, {Component} from 'react';
 import {
     View,
     StyleSheet,
-    Image,
+    Image, ActivityIndicator,
+    Linking
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {retrieveItem} from "../../services/AsyncStorage/retrieve";
+import {emailVerif, signUpUser} from "../../services/user/userFuncs";
+import WEB from '../../config/web';
+
 
 export default class EmailVerif extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            loading : true,
+            error: false,
+        };
+
+    }
+    componentDidMount() {
+        if (this.props.navigation) {
+            if(this.props.navigation.getParam('token')){
+                emailVerif(this.props.navigation.getParam('token'))
+                    .then((data) => {
+                        this.setState({loading: false})
+                    })
+                    .catch((error) => {
+                        this.setState({error: error.message}),
+                            this.setState({loading: false})
+                    })
+            }
+            else{
+                this.props.navigation.navigate('AuthLoading');
+            }
+        }
     }
 
     render() {
+        let showConfirm = (
+            this.state.error ?
+                <View  style={styles.containerMessage} className='errorShow'>
+                        <Icon
+                            name='times'
+                            size={100}
+                        />
+                        <Text style={{color: 'grey', fontSize: 19, marginTop:20, textAlign:'center'}} >
+                            {this.state.error}
+                        </Text>
+                        <Button
+                            className='return-button'
+                            buttonStyle={styles.button}
+                            title="Home"
+                            onPress={() => {
+                                Linking.openURL(WEB.URL)
+                            }}/>
+                </View> :
+                    <View style={styles.containerMessage}>
+                        <Icon
+                            name='check'
+                            size={100}
+                        />
+                        <Text style={{color: 'grey', fontSize: 19, marginTop:20, textAlign:'center'}} >
+                            Your email has been successfully verified
+                        </Text>
+                        <Button
+                            className='return-button'
+                            buttonStyle={styles.button}
+                            title="Home"
+                            onPress={() => {
+                                Linking.openURL(WEB.URL)
+                            }}/>
+                    </View>
+        );
+        let showLoading = (
+            this.state.loading ?
+                <View style={[styles.containerMessage, styles.horizontal]}>
+                    <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
+                </View> :
+                <View>
+                    {showConfirm}
+                </View>
+        );
+
         return (
             <View style={styles.container}>
-                <View style={styles.cross}>
-                    <Button
-                        className='close-button'
-                        type="clear"
-                        icon={
-                            <Icon
-                                name="times"
-                                size={30}
-                                color="grey"
-                            />
-                        }
-                        onPress={() => {
-                            this.props.navigation.replace('Welcome');
-                        }
-                        }
-                    />
-                </View>
-
-                <View style={styles.containerMessage}>
-                    <Icon
-                        name='check'
-                        size={100}
-                    />
-                    <Text style={{color: 'grey', fontSize: 19, marginTop:20, textAlign:'center'}} >
-                        Your email has been successfully verified
-                    </Text>
-                </View>
-
+                {showLoading}
             </View>
         )
     }
@@ -64,7 +109,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         //justifyContent: 'center',
-        marginTop: 100,
+        marginTop: 180,
         padding: 20
     },
     logo: {
@@ -75,10 +120,11 @@ const styles = StyleSheet.create({
         height: 100
     },
     button: {
-        marginTop: 70,
-        width: 150,
-        height: 55,
-        padding: 8,
+        width: 120,
+        height: 40,
+        marginTop: 90,
+        backgroundColor: 'grey',
+        borderRadius: 14
     },
     buttonText: {
         fontSize: 25,

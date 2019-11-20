@@ -177,3 +177,30 @@ export const getRequestEdit = (token) => {
             throw error;
         });
 }
+
+export const emailVerif = (token) => {
+    const URL = 'https://preunizar-30248-2019-murcy.herokuapp.com/api/user/confirm/'+token;
+    return fetch(URL, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(async (response) => {
+            if (response.status === 201) {
+                return response
+            } else if (response.status === 404) {
+                console.log(response.status)
+                throw new Error("Not Found")
+            } else {
+                console.log(response.status)
+                throw new Error("Server error")
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            console.log(error.message)
+            throw error;
+        });
+}

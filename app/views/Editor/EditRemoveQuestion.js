@@ -5,7 +5,7 @@ import {
     TextInput,
     ScrollView,
     FlatList,
-    SafeAreaView
+    SafeAreaView, ActivityIndicator
 } from 'react-native'
 import {Button, Text, CheckBox, ListItem} from 'react-native-elements';
 import {retrieveItem} from "../../services/AsyncStorage/retrieve";
@@ -91,16 +91,20 @@ export default class EditRemoveQuestion extends Component {
     }
 
     deleteQuestion() {
+        this.setState({loading: true})
+        this.setState({error: false})
         /*
         deleteQuestion(this.state.id)
             .then((data) => {
                 console.log(data);
+                this.setState({loading: false})
             })
             .catch((error) => {
                 this.setState( {error: error.message})
+                this.setState({loading: false})
             });
             */
-        this.props.navigation.goBack();
+        this.props.navigation.replace('QuestionConfirm', { type: 'deleted' });
     }
 
     render() {
@@ -111,6 +115,13 @@ export default class EditRemoveQuestion extends Component {
                     <Text style={{color: 'red'}}>
                         {this.state.error}
                     </Text>
+                </View> :
+                <View></View>
+        );
+        let showLoading = (
+            this.state.loading ?
+                <View style={[styles.containerLoading]} className='loadingShow'>
+                    <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
                 </View> :
                 <View></View>
         );
@@ -144,6 +155,7 @@ export default class EditRemoveQuestion extends Component {
                     <Text>Fill in at least 2 answers</Text> 
                     <View>
                         <TextInput
+                            className='questionInput'
                             style={styles.input}
                             className='title1'
                             placeholder='Answer 1'
@@ -160,6 +172,7 @@ export default class EditRemoveQuestion extends Component {
                         </View>
                         <View>
                         <TextInput
+                            className='description'
                             style={styles.input}
                             className='title2'
                             placeholder='Answer 2'
@@ -267,6 +280,9 @@ const styles = StyleSheet.create({
         color: 'grey',
     },
     checkBoxC: {
+        padding: 0,
+        marginTop: 25,
+        alignItems: 'center',
         backgroundColor: "white",
         borderColor: "white"
     },
@@ -285,6 +301,17 @@ const styles = StyleSheet.create({
     },
     input: {
         width: 300,
+        height: 55,
+        backgroundColor: 'whitesmoke',
+        margin: 10,
+        padding: 8,
+        color: 'grey',
+        borderRadius: 14,
+        fontSize: 18,
+        fontWeight: '500',
+    },
+    inputAns: {
+        width: 260,
         height: 55,
         backgroundColor: 'whitesmoke',
         margin: 10,
@@ -314,5 +341,13 @@ const styles = StyleSheet.create({
         width: 150,
         height: 55,
         borderRadius: 14
-    }
+    },
+    containerLoading: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10
+    },
+    containerButtons: {
+        flexDirection: 'row'
+    },
 })

@@ -33,11 +33,13 @@ export default class SettingScreen extends Component {
         retrieveItem('role')
             .then(data => {
                 console.log(data)
-                if(data.includes("USER")){
-                    this.setState({player: true})
-                }
-                if(data.includes("REVIEWER")){
-                    this.setState({reviewer: true})
+                if(data){
+                    if(data.includes("USER")){
+                        this.setState({player: true})
+                    }
+                    if(data.includes("REVIEWER")){
+                        this.setState({reviewer: true})
+                    }
                 }
             })
     }
