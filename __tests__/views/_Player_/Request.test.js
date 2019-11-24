@@ -2,7 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import renderer from 'react-test-renderer';
 import Request from '../../../app/views/Player/Request';
-import {retrieveItem} from "../../../app/services/AsyncStorage/retrieve";
+import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 import LogIn from "../../../app/views/LogIn/LogIn";
 
 describe('<Request />', () => {

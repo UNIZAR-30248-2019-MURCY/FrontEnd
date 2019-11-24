@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ActivityIndicator, AsyncStorage, ScrollView, StyleSheet, TextInput, View,} from 'react-native'
 import {Button, Text} from 'react-native-elements';
 import {getRequestEdit, requestEditor, editRequestEditor} from "../../services/user/userFuncs";
-import {retrieveItem} from "../../services/AsyncStorage/retrieve";
+import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
 
 export default class Request extends Component {
 

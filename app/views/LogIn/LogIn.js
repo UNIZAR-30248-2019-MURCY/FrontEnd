@@ -10,7 +10,7 @@ import {
 import {Button} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {logInUser, userInfo} from "../../services/user/userFuncs";
-import {saveData} from "../../services/AsyncStorage/save";
+import {saveData} from "../../modules/AsyncStorage/save";
 import {NavigationActions, StackActions} from "react-navigation";
 
 

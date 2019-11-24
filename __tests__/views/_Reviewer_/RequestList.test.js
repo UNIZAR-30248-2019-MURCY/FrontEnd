@@ -2,7 +2,7 @@ import React from 'react';
 import {shallow, mount} from 'enzyme';
 import renderer from 'react-test-renderer';
 import RequestList from "../../../app/views/Reviewer/RequestList";
-import {retrieveItem} from "../../../app/services/AsyncStorage/retrieve";
+import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 import Request from "../../../app/views/Player/Request";
 import LogIn from "../../../app/views/LogIn/LogIn";
 

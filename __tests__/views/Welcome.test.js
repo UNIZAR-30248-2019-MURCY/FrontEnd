@@ -3,7 +3,7 @@ import {shallow} from 'enzyme';
 import renderer from 'react-test-renderer';
 import Welcome from '../../app/views/Welcome';
 import LogIn from "../../app/views/LogIn/LogIn";
-import {retrieveItem} from "../../app/services/AsyncStorage/retrieve";
+import {retrieveItem} from "../../app/modules/AsyncStorage/retrieve";
 
 describe('<Welcome />', () => {
     it('Welcome renders without crashing', async () => {

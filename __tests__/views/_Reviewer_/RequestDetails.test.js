@@ -2,7 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import renderer from 'react-test-renderer';
 import RequestDetails from "../../../app/views/Reviewer/RequestDetails";
-import {retrieveItem} from "../../../app/services/AsyncStorage/retrieve";
+import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 
 describe('<RequestDetails />', () => {
     it('RequestDetails renders without crashing', () => {

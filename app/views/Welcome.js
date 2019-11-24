@@ -6,7 +6,7 @@ import {
     Platform, Linking
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
-import {retrieveItem} from "../services/AsyncStorage/retrieve";
+import {retrieveItem} from "../modules/AsyncStorage/retrieve";
 import {emailVerif, getRequestEdit} from "../services/user/userFuncs";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
