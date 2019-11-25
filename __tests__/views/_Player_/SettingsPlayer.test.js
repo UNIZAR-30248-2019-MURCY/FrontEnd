@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import SettingsPlayer from "../../../app/views/Player/SettingsPlayer";
 import LogIn from "../../../app/views/LogIn/LogIn";
-import {retrieveItem} from "../../../app/services/AsyncStorage/retrieve";
+import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 
 describe('<SettingsPlayer />', () => {
     it('SettingsPlayer renders without crashing', async() => {

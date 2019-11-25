@@ -38,14 +38,14 @@ export default class RequestDetails extends Component {
                             buttonStyle={styles.button}
                             title="Accept"
                             onPress={() => {
-                                this.props.navigation.goBack();
+                                this.props.navigation.replace('RequestActionConfirm', { type: 'accepted' });
                             }}/>
 
                         <Button
                             buttonStyle={styles.buttonDen}
                             title="Deny"
                             onPress={() => {
-                                this.props.navigation.goBack();
+                                this.props.navigation.replace('RequestActionConfirm', { type: 'denied' });
                             }}/>
                     </View>
                 </View> :

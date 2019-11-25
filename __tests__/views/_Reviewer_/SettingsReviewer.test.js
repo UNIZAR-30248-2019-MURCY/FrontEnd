@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import SettingsReviewer from "../../../app/views/Reviewer/SettingsReviewer";
 import SettingsPlayer from "../../../app/views/Player/SettingsPlayer";
-import {retrieveItem} from "../../../app/services/AsyncStorage/retrieve";
+import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 
 describe('<SettingsReviewer />', () => {
     it('SettingsReviewer renders without crashing', async() => {

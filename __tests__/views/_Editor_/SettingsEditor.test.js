@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import SettingsEditor from "../../../app/views/Editor/SettingsEditor";
 import SettingsReviewer from "../../../app/views/Reviewer/SettingsReviewer";
-import {retrieveItem} from "../../../app/services/AsyncStorage/retrieve";
+import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 import SettingsPlayer from "../../../app/views/Player/SettingsPlayer";
 
 describe('<SettingsEditor />', () => {

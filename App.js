@@ -19,13 +19,14 @@ import Request from "./app/views/Player/Request";
 import RequestConfirm from "./app/views/Player/RequestConfirm";
 import RequestList from "./app/views/Reviewer/RequestList";
 import RequestDetails from "./app/views/Reviewer/RequestDetails";
+import RequestActionConfirm from "./app/views/Reviewer/RequestActionConfirm";
 import SettingsReviewer from "./app/views/Reviewer/SettingsReviewer";
 import EditRemoveQuestion from "./app/views/Editor/EditRemoveQuestion";
 import QuestionConfirm from "./app/views/Editor/QuestionConfirm";
 import {Linking} from "expo";
 
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
-import {retrieveItem} from "./app/services/AsyncStorage/retrieve";
+import {retrieveItem} from "./app/modules/AsyncStorage/retrieve";
 import {getRequestEdit} from "./app/services/user/userFuncs";
 import WEB from './app/config/web';
 
@@ -180,6 +181,7 @@ const RequestListStack = createStackNavigator(
     {
         RequestList: RequestList,
         RequestDetails: RequestDetails,
+        RequestActionConfirm: RequestActionConfirm,
     },
     {
         initialRouteName: 'RequestList',

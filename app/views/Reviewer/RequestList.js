@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ActivityIndicator, AsyncStorage, FlatList, StyleSheet, TextInput, View,} from 'react-native'
 import {Button, ListItem, Text} from 'react-native-elements';
 import {reviewerReqList} from "../../services/user/reviewerFuncs";
-import {retrieveItem} from "../../services/AsyncStorage/retrieve";
+import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
 
 export default class RequestList extends Component {
 
