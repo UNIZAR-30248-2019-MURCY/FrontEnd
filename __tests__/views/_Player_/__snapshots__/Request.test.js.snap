@@ -86,5 +86,67 @@ exports[`<Request /> Request test against snapshot 1`] = `
       </View>
     </View>
   </RCTScrollView>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "borderRadius": 14,
+        }
+      }
+    >
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#2089dc",
+              "borderRadius": 14,
+              "borderWidth": 0,
+              "flexDirection": "row",
+              "height": 55,
+              "justifyContent": "center",
+              "padding": 8,
+              "width": 150,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "grey",
+                "fontSize": 18,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
+            }
+          >
+            Return
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
 </View>
 `;

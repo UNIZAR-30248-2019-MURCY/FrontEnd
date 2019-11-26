@@ -3,6 +3,8 @@ import {ActivityIndicator, AsyncStorage, FlatList, StyleSheet, TextInput, View,}
 import {Button, ListItem, Text} from 'react-native-elements';
 import {reviewerReqList} from "../../services/user/reviewerFuncs";
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
+import ActionButton from "react-native-action-button";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class RequestList extends Component {
 
@@ -22,7 +24,24 @@ export default class RequestList extends Component {
         retrieveItem('token')
             .then(data => {
                 this.setState({token: JSON.parse(data).jsonWebToken})
-                reviewerReqList(this.state.token)
+                reviewerReqList(this.state.token, false, false)
+                    .then((data) => {
+                        this.setState({requests: data})
+                        console.log(this.state.requests)
+                        this.setState({loading: false})
+                    })
+                    .catch((error) => {
+                        this.setState({errorGettingReq: error.message})
+                        this.setState({loading: false})
+                    })
+            })
+    }
+    reload( closed, approved) {
+        this.setState({loading: true})
+        retrieveItem('token')
+            .then(data => {
+                this.setState({token: JSON.parse(data).jsonWebToken})
+                reviewerReqList(this.state.token,  closed, approved)
                     .then((data) => {
                         this.setState({requests: data})
                         console.log(this.state.requests)
@@ -37,8 +56,8 @@ export default class RequestList extends Component {
 
     render() {
         let showLoading = (
-            <View style={ styles.horizontal}>
-                <ActivityIndicator animating={this.state.loading} size="large" color="grey" />
+            <View style={styles.horizontal}>
+                <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
             </View>
         );
 
@@ -62,14 +81,9 @@ export default class RequestList extends Component {
                                     titleStyle={{fontSize: 18}}
                                     bottomDivider
                                     onPress={() => {
-                                        let workflow = item.workflow;
-
-                                        while(workflow.nextWorkflow !== null){
-                                            workflow = workflow.nextWorkflow;
-                                        }
-
                                         this.props.navigation.navigate('RequestDetails', {
-                                            workflow: workflow
+                                            workflow: item.lastWorkflow,
+                                            closed: item.closed
                                         });
                                     }}
                                 />
@@ -84,6 +98,41 @@ export default class RequestList extends Component {
                     <Text h2>Requests List</Text>
                 </View>
                 {showReq}
+                <ActionButton
+                    className='filter-button'
+                    hideShadow={true}
+                    buttonColor="grey"
+                    renderIcon={active => active ? (<Icon name="filter" size={30} color="white"/> ) : (<Icon name="filter" size={30} color="white"/>)}>
+                >
+
+                    <ActionButton.Item buttonColor='#33d9b2' title="Accepted"
+                                       onPress={() => this.reload( true, true)}>
+                        <Icon
+                            name="check"
+                            size={30}
+                            color="white"
+                        />
+                    </ActionButton.Item>
+
+                    <ActionButton.Item buttonColor='#ff5252' title="Denied"
+                                       onPress={() => this.reload( true, false)}>
+                        <Icon
+                            name="times"
+                            size={30}
+                            color="white"
+                        />
+                    </ActionButton.Item>
+
+                    <ActionButton.Item buttonColor='#ffda79' title="Opened"
+                                       onPress={() =>this.reload( false, false)}>
+                        <Icon
+                            name="spinner"
+                            size={30}
+                            color="white"
+                        />
+                    </ActionButton.Item>
+
+                </ActionButton>
             </View>
         )
     }

@@ -12,7 +12,7 @@ export default class Request extends Component {
             description: '',
             token: '',
             request: false,
-            workflow: false,
+            lastWorkflow: false,
             errorGettingReq: false,
             errorForm: false,
             editing: false,
@@ -21,17 +21,10 @@ export default class Request extends Component {
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.searchLastRequest = this.searchLastRequest.bind(this);
     }
 
     onChangeText = (key, val) => {
         this.setState({[key]: val})
-    }
-
-    searchLastRequest() {
-        while (this.state.workflow.nextWorkflow !== null) {
-            this.setState({request: this.state.workflow.nextWorkflow})
-        }
     }
 
     componentDidMount() {
@@ -41,11 +34,9 @@ export default class Request extends Component {
                 this.setState({token: JSON.parse(data).jsonWebToken})
                 getRequestEdit(this.state.token)
                     .then((request) => {
-                        if(request)
-                        {
+                        if (request) {
                             this.setState({request: request})
-                            this.setState({workflow: request.workflow})
-                            this.searchLastRequest()
+                            this.setState({lastWorkflow: request.lastWorkflow})
                         }
                         this.setState({loading: false})
                     })
@@ -67,7 +58,7 @@ export default class Request extends Component {
                     })
                     .catch((error) => {
                         this.setState({errorForm: error.message}),
-                        this.setState({loading: false})
+                            this.setState({loading: false})
                     })
             } else {
                 editRequestEditor(this.state.description, this.state.token)
@@ -82,7 +73,7 @@ export default class Request extends Component {
             }
         } else {
             this.setState({loading: false})
-            this.setState({errorForm: 'Introduzca todos los campos'})
+            this.setState({errorForm: 'Complete todos los campos'})
         }
 
     }
@@ -99,13 +90,13 @@ export default class Request extends Component {
         );
 
         let showLoading = (
-            <View style={ styles.horizontal}>
-                <ActivityIndicator animating={this.state.loading} size="large" color="grey" />
+            <View style={styles.horizontal}>
+                <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
             </View>
         );
 
         let reqNotExist = (
-            <View style={styles.containerRequest}  className='editCreateReq'>
+            <View style={styles.containerRequest} className='editCreateReq'>
                 <TextInput
                     className='descriptionInput'
                     style={styles.input}
@@ -170,30 +161,36 @@ export default class Request extends Component {
         let reqExist = (
             this.state.request.closed && !this.state.request.approved ?
                 <View className='requesDenied'>
-                    <Text h4>A request has been denied</Text>
+                    <Text h4 style={{textAlign: 'center'}}>A request has been denied</Text>
                     <Text style={styles.containerRequestExistContent}>
-                        Description: {this.state.workflow.description}
+                        Description: {this.state.lastWorkflow.description}
                         {'\n'}{'\n'}
-                        Status: {this.state.workflow.status}
+                        Status: {this.state.lastWorkflow.status}
+                        {'\n'}{'\n'}
+                        Response: {this.state.lastWorkflow.response}
                     </Text>
                     {reReq}
                 </View>
                 :
                 this.state.request.closed && this.state.request.approved ?
                     <View className='requesApproved'>
-                        <Text h4>A request has been accepted</Text>
+                        <Text h4 style={{textAlign: 'center'}}>A request has been accepted</Text>
                         <Text style={styles.containerRequestExistContent}>
-                            Description: {this.state.workflow.description}
+                            Description: {this.state.lastWorkflow.description}
                             {'\n'}{'\n'}
-                            Status: {this.state.workflow.status}
+                            Status: {this.state.lastWorkflow.status}
+                            {'\n'}{'\n'}
+                            Response: {this.state.lastWorkflow.response}
                         </Text>
-                    </View >
+                    </View>
                     : <View style={styles.containerInfo} className='editMode'>
-                        <Text h4>A request already exists</Text>
+                        <Text h4 style={{textAlign: 'center'}}>A request already exists</Text>
                         <Text style={styles.containerRequestExistContent}>
-                            Description: {this.state.workflow.description}
+                            Description: {this.state.lastWorkflow.description}
                             {'\n'}{'\n'}
-                            Status: {this.state.workflow.status}
+                            Status: {this.state.lastWorkflow.status}
+                            {'\n'}{'\n'}
+                            Response: {this.state.lastWorkflow.response}
                         </Text>
                         {editReq}
                     </View>
@@ -210,19 +207,9 @@ export default class Request extends Component {
                     this.state.request ?
                         <View style={styles.containerRequestExist} className='requestShow'>
                             {reqExist}
-                                <Button
-                                    className='return-button'
-                                    type="clear"
-                                    buttonStyle={styles.button2}
-                                    title="Return"
-                                    titleStyle={{color: 'grey'}}
-                                    onPress={() => {
-                                        this.props.navigation.goBack();
-                                    }
-                                    }/>
                         </View>
-                     :reqNotExist
-                : showLoading
+                        : reqNotExist
+                    : showLoading
         );
 
         return (
@@ -233,6 +220,18 @@ export default class Request extends Component {
                 <ScrollView>
                     {show}
                 </ScrollView>
+                <View style={styles.containerReturn}>
+                    <Button
+                        className='return-button'
+                        type="clear"
+                        buttonStyle={styles.button2}
+                        title="Return"
+                        titleStyle={{color: 'grey'}}
+                        onPress={() => {
+                            this.props.navigation.goBack();
+                        }
+                        }/>
+                </View>
             </View>
         )
     }
@@ -262,6 +261,12 @@ const styles = StyleSheet.create({
     containerRequestExist: {
         flex: 1,
         padding: 30,
+        alignItems: 'center',
+    },
+    containerRequestExist2: {
+        flex: 1,
+    },
+    containerReturn: {
         alignItems: 'center',
     },
     containerRequestExistContent: {
