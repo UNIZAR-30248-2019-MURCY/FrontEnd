@@ -160,7 +160,11 @@ export const getRequestEdit = (token) => {
                 const responseJSON = await response.json();
                 console.log(responseJSON)
                 return responseJSON
-            } else if (response.status === 403) {
+            } else if (response.status === 401) {
+                console.log(response.status)
+                throw new Error("Not available")
+            }
+            else if (response.status === 403) {
                 console.log(response.status)
                 throw new Error("Not authorized")
             } else if (response.status === 404) {

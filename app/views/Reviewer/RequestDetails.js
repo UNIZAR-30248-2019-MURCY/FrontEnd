@@ -1,29 +1,135 @@
 import React, {Component} from 'react';
-import {AsyncStorage, FlatList, StyleSheet, TextInput, View,} from 'react-native'
+import {ActivityIndicator, AsyncStorage, FlatList, StyleSheet, TextInput, View,} from 'react-native'
 import {Button, ListItem, Text} from 'react-native-elements';
+import {getRequestEdit, requestEditor} from "../../services/user/userFuncs";
+import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
+import {acceptRe, denyReq} from "../../services/user/reviewerFuncs";
 
 export default class RequestDetails extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            workflow: false
+            workflow: false,
+            response: '',
+            errorForm: false,
+            loading: false,
+            token: '',
+            closed: false
         }
     }
 
     componentDidMount() {
+        this.setState({loading: true})
         if (this.props.navigation) {
             this.setState({workflow: this.props.navigation.getParam('workflow', 'default value')});
+            this.setState({closed: this.props.navigation.getParam('closed', 'default value')});
         }
+        retrieveItem('token')
+            .then(data => {
+                this.setState({token: JSON.parse(data).jsonWebToken})
+                this.setState({loading: false})
+            })
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.navigation.state.params.lastName) {
-            this.setState({lastName: nextProps.navigation.state.params.lastName});
+    accept() {
+        this.setState({loading: true})
+        if (this.state.response !== '') {
+            acceptRe(this.state.token, this.state.response, this.state.workflow.id)
+                .then((data) => {
+                    this.setState({loading: false})
+                    this.props.navigation.replace('RequestActionConfirm', {type: 'accepted'});
+                })
+                .catch((error) => {
+                    this.setState({errorForm: error.message}),
+                        this.setState({loading: false})
+                })
+
+
+        } else {
+            this.setState({loading: false})
+            this.setState({errorForm: 'Introduzca una respuesta'})
+        }
+
+    }
+
+    deny() {
+        this.setState({loading: true})
+        if (this.state.response !== '') {
+            denyReq(this.state.token, this.state.response, this.state.workflow.id)
+                .then((data) => {
+                    this.setState({loading: false})
+                    this.props.navigation.replace('RequestActionConfirm', {type: 'denied'});
+                })
+                .catch((error) => {
+                    this.setState({errorForm: error.message}),
+                        this.setState({loading: false})
+                })
+
+        } else {
+            this.setState({loading: false})
+            this.setState({errorForm: 'Introduzca una respuesta'})
         }
     }
 
     render() {
+        let showErr = (
+            this.state.errorForm ?
+                <View style={styles.error} className='errorShow'>
+                    <Text style={{color: 'red'}}>
+                        {this.state.errorForm}
+                    </Text>
+                </View> :
+                <View></View>
+        );
+
+        let showButtons = (
+            !this.state.loading ?
+                !this.state.closed ?
+                    <View style={styles.containerForm}>
+
+                        <View style={styles.containerButtons}>
+                            <Button
+                                buttonStyle={styles.button}
+                                title="Accept"
+                                onPress={() => {
+                                    this.accept()
+                                }}/>
+
+                            <Button
+                                buttonStyle={styles.buttonDen}
+                                title="Deny"
+                                onPress={() => {
+                                    this.deny()
+                                }}/>
+                        </View>
+                    </View>
+                    :
+                    <View>
+                    </View>
+                :
+                <View style={styles.horizontal}>
+                    <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
+                </View>
+
+        );
+        let showInput = (
+            !this.state.closed ?
+                <TextInput
+                    className='responseInput'
+                    style={styles.input}
+                    multiline={true}
+                    placeholder='Response'
+                    autoCapitalize="none"
+                    placeholderTextColor='darkgrey'
+                    onChangeText={val => this.setState({response: val})}
+                />
+                :
+                <View>
+                </View>
+
+        );
+
         let showDetails = (
             this.state.workflow ?
                 <View style={styles.containerRequest}>
@@ -33,21 +139,9 @@ export default class RequestDetails extends Component {
                         {'\n'}{'\n'}
                         Status: {this.state.workflow.status}
                     </Text>
-                    <View style={styles.containerButtons}>
-                        <Button
-                            buttonStyle={styles.button}
-                            title="Accept"
-                            onPress={() => {
-                                this.props.navigation.replace('RequestActionConfirm', { type: 'accepted' });
-                            }}/>
-
-                        <Button
-                            buttonStyle={styles.buttonDen}
-                            title="Deny"
-                            onPress={() => {
-                                this.props.navigation.replace('RequestActionConfirm', { type: 'denied' });
-                            }}/>
-                    </View>
+                    {showInput}
+                    {showErr}
+                    {showButtons}
                 </View> :
                 <View></View>
 
@@ -103,11 +197,21 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     containerRequestDetails: {
-        flex: 1,
         marginTop: 25,
         fontSize: 18,
         color: 'grey',
         textAlign: 'center',
+    },
+    input: {
+        width: 250,
+        height: 80,
+        backgroundColor: 'whitesmoke',
+        marginTop: 50,
+        padding: 8,
+        color: 'grey',
+        borderRadius: 14,
+        fontSize: 18,
+        fontWeight: '500',
     },
     button: {
         width: 150,
@@ -134,5 +238,19 @@ const styles = StyleSheet.create({
     containerButtons: {
         flexDirection: 'row'
     },
+    containerForm: {
+        alignItems: 'center',
+    },
+    error: {
+        margin: 10,
+        alignItems: 'center',
+    },
+    horizontal: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10,
+        marginTop: 50,
+    },
+
 
 })

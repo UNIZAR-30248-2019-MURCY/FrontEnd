@@ -28,7 +28,7 @@ export default class EmailConfirm extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.navigation.navigate('Auth');
+                            this.props.navigation.navigate('AuthLoading');
                         }
                         }
                     />
