@@ -58,27 +58,36 @@ describe('<CreateQuestion />', () => {
         expect(wrapper.instance().onChangeText).toBeCalledWith('title2','London');
         expect(wrapper.find('.correct2').prop('checked')).toBe(false);
 
+        wrapper.find('.correct2').prop('onPress')();
+        expect(wrapper.find('.correct2').prop('checked')).toBe(true);
+
+        wrapper.find('.add-button').simulate('press');
         event = 'Paris';
         wrapper.find('.title3').simulate('changeText', event)
         expect(wrapper.instance().onChangeText).toBeCalledWith('title3','Paris');
         expect(wrapper.find('.correct3').prop('checked')).toBe(false);
 
+        wrapper.find('.add-button').simulate('press');
         event = 'Dublin';
         wrapper.find('.title4').simulate('changeText', event)
         expect(wrapper.instance().onChangeText).toBeCalledWith('title4','Dublin');
         expect(wrapper.find('.correct4').prop('checked')).toBe(false);
-
     });
+
     it('CheckBoxes', () => {
         let wrapper = shallow(<CreateQuestion/>);
         wrapper.find('.correct1').prop('onPress')();
         expect(wrapper.find('.correct1').prop('checked')).toBe(true);
         wrapper.find('.correct2').prop('onPress')();
         expect(wrapper.find('.correct2').prop('checked')).toBe(true);
-        wrapper.find('.correct3').prop('onPress')();
-        expect(wrapper.find('.correct3').prop('checked')).toBe(true);
-        wrapper.find('.correct4').prop('onPress')();
-        expect(wrapper.find('.correct4').prop('checked')).toBe(true);
     });
 
+    it('deleteAnswer', () => {
+        let wrapper = shallow(<CreateQuestion/>);
+
+        wrapper.find('.add-button').simulate('press');
+        wrapper.find('.add-button').simulate('press');
+        wrapper.find('.remove-button').simulate('press');
+        wrapper.find('.remove-button').simulate('press');
+    })
 });

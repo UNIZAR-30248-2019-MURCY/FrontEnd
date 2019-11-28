@@ -9,7 +9,8 @@ import {
 import {Button, Text, ListItem} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {retrieveItem} from "../../services/AsyncStorage/retrieve";
+import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
+import {listQuestions } from "../../services/quiz/questionFuncs";
 
 
 export default class QuestionsEdit extends Component {
@@ -59,12 +60,12 @@ export default class QuestionsEdit extends Component {
         }
     }
 
-    /*
+    
     componentDidMount() {
         retrieveItem('token')
             .then(data => {
                 this.setState({token: data})
-                listQuestion(this.state.token)
+                listQuestions(this.state.token)
                     .then((data) => {
                         console.log(data);
                         this.setState(data);
@@ -73,7 +74,7 @@ export default class QuestionsEdit extends Component {
                         this.setState( {error: error.message})
                     })
             })
-    }*/
+    }
 
 
     render() {
