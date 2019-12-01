@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import QuestionsEdit from "../../../app/views/Editor/QuestionsEdit";
 
-describe('<CreateQuestion />', () => {
+describe('<QuestionsEdit />', () => {
     it('QuestionsEdit renders without crashing', () => {
         const rendered = renderer.create(<QuestionsEdit />).toJSON();
         expect(rendered).toBeTruthy();

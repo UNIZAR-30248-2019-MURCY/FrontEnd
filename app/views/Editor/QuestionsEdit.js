@@ -20,43 +20,7 @@ export default class QuestionsEdit extends Component {
         this.state = {
             token: '',
             error: '',
-            data: [
-                {
-                    id: 1,
-                    title: '¿Cual es la capital de España?',
-                    description: 'Hey q pasa',
-                    options: [
-                        {
-                            title: 'Madrid',
-                            correct: true
-                        },
-                        {
-                            title: 'Zgz',
-                            correct: false
-                        },
-
-                    ]
-                },
-                {
-                    id: 2,
-                    title: '¿Cual es la capital de Aragón?',
-                    description: 'Hey q pasa',
-                    options: [
-                        {
-                            title: 'Huesca',
-                            correct: false
-                        },
-                        {
-                            title: 'Zgz',
-                            correct: true
-                        },
-                        {
-                            title: 'Teruel',
-                            correct: false
-                        },
-                    ]
-                }
-            ]
+            data: []
         }
     }
 
@@ -64,16 +28,33 @@ export default class QuestionsEdit extends Component {
     componentDidMount() {
         retrieveItem('token')
             .then(data => {
-                this.setState({token: data})
+                this.setState({token: JSON.parse(data).jsonWebToken})
                 listQuestions(this.state.token)
                     .then((data) => {
                         console.log(data);
-                        this.setState(data);
+                        this.setState( {data: data});
                     })
                     .catch((error) => {
                         this.setState( {error: error.message})
                     })
             })
+    }
+    
+    componentWillReceiveProps(nextProps){
+        if (nextProps.navigation.state.params.reload) {
+            retrieveItem('token')
+            .then(data => {
+                this.setState({token: JSON.parse(data).jsonWebToken})
+                listQuestions(this.state.token)
+                    .then((data) => {
+                        console.log(data);
+                        this.setState( {data: data});
+                    })
+                    .catch((error) => {
+                        this.setState( {error: error.message})
+                    })
+            })
+        }
     }
 
 

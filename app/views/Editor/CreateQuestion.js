@@ -44,7 +44,7 @@ export default class CreateQuestion extends Component {
     componentDidMount() {
         retrieveItem('token')
             .then(data => {
-                this.setState({token: data})
+                this.setState({token: JSON.parse(data).jsonWebToken})
             })
     }
     
@@ -70,7 +70,7 @@ export default class CreateQuestion extends Component {
             console.log(this.state.description)
             console.log(this.state.options)
 
-            /*
+            
             createQuestion(this.state.title, this.state.description, this.state.options, this.state.token)
                 .then((data) => {
                     console.log(data);
@@ -79,7 +79,7 @@ export default class CreateQuestion extends Component {
                     this.setState( {error: error.message})
                     this.setState({loading: false})
                 });
-                */
+                
             this.props.navigation.replace('QuestionConfirm', {type: 'created'});
         } else {
             this.setState({loading: false})

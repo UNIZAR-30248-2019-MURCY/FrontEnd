@@ -1,5 +1,5 @@
 export const createQuestion = (title, description, options, token) => {
-    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/question`;
+    const URL = 'https://preunizar-30248-2019-murcy.herokuapp.com/api/question';
     return fetch(URL, {
         method: 'POST',
         headers: {
@@ -14,12 +14,16 @@ export const createQuestion = (title, description, options, token) => {
         }),
     })
     .then(async (response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
             const responseJSON = await response.json();
             console.log(responseJSON)
             return responseJSON
+        } else if (response.status === 403) {
+            console.log(response.status)
+            throw new Error("Not authorized")
         } else {
-            throw new Error("Create question error")
+            console.log(response.status)
+            throw new Error("Server error")
         }
     })
     .catch((error) => {
@@ -45,12 +49,16 @@ export const editQuestion = (id, title, description, options, token) => {
         }),
     })
     .then(async (response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
             const responseJSON = await response.json();
             console.log(responseJSON)
             return responseJSON
+        } else if (response.status === 403) {
+            console.log(response.status)
+            throw new Error("Not authorized")
         } else {
-            throw new Error("Edit question error")
+            console.log(response.status)
+            throw new Error("Server error")
         }
     })
     .catch((error) => {
@@ -71,12 +79,16 @@ export const deleteQuestion = (id, token) => {
         }
     })
     .then(async (response) => {
-        if (response.status === 200) {
+        if (response.status === 201) {
             const responseJSON = await response.json();
             console.log(responseJSON)
             return responseJSON
+        } else if (response.status === 403) {
+            console.log(response.status)
+            throw new Error("Not authorized")
         } else {
-            throw new Error("Delete question error")
+            console.log(response.status)
+            throw new Error("Server error")
         }
     })
     .catch((error) => {
@@ -86,23 +98,27 @@ export const deleteQuestion = (id, token) => {
     });
 }
 
-export const listQuestions = (id, token) => {
-    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/question/` + id;
+export const listQuestions = (token) => {
+    const URL = 'https://preunizar-30248-2019-murcy.herokuapp.com/api/question/list';
     return fetch(URL, {
         method: 'GET',
         headers: {
             Authorization: 'Bearer ' + token,
             Accept: 'application/json',
             'Content-Type': 'application/json',
-        }
+        },
     })
     .then(async (response) => {
         if (response.status === 200) {
             const responseJSON = await response.json();
             console.log(responseJSON)
             return responseJSON
+        } else if (response.status === 403) {
+            console.log(response.status)
+            throw new Error("Not authorized")
         } else {
-            throw new Error("List questions error")
+            console.log(response.status)
+            throw new Error("Server error")
         }
     })
     .catch((error) => {

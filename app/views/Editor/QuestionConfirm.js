@@ -39,7 +39,7 @@ export default class QuestionConfirm extends Component {
                             />
                         }
                         onPress={() => {
-                            this.props.navigation.goBack();
+                            this.props.navigation.navigate('QuestionsEdit', { reload: true })
                         }
                         }
                     />

@@ -14,11 +14,11 @@ describe('<QuestionConfirm />', () => {
     });
     it('should go back', () => {
         const navigationMock = {
-            goBack: jest.fn(),
+            navigate: jest.fn(),
             getParam: jest.fn()
         };
         const wrapper = shallow(<QuestionConfirm navigation={navigationMock}/>);
         wrapper.find('.close-button').simulate('press');
-        expect(navigationMock.goBack.mock.calls.length).toEqual(1);
+        expect(navigationMock.navigate.mock.calls.length).toEqual(1);
     })
 });
