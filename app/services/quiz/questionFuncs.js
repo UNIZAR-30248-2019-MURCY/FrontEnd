@@ -1,10 +1,11 @@
 import WEB from "../../config/web";
 
 export const createQuestion = (title, description, options) => {
-    const URL = WEB.BACK +'/quiz/';
+    const URL = WEB.BACK +'/question';
     return fetch(URL, {
         method: 'POST',
         headers: {
+            Authorization: 'Bearer ' + token,
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
@@ -14,143 +15,117 @@ export const createQuestion = (title, description, options) => {
             options: options
         }),
     })
-        .then((response) => {
-            if(response.statusText === "OK" && response.status >= 200 && response.status < 300) {
-                return response.json()
-            } else {
-                throw new Error("Server can't be reached!")
-            }
-        })
-        .then((json) => {
-            console.log("json!")
-            console.log(json)
-        })
-        .catch((error) => {
-            console.log(error)
-            console.log(error.message)
-            throw error;
-        });
+    .then(async (response) => {
+        if (response.status === 201) {
+            const responseJSON = await response.json();
+            console.log(responseJSON)
+            return responseJSON
+        } else if (response.status === 403) {
+            console.log(response.status)
+            throw new Error("Not authorized")
+        } else {
+            console.log(response.status)
+            throw new Error("Server error")
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        console.log(error.message)
+        throw error;
+    });
 }
 
-export const editQuestion = (id, title, description, options) => {
-    const URL = WEB.BACK +'/quiz/';
+export const editQuestion = (id, title, description, options, token) => {
+    const URL = WEB.BACK +'/question' + id;
     return fetch(URL, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
+            Authorization: 'Bearer ' + token,
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            id: id,
             title: title,
             description: description,
             options: options
         }),
     })
-        .then((response) => {
-            if(response.statusText === "OK" && response.status >= 200 && response.status < 300) {
-                return response.json()
-            } else {
-                throw new Error("Server can't be reached!")
-            }
-        })
-        .then((json) => {
-            console.log("json!")
-            console.log(json)
-        })
-        .catch((error) => {
-            console.log(error)
-            console.log(error.message)
-            throw error;
-        });
+    .then(async (response) => {
+        if (response.status === 201) {
+            const responseJSON = await response.json();
+            console.log(responseJSON)
+            return responseJSON
+        } else if (response.status === 403) {
+            console.log(response.status)
+            throw new Error("Not authorized")
+        } else {
+            console.log(response.status)
+            throw new Error("Server error")
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        console.log(error.message)
+        throw error;
+    });
 }
 
-export const deleteQuestion = (id) => {
-    const URL = WEB.BACK +'/quiz/';
+export const deleteQuestion = (id, token) => {
+    const URL = WEB.BACK +'/question' + id;
     return fetch(URL, {
-        method: 'POST',
+        method: 'DELETE',
         headers: {
+            Authorization: 'Bearer ' + token,
             Accept: 'application/json',
             'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            id: id
-        }),
+        }
     })
-        .then((response) => {
-            if(response.statusText === "OK" && response.status >= 200 && response.status < 300) {
-                return response.json()
-            } else {
-                throw new Error("Server can't be reached!")
-            }
-        })
-        .then((json) => {
-            console.log("json!")
-            console.log(json)
-        })
-        .catch((error) => {
-            console.log(error)
-            console.log(error.message)
-            throw error;
-        });
+    .then(async (response) => {
+        if (response.status === 201) {
+            const responseJSON = await response.json();
+            console.log(responseJSON)
+            return responseJSON
+        } else if (response.status === 403) {
+            console.log(response.status)
+            throw new Error("Not authorized")
+        } else {
+            console.log(response.status)
+            throw new Error("Server error")
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        console.log(error.message)
+        throw error;
+    });
 }
 
-export const listQuestions = () => {
-    const URL = WEB.BACK +'/quiz/';
-    return fetch(URL, {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-
-        }),
-    })
-        .then((response) => {
-            if(response.statusText === "OK" && response.status >= 200 && response.status < 300) {
-                return response.json()
-            } else {
-                throw new Error("Server can't be reached!")
-            }
-        })
-        .then((json) => {
-            console.log("json!")
-            console.log(json)
-        })
-        .catch((error) => {
-            console.log(error)
-            console.log(error.message)
-            throw error;
-        });
-}
-
-export const infoQuestions = (id) => {
-    const URL = WEB.BACK +'/quiz/';
+export const listQuestions = (token) => {
+    const URL = WEB.BACK +'/question/list';
     return fetch(URL, {
         method: 'GET',
         headers: {
+            Authorization: 'Bearer ' + token,
             Accept: 'application/json',
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-            id: id
-        }),
     })
-        .then((response) => {
-            if(response.statusText === "OK" && response.status >= 200 && response.status < 300) {
-                return response.json()
-            } else {
-                throw new Error("Server can't be reached!")
-            }
-        })
-        .then((json) => {
-            console.log("json!")
-            console.log(json)
-        })
-        .catch((error) => {
-            console.log(error)
-            console.log(error.message)
-            throw error;
-        });
+    .then(async (response) => {
+        if (response.status === 200) {
+            const responseJSON = await response.json();
+            console.log(responseJSON)
+            return responseJSON
+        } else if (response.status === 403) {
+            console.log(response.status)
+            throw new Error("Not authorized")
+        } else {
+            console.log(response.status)
+            throw new Error("Server error")
+        }
+    })
+    .catch((error) => {
+        console.log(error)
+        console.log(error.message)
+        throw error;
+    });
 }

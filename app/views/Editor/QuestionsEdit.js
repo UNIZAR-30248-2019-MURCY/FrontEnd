@@ -9,6 +9,8 @@ import {
 import {Button, Text, ListItem} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
+import {listQuestions } from "../../services/quiz/questionFuncs";
 
 
 export default class QuestionsEdit extends Component {
@@ -16,57 +18,43 @@ export default class QuestionsEdit extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [
-                {
-                    id: 1,
-                    title: '¿Cual es la capital de España?',
-                    description: 'Hey q pasa',
-                    options: [
-                        {
-                            title: 'Madrid',
-                            correct: true
-                        },
-                        {
-                            title: 'Zgz',
-                            correct: false
-                        },
-
-                    ]
-                },
-                {
-                    id: 2,
-                    title: '¿Cual es la capital de Aragón?',
-                    description: 'Hey q pasa',
-                    options: [
-                        {
-                            title: 'Huesca',
-                            correct: false
-                        },
-                        {
-                            title: 'Zgz',
-                            correct: true
-                        },
-                        {
-                            title: 'Teruel',
-                            correct: false
-                        },
-                    ]
-                }
-            ]
+            token: '',
+            error: '',
+            data: []
         }
     }
 
-    componentDidMount(){
-        /*
-        listQuestion()
-                .then((data) => {
-                    console.log(data);
-                    //this.setState(data);
-                })
-                .catch((error) => {
-                    this.setState( {error: error.message})
-                });
-                */
+    
+    componentDidMount() {
+        retrieveItem('token')
+            .then(data => {
+                this.setState({token: JSON.parse(data).jsonWebToken})
+                listQuestions(this.state.token)
+                    .then((data) => {
+                        console.log(data);
+                        this.setState( {data: data});
+                    })
+                    .catch((error) => {
+                        this.setState( {error: error.message})
+                    })
+            })
+    }
+    
+    componentWillReceiveProps(nextProps){
+        if (nextProps.navigation.state.params.reload) {
+            retrieveItem('token')
+            .then(data => {
+                this.setState({token: JSON.parse(data).jsonWebToken})
+                listQuestions(this.state.token)
+                    .then((data) => {
+                        console.log(data);
+                        this.setState( {data: data});
+                    })
+                    .catch((error) => {
+                        this.setState( {error: error.message})
+                    })
+            })
+        }
     }
 
 
