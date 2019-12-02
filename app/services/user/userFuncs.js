@@ -1,5 +1,7 @@
+import WEB from "../../config/web";
+
 export const signUpUser = (username, password, email, fullName) => {
-    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/user`;
+    const URL = WEB.BACK +'/user';
     return fetch(URL, {
         method: 'POST',
         headers: {
@@ -29,7 +31,7 @@ export const signUpUser = (username, password, email, fullName) => {
 
 
 export const logInUser = (username, password) => {
-    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/user/login`;
+    const URL = WEB.BACK +'/user/login';
     return fetch(URL, {
         method: 'POST',
         headers: {
@@ -58,7 +60,7 @@ export const logInUser = (username, password) => {
 }
 
 export const userInfo = (token) => {
-    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/user/info`;
+    const URL = WEB.BACK +'/user/info';
     return fetch(URL, {
         method: 'GET',
         headers: {
@@ -85,7 +87,7 @@ export const userInfo = (token) => {
 }
 
 export const requestEditor = (description, token) => {
-    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/request/editor`;
+    const URL = WEB.BACK +'/request/editor';
     return fetch(URL, {
         method: 'POST',
         headers: {
@@ -118,7 +120,7 @@ export const requestEditor = (description, token) => {
 
 
 export const editRequestEditor = (description, token) => {
-    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/request/editor`;
+    const URL = WEB.BACK +'/request/editor';
     return fetch(URL, {
         method: 'PUT',
         headers: {
@@ -146,7 +148,7 @@ export const editRequestEditor = (description, token) => {
 }
 
 export const getRequestEdit = (token) => {
-    const URL = `https://preunizar-30248-2019-murcy.herokuapp.com/api/request/editor`;
+    const URL = WEB.BACK +'/request/editor';
     return fetch(URL, {
         method: 'GET',
         headers: {
@@ -183,7 +185,7 @@ export const getRequestEdit = (token) => {
 }
 
 export const emailVerif = (token) => {
-    const URL = 'https://preunizar-30248-2019-murcy.herokuapp.com/api/user/confirm/'+token;
+    const URL = WEB.BACK +'/user/confirm/'+token;
     return fetch(URL, {
         method: 'POST',
         headers: {

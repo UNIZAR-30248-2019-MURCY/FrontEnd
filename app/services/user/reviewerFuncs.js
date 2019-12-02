@@ -1,5 +1,7 @@
+import WEB from "../../config/web";
+
 export const reviewerReqList = (token, closed, approved) => {
-    const URL = 'https://preunizar-30248-2019-murcy.herokuapp.com/api/request/editor/list?closed='+closed+'&approved='+approved;
+    const URL = WEB.BACK +'/request/editor/list?closed='+closed+'&approved='+approved;
     return fetch(URL, {
         method: 'GET',
         headers: {
@@ -29,7 +31,7 @@ export const reviewerReqList = (token, closed, approved) => {
 }
 
 export const acceptRe = (token, response, id) => {
-    const URL = 'https://preunizar-30248-2019-murcy.herokuapp.com/api/workflow/' + id + '/approve';
+    const URL = WEB.BACK +'/workflow/' + id + '/approve';
     return fetch(URL, {
         method: 'PUT',
         headers: {
@@ -42,7 +44,7 @@ export const acceptRe = (token, response, id) => {
         }),
     })
         .then(async (response) => {
-            if (response.status === 200) {
+            if (response.status === 201) {
                 const responseJSON = await response.json();
                 console.log(responseJSON)
                 return responseJSON
@@ -62,7 +64,7 @@ export const acceptRe = (token, response, id) => {
 }
 
 export const denyReq = (token, response, id) => {
-    const URL = 'https://preunizar-30248-2019-murcy.herokuapp.com/api/workflow/' + id + '/deny';
+    const URL = WEB.BACK +'/workflow/' + id + '/deny';
     return fetch(URL, {
         method: 'PUT',
         headers: {

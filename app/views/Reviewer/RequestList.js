@@ -23,7 +23,7 @@ export default class RequestList extends Component {
         this.setState({loading: true})
         retrieveItem('token')
             .then(data => {
-                this.setState({token: JSON.parse(data).jsonWebToken})
+                this.setState({token: JSON.parse(data)})
                 reviewerReqList(this.state.token, false, false)
                     .then((data) => {
                         this.setState({requests: data})
@@ -40,7 +40,7 @@ export default class RequestList extends Component {
         this.setState({loading: true})
         retrieveItem('token')
             .then(data => {
-                this.setState({token: JSON.parse(data).jsonWebToken})
+                this.setState({token: JSON.parse(data)})
                 reviewerReqList(this.state.token,  closed, approved)
                     .then((data) => {
                         this.setState({requests: data})
@@ -77,11 +77,12 @@ export default class RequestList extends Component {
                             renderItem={({item}) => (
                                 <ListItem
                                     className='detail-button'
-                                    title={item.description}
+                                    title={item.lastWorkflow.description}
                                     titleStyle={{fontSize: 18}}
                                     bottomDivider
                                     onPress={() => {
                                         this.props.navigation.navigate('RequestDetails', {
+                                            workflowList: item.workflow,
                                             workflow: item.lastWorkflow,
                                             closed: item.closed
                                         });
@@ -92,6 +93,7 @@ export default class RequestList extends Component {
                     </View>
                     : showLoading
         );
+
         return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
@@ -108,6 +110,7 @@ export default class RequestList extends Component {
                     <ActionButton.Item buttonColor='#33d9b2' title="Accepted"
                                        onPress={() => this.reload( true, true)}>
                         <Icon
+                            className='accepted'
                             name="check"
                             size={30}
                             color="white"
@@ -117,6 +120,7 @@ export default class RequestList extends Component {
                     <ActionButton.Item buttonColor='#ff5252' title="Denied"
                                        onPress={() => this.reload( true, false)}>
                         <Icon
+                            className='denied'
                             name="times"
                             size={30}
                             color="white"
@@ -126,6 +130,7 @@ export default class RequestList extends Component {
                     <ActionButton.Item buttonColor='#ffda79' title="Opened"
                                        onPress={() =>this.reload( false, false)}>
                         <Icon
+                            className='opened'
                             name="spinner"
                             size={30}
                             color="white"

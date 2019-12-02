@@ -1,5 +1,7 @@
+import WEB from "../../config/web";
+
 export const createQuestion = (title, description, options) => {
-    const URL = `https://murcy.com/quiz/`;
+    const URL = WEB.BACK +'/quiz/';
     return fetch(URL, {
         method: 'POST',
         headers: {
@@ -31,7 +33,7 @@ export const createQuestion = (title, description, options) => {
 }
 
 export const editQuestion = (id, title, description, options) => {
-    const URL = `https://murcy.com/quiz/`;
+    const URL = WEB.BACK +'/quiz/';
     return fetch(URL, {
         method: 'POST',
         headers: {
@@ -64,7 +66,7 @@ export const editQuestion = (id, title, description, options) => {
 }
 
 export const deleteQuestion = (id) => {
-    const URL = `https://murcy.com/quiz/`;
+    const URL = WEB.BACK +'/quiz/';
     return fetch(URL, {
         method: 'POST',
         headers: {
@@ -94,7 +96,7 @@ export const deleteQuestion = (id) => {
 }
 
 export const listQuestions = () => {
-    const URL = `https://murcy.com/quiz/`;
+    const URL = WEB.BACK +'/quiz/';
     return fetch(URL, {
         method: 'GET',
         headers: {
@@ -102,7 +104,7 @@ export const listQuestions = () => {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            
+
         }),
     })
         .then((response) => {
@@ -124,7 +126,7 @@ export const listQuestions = () => {
 }
 
 export const infoQuestions = (id) => {
-    const URL = `https://murcy.com/quiz/`;
+    const URL = WEB.BACK +'/quiz/';
     return fetch(URL, {
         method: 'GET',
         headers: {

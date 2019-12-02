@@ -3,6 +3,7 @@ import {ActivityIndicator, AsyncStorage, ScrollView, StyleSheet, TextInput, View
 import {Button, Text} from 'react-native-elements';
 import {getRequestEdit, requestEditor, editRequestEditor} from "../../services/user/userFuncs";
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class Request extends Component {
 
@@ -31,7 +32,7 @@ export default class Request extends Component {
         this.setState({loading: true})
         retrieveItem('token')
             .then(data => {
-                this.setState({token: JSON.parse(data).jsonWebToken})
+                this.setState({token: JSON.parse(data)})
                 getRequestEdit(this.state.token)
                     .then((request) => {
                         if (request) {
@@ -158,6 +159,30 @@ export default class Request extends Component {
                 : reqNotExist
         );
 
+        let workflowButton = (
+            <Button
+                className='workflow-button'
+                type="clear"
+                title="Workflow"
+                titleStyle={{color: 'grey'}}
+                onPress={() => {
+                    console.log(this.state.request)
+
+                    let workflowList = [this.state.request.workflow];
+                    let lastW = this.state.request.workflow;
+
+                    while (lastW.nextWorkflow) {
+                        console.log('ENTRA');
+                        workflowList.push(lastW.nextWorkflow);
+                        lastW = lastW.nextWorkflow;
+                    }
+
+                    this.props.navigation.navigate('WorkflowView', {
+                        workflow: workflowList,
+                    });
+                }}/>
+        );
+
         let reqExist = (
             this.state.request.closed && !this.state.request.approved ?
                 <View className='requesDenied'>
@@ -170,6 +195,7 @@ export default class Request extends Component {
                         Response: {this.state.lastWorkflow.response}
                     </Text>
                     {reReq}
+                    {workflowButton}
                 </View>
                 :
                 this.state.request.closed && this.state.request.approved ?
@@ -182,6 +208,7 @@ export default class Request extends Component {
                             {'\n'}{'\n'}
                             Response: {this.state.lastWorkflow.response}
                         </Text>
+                        {workflowButton}
                     </View>
                     : <View style={styles.containerInfo} className='editMode'>
                         <Text h4 style={{textAlign: 'center'}}>A request already exists</Text>
@@ -193,6 +220,7 @@ export default class Request extends Component {
                             Response: {this.state.lastWorkflow.response}
                         </Text>
                         {editReq}
+                        {workflowButton}
                     </View>
         );
 

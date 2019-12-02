@@ -40,20 +40,27 @@ export default class LogIn extends Component {
             this.setState({error: false})
             logInUser(this.state.username, this.state.password)
                 .then((data) => {
-                    saveData('token', data).then(r =>
-                        userInfo(data.jsonWebToken).then((dataUser) => {
-                                saveData('role', dataUser.role).then(r =>
-                                        console.log(dataUser.role),
-                                    this.setState({loading: false}),
-                                    this.props.navigation.navigate('App')
-                                )
-                            }
-                        )
-                            .catch((error) => {
-                                this.setState({error: error.message}),
-                                    this.setState({loading: false})
-                            })
-                    );
+                    let token;
+                    if(data.token){
+                        token=data.token;
+                    }
+                    else{
+                        token=data.jsonWebToken;
+                    }
+                    userInfo(token).then((dataUser) => {
+                            saveData('token', token);
+                            saveData('role', dataUser.role).then(r =>
+                                    console.log(dataUser.role),
+                                this.setState({loading: false}),
+                                this.props.navigation.navigate('App')
+                            )
+
+                        }
+                    )
+                        .catch((error) => {
+                            this.setState({error: error.message}),
+                                this.setState({loading: false})
+                        })
                 })
                 .catch((error) => {
                     this.setState({error: error.message}),
@@ -76,7 +83,7 @@ export default class LogIn extends Component {
         );
         let showLoading = (
             this.state.loading ?
-                <View style={[styles.containerLoading]}>
+                <View style={[styles.containerLoading]} className='loadingShow'>
                     <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
                 </View> :
                 <View></View>

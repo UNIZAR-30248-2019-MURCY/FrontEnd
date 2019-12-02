@@ -15,7 +15,8 @@ export default class RequestDetails extends Component {
             errorForm: false,
             loading: false,
             token: '',
-            closed: false
+            closed: false,
+            workflowList: ''
         }
     }
 
@@ -23,11 +24,12 @@ export default class RequestDetails extends Component {
         this.setState({loading: true})
         if (this.props.navigation) {
             this.setState({workflow: this.props.navigation.getParam('workflow', 'default value')});
+            this.setState({workflowList: this.props.navigation.getParam('workflowList', 'default value')});
             this.setState({closed: this.props.navigation.getParam('closed', 'default value')});
         }
         retrieveItem('token')
             .then(data => {
-                this.setState({token: JSON.parse(data).jsonWebToken})
+                this.setState({token: JSON.parse(data)})
                 this.setState({loading: false})
             })
     }
@@ -90,6 +92,7 @@ export default class RequestDetails extends Component {
 
                         <View style={styles.containerButtons}>
                             <Button
+                                className='accept-button'
                                 buttonStyle={styles.button}
                                 title="Accept"
                                 onPress={() => {
@@ -97,6 +100,7 @@ export default class RequestDetails extends Component {
                                 }}/>
 
                             <Button
+                                className='deny-button'
                                 buttonStyle={styles.buttonDen}
                                 title="Deny"
                                 onPress={() => {
@@ -139,12 +143,36 @@ export default class RequestDetails extends Component {
                         {'\n'}{'\n'}
                         Status: {this.state.workflow.status}
                     </Text>
+
                     {showInput}
                     {showErr}
                     {showButtons}
                 </View> :
                 <View></View>
 
+        );
+        let workflowButton = (
+            <Button
+                className='workflow-button'
+                type="clear"
+                title="Workflow"
+                titleStyle={{color: 'grey'}}
+                onPress={() => {
+                    console.log(this.state.request)
+
+                    let workflowList = [this.state.workflowList];
+                    let lastW = this.state.workflowList;
+
+                    while (lastW.nextWorkflow) {
+                        console.log('ENTRA');
+                        workflowList.push(lastW.nextWorkflow);
+                        lastW = lastW.nextWorkflow;
+                    }
+
+                    this.props.navigation.navigate('WorkflowView', {
+                        workflow: workflowList,
+                    });
+                }}/>
         );
 
         return (
@@ -154,6 +182,7 @@ export default class RequestDetails extends Component {
                 </View>
                 <View style={styles.containerRequest2}>
                     {showDetails}
+                    {workflowButton}
                     <View style={styles.containerRequest3}>
                         <Button
                             className='return-button'

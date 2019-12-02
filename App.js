@@ -23,6 +23,7 @@ import RequestActionConfirm from "./app/views/Reviewer/RequestActionConfirm";
 import SettingsReviewer from "./app/views/Reviewer/SettingsReviewer";
 import EditRemoveQuestion from "./app/views/Editor/EditRemoveQuestion";
 import QuestionConfirm from "./app/views/Editor/QuestionConfirm";
+import WorkflowView from "./app/components/WorkflowView";
 import {Linking} from "expo";
 
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
@@ -51,6 +52,7 @@ const SettingsPlayerStack = createStackNavigator(
     {
         SettingsPlayer: SettingsPlayer,
         Request: Request,
+        WorkflowView: WorkflowView,
         RequestConfirm: RequestConfirm,
     },
     {
@@ -181,6 +183,7 @@ const RequestListStack = createStackNavigator(
     {
         RequestList: RequestList,
         RequestDetails: RequestDetails,
+        WorkflowView: WorkflowView,
         RequestActionConfirm: RequestActionConfirm,
     },
     {

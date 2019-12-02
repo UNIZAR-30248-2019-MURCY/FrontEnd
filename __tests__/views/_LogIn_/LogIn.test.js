@@ -37,6 +37,11 @@ describe('<LogIn />', () => {
         loginComponent.setState({ error: true });
         expect(loginComponent.find('.errorShow').length).toBe(1);
     });
+    it('should render the loading component if state.loading is true', () => {
+        let loginComponent = shallow(<LogIn />);
+        loginComponent.setState({ loading: true });
+        expect(loginComponent.find('.loadingShow').length).toBe(1);
+    });
     it('onChangeText', () => {
         let wrapper = shallow(<LogIn/>);
         wrapper.instance().onChangeText = jest.fn();
