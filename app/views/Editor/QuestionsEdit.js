@@ -4,7 +4,7 @@ import {
     StyleSheet,
     FlatList,
     ScrollView,
-    SafeAreaView
+    SafeAreaView, ActivityIndicator
 } from 'react-native'
 import {Button, Text, ListItem} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
@@ -24,34 +24,40 @@ export default class QuestionsEdit extends Component {
         }
     }
 
-    
+
     componentDidMount() {
+        this.setState({loading: true})
         retrieveItem('token')
             .then(data => {
-                this.setState({token: JSON.parse(data).jsonWebToken})
+                this.setState({token: JSON.parse(data)})
                 listQuestions(this.state.token)
                     .then((data) => {
                         console.log(data);
                         this.setState( {data: data});
+                        this.setState({loading: false})
                     })
                     .catch((error) => {
                         this.setState( {error: error.message})
+                        this.setState({loading: false})
                     })
             })
     }
-    
+
     componentWillReceiveProps(nextProps){
+        this.setState({loading: true})
         if (nextProps.navigation.state.params.reload) {
             retrieveItem('token')
             .then(data => {
-                this.setState({token: JSON.parse(data).jsonWebToken})
+                this.setState({token: JSON.parse(data)})
                 listQuestions(this.state.token)
                     .then((data) => {
                         console.log(data);
                         this.setState( {data: data});
+                        this.setState({loading: false})
                     })
                     .catch((error) => {
                         this.setState( {error: error.message})
+                        this.setState({loading: false})
                     })
             })
         }
@@ -59,14 +65,22 @@ export default class QuestionsEdit extends Component {
 
 
     render() {
-        return (
+        let showLoading = (
+            this.state.loading ?
+                <View style={[styles.containerLoading]} className='loadingShow'>
+                    <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
+                </View> :
+                <View></View>
+        );
 
+        return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
                     <Text h2>Questions</Text>
                 </View>
                 <ScrollView>
                     <SafeAreaView style={styles.containerQuestions}>
+                        {showLoading}
                         <FlatList
                             data={this.state.data}
                             keyExtractor={item => item.id.toString()}

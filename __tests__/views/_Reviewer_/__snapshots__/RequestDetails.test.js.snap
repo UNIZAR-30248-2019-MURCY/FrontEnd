@@ -129,6 +129,7 @@ exports[`<RequestDetails /> RequestDetails test against snapshot 1`] = `
       style={
         Object {
           "alignItems": "center",
+          "marginBottom": 10,
         }
       }
     >
@@ -175,7 +176,7 @@ exports[`<RequestDetails /> RequestDetails test against snapshot 1`] = `
               style={
                 Object {
                   "color": "grey",
-                  "fontSize": 18,
+                  "fontSize": 20,
                   "paddingBottom": 1,
                   "paddingTop": 2,
                   "textAlign": "center",

@@ -364,7 +364,8 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
           <View
             style={
               Object {
-                "flex": 1,
+                "alignItems": "center",
+                "justifyContent": "center",
               }
             }
           >
@@ -394,12 +395,12 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
                   style={
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "blue",
+                      "backgroundColor": "#4b7bec",
                       "borderColor": "#2089dc",
                       "borderRadius": 14,
                       "borderWidth": 0,
                       "flexDirection": "row",
-                      "height": 55,
+                      "height": 45,
                       "justifyContent": "center",
                       "margin": 10,
                       "marginTop": 25,
@@ -428,7 +429,8 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
           <View
             style={
               Object {
-                "flex": 1,
+                "alignItems": "center",
+                "justifyContent": "center",
               }
             }
           >
@@ -458,12 +460,12 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
                   style={
                     Object {
                       "alignItems": "center",
-                      "backgroundColor": "red",
+                      "backgroundColor": "#ff5252",
                       "borderColor": "#2089dc",
                       "borderRadius": 14,
                       "borderWidth": 0,
                       "flexDirection": "row",
-                      "height": 55,
+                      "height": 45,
                       "justifyContent": "center",
                       "margin": 10,
                       "marginTop": 25,
@@ -490,7 +492,6 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
             </View>
           </View>
         </View>
-        <br />
         <View />
         <View />
         <View
@@ -527,7 +528,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
                   "height": 55,
                   "justifyContent": "center",
                   "margin": 10,
-                  "marginTop": 45,
+                  "marginTop": 30,
                   "padding": 8,
                   "width": 250,
                 }

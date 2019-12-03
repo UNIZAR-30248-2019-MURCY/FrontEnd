@@ -1,6 +1,6 @@
 import WEB from "../../config/web";
 
-export const createQuestion = (title, description, options) => {
+export const createQuestion = (title, description, options, token) => {
     const URL = WEB.BACK +'/question';
     return fetch(URL, {
         method: 'POST',
@@ -17,14 +17,13 @@ export const createQuestion = (title, description, options) => {
     })
     .then(async (response) => {
         if (response.status === 201) {
-            const responseJSON = await response.json();
-            console.log(responseJSON)
-            return responseJSON
+            return response
         } else if (response.status === 403) {
             console.log(response.status)
             throw new Error("Not authorized")
         } else {
             console.log(response.status)
+            console.log(response)
             throw new Error("Server error")
         }
     })

@@ -189,7 +189,7 @@ export default class RequestDetails extends Component {
                             type="clear"
                             buttonStyle={styles.button2}
                             title="Return"
-                            titleStyle={{color: 'grey'}}
+                            titleStyle={{color: 'grey', fontSize: 20}}
                             onPress={() => {
                                 this.props.navigation.goBack();
                             }
@@ -224,6 +224,7 @@ const styles = StyleSheet.create({
     },
     containerRequest3: {
         alignItems: 'center',
+        marginBottom: 10
     },
     containerRequestDetails: {
         marginTop: 25,

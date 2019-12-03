@@ -160,27 +160,32 @@ export default class Request extends Component {
         );
 
         let workflowButton = (
-            <Button
-                className='workflow-button'
-                type="clear"
-                title="Workflow"
-                titleStyle={{color: 'grey'}}
-                onPress={() => {
-                    console.log(this.state.request)
+            !this.state.loading && this.state.request ?
+                <View style={{marginTop: 50}}>
+                    <Button
+                        className='workflow-button'
+                        type="clear"
+                        title="Workflow"
+                        titleStyle={{color: 'grey'}}
+                        onPress={() => {
+                            console.log(this.state.request)
 
-                    let workflowList = [this.state.request.workflow];
-                    let lastW = this.state.request.workflow;
+                            let workflowList = [this.state.request.workflow];
+                            let lastW = this.state.request.workflow;
 
-                    while (lastW.nextWorkflow) {
-                        console.log('ENTRA');
-                        workflowList.push(lastW.nextWorkflow);
-                        lastW = lastW.nextWorkflow;
-                    }
+                            while (lastW.nextWorkflow) {
+                                console.log('ENTRA');
+                                workflowList.push(lastW.nextWorkflow);
+                                lastW = lastW.nextWorkflow;
+                            }
 
-                    this.props.navigation.navigate('WorkflowView', {
-                        workflow: workflowList,
-                    });
-                }}/>
+                            this.props.navigation.navigate('WorkflowView', {
+                                workflow: workflowList,
+                            });
+                        }}/>
+                </View>
+                : <View></View>
+
         );
 
         let reqExist = (
@@ -195,7 +200,6 @@ export default class Request extends Component {
                         Response: {this.state.lastWorkflow.response}
                     </Text>
                     {reReq}
-                    {workflowButton}
                 </View>
                 :
                 this.state.request.closed && this.state.request.approved ?
@@ -208,7 +212,6 @@ export default class Request extends Component {
                             {'\n'}{'\n'}
                             Response: {this.state.lastWorkflow.response}
                         </Text>
-                        {workflowButton}
                     </View>
                     : <View style={styles.containerInfo} className='editMode'>
                         <Text h4 style={{textAlign: 'center'}}>A request already exists</Text>
@@ -220,7 +223,6 @@ export default class Request extends Component {
                             Response: {this.state.lastWorkflow.response}
                         </Text>
                         {editReq}
-                        {workflowButton}
                     </View>
         );
 
@@ -248,13 +250,14 @@ export default class Request extends Component {
                 <ScrollView>
                     {show}
                 </ScrollView>
+                {workflowButton}
                 <View style={styles.containerReturn}>
                     <Button
                         className='return-button'
                         type="clear"
                         buttonStyle={styles.button2}
                         title="Return"
-                        titleStyle={{color: 'grey'}}
+                        titleStyle={{color: 'grey', fontSize: 20}}
                         onPress={() => {
                             this.props.navigation.goBack();
                         }
@@ -296,6 +299,7 @@ const styles = StyleSheet.create({
     },
     containerReturn: {
         alignItems: 'center',
+        marginBottom: 20
     },
     containerRequestExistContent: {
         textAlign: 'center',

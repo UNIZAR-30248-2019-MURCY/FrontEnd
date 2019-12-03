@@ -55,7 +55,7 @@ export default class WorkflowView extends Component {
                         type="clear"
                         buttonStyle={styles.button2}
                         title="Return"
-                        titleStyle={{color: 'grey'}}
+                        titleStyle={{color: 'grey', fontSize: 20}}
                         onPress={() => {
                             this.props.navigation.goBack();
                         }
@@ -90,6 +90,6 @@ const styles = StyleSheet.create({
     },
     containerReturn: {
         alignItems: 'center',
-        marginBottom: 10
+        marginBottom: 25
     },
 })

@@ -76,6 +76,21 @@ exports[`<QuestionsEdit /> QuestionsEdit test against snapshot 1`] = `
           }
         }
       >
+        <View
+          className="loadingShow"
+          style={
+            Array [
+              undefined,
+            ]
+          }
+        >
+          <ActivityIndicator
+            animating={true}
+            color="grey"
+            hidesWhenStopped={true}
+            size="large"
+          />
+        </View>
         <RCTScrollView
           data={Array []}
           disableVirtualization={false}

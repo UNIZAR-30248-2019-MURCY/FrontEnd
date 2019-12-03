@@ -108,7 +108,7 @@ exports[`<WorkflowView /> WorkflowView test against snapshot 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "marginBottom": 10,
+        "marginBottom": 25,
       }
     }
   >
@@ -152,7 +152,7 @@ exports[`<WorkflowView /> WorkflowView test against snapshot 1`] = `
             style={
               Object {
                 "color": "grey",
-                "fontSize": 18,
+                "fontSize": 20,
                 "paddingBottom": 1,
                 "paddingTop": 2,
                 "textAlign": "center",
