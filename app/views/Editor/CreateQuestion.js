@@ -197,6 +197,8 @@ export default class CreateQuestion extends Component {
                             onChangeText={val => this.onChangeText('description', val)}
                         />
                         <Text style={styles.subTitle2}>Answers</Text>
+                        <Text style={styles.subTitle3}>Fill in at least 2 answers</Text>
+
                         <View style={styles.containerButtons}>
                             <TextInput
                                 className='title1'

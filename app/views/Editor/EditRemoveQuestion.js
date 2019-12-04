@@ -174,13 +174,18 @@ export default class EditRemoveQuestion extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        alignItems: 'center',
         //justifyContent: 'center',
         padding: 20
     },
     containerTitle: {
+        marginTop: 50,
+        padding: 20
+    },
+    containerCreate: {
         flex: 1,
         alignItems: 'center',
-        marginTop: 50,
+        //justifyContent: 'center',
         padding: 20
     },
     subTitle: {
@@ -198,6 +203,7 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 17,
         color: 'grey',
+        marginBottom: 5
     },
     checkBoxC: {
         padding: 0,
@@ -205,12 +211,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: "white",
         borderColor: "white"
-    },
-    containerCreate: {
-        flex: 1,
-        alignItems: 'center',
-        //justifyContent: 'center',
-        padding: 20
     },
     logo: {
         margin: 30,

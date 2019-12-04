@@ -6,6 +6,7 @@ exports[`<EditRemoveQuestion /> CreateQuestion test against snapshot 1`] = `
     <View
       style={
         Object {
+          "alignItems": "center",
           "flex": 1,
           "padding": 20,
         }
@@ -14,8 +15,6 @@ exports[`<EditRemoveQuestion /> CreateQuestion test against snapshot 1`] = `
       <View
         style={
           Object {
-            "alignItems": "center",
-            "flex": 1,
             "marginTop": 50,
             "padding": 20,
           }
@@ -226,6 +225,7 @@ exports[`<EditRemoveQuestion /> CreateQuestion test against snapshot 1`] = `
               "color": "grey",
               "flex": 1,
               "fontSize": 17,
+              "marginBottom": 5,
             }
           }
           theme={
