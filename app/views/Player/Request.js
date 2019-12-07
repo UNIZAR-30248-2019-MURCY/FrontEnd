@@ -168,17 +168,15 @@ export default class Request extends Component {
                         title="Workflow"
                         titleStyle={{color: 'grey'}}
                         onPress={() => {
-                            console.log(this.state.request)
-
                             let workflowList = [this.state.request.workflow];
                             let lastW = this.state.request.workflow;
 
-                            while (lastW.nextWorkflow) {
-                                console.log('ENTRA');
-                                workflowList.push(lastW.nextWorkflow);
-                                lastW = lastW.nextWorkflow;
+                            if(lastW){
+                                while (lastW.nextWorkflow) {
+                                    workflowList.push(lastW.nextWorkflow);
+                                    lastW = lastW.nextWorkflow;
+                                }
                             }
-
                             this.props.navigation.navigate('WorkflowView', {
                                 workflow: workflowList,
                             });

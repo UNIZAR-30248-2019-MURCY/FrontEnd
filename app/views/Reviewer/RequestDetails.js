@@ -88,8 +88,7 @@ export default class RequestDetails extends Component {
         let showButtons = (
             !this.state.loading ?
                 !this.state.closed ?
-                    <View style={styles.containerForm}>
-
+                    <View style={styles.containerForm}  className='containerButtons'>
                         <View style={styles.containerButtons}>
                             <Button
                                 className='accept-button'
@@ -136,7 +135,7 @@ export default class RequestDetails extends Component {
 
         let showDetails = (
             this.state.workflow ?
-                <View style={styles.containerRequest}>
+                <View style={styles.containerRequest} className='showDetails'>
                     <Text h4 style={styles.containerSubTitle}>{this.state.workflow.title}</Text>
                     <Text style={styles.containerRequestDetails}>
                         Description: {this.state.workflow.description}
@@ -158,15 +157,14 @@ export default class RequestDetails extends Component {
                 title="Workflow"
                 titleStyle={{color: 'grey'}}
                 onPress={() => {
-                    console.log(this.state.request)
-
                     let workflowList = [this.state.workflowList];
                     let lastW = this.state.workflowList;
 
-                    while (lastW.nextWorkflow) {
-                        console.log('ENTRA');
-                        workflowList.push(lastW.nextWorkflow);
-                        lastW = lastW.nextWorkflow;
+                    if(lastW){
+                        while (lastW.nextWorkflow) {
+                            workflowList.push(lastW.nextWorkflow);
+                            lastW = lastW.nextWorkflow;
+                        }
                     }
 
                     this.props.navigation.navigate('WorkflowView', {

@@ -31,6 +31,9 @@ describe('<LogIn />', () => {
         wrapper.update();
         wrapper.find('.login-button').simulate('press');
         expect(wrapper.instance().handleSubmit).toBeCalledTimes(1);
+        wrapper.find('.passInput').simulate('submitEditing');
+        expect(wrapper.instance().handleSubmit).toBeCalledTimes(2);
+
     })
     it('should render the Error component if state.error is true', () => {
         let loginComponent = shallow(<LogIn />);

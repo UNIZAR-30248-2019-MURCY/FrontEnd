@@ -183,5 +183,70 @@ describe('<Request />', () => {
         wrapper.setState({errorForm: true});
         expect(wrapper.find('.errorGettingReq').length).toBe(1);
     });
+
+    it('should go to Workflow View', async () => {
+        await retrieveItem();
+        const navigationMock = {navigate: jest.fn()};
+        let wrapper = shallow(<Request navigation={navigationMock}/>);
+        wrapper.setState({errorGettingReq: false});
+        wrapper.setState({loading: false});
+        wrapper.setState({
+            request: {
+                closed: false,
+                workflow: {
+                    description: "Prueba petición",
+                    id: 1,
+                    nextWorkflow: {
+                        description: "Prueba petición",
+                        id: 2,
+                        nextWorkflow: null,
+                        response: "Prueba",
+                        status: "APPROVED",
+                        statusBy: "test",
+                        statusDate: "2019-11-26T10:27:05.853+0000",
+                        title: "Solicitud para ser editor",
+                    },
+                    response: "Prueba",
+                    status: "APPROVED",
+                    statusBy: "test",
+                    statusDate: "2019-11-26T10:27:05.853+0000",
+                    title: "Solicitud para ser editor",
+                }
+            }
+        });
+        let workflowList = {
+            workflow: [{
+                description: "Prueba petición",
+                id: 1,
+                nextWorkflow: {
+                    description: "Prueba petición",
+                    id: 2,
+                    nextWorkflow: null,
+                    response: "Prueba",
+                    status: "APPROVED",
+                    statusBy: "test",
+                    statusDate: "2019-11-26T10:27:05.853+0000",
+                    title: "Solicitud para ser editor",
+                },
+                response: "Prueba",
+                status: "APPROVED",
+                statusBy: "test",
+                statusDate: "2019-11-26T10:27:05.853+0000",
+                title: "Solicitud para ser editor",
+            },
+                {
+                    description: "Prueba petición",
+                    id: 2,
+                    nextWorkflow: null,
+                    response: "Prueba",
+                    status: "APPROVED",
+                    statusBy: "test",
+                    statusDate: "2019-11-26T10:27:05.853+0000",
+                    title: "Solicitud para ser editor",
+                }]
+        }
+        wrapper.find('.workflow-button').simulate('press');
+        expect(navigationMock.navigate.mock.calls[0]).toEqual(['WorkflowView', workflowList]);
+    });
 });
 
