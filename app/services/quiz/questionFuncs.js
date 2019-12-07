@@ -35,7 +35,7 @@ export const createQuestion = (title, description, options, token) => {
 }
 
 export const editQuestion = (id, title, description, options, token) => {
-    const URL = WEB.BACK +'/question' + id;
+    const URL = WEB.BACK +'/question/' + id;
     return fetch(URL, {
         method: 'PUT',
         headers: {
@@ -70,7 +70,9 @@ export const editQuestion = (id, title, description, options, token) => {
 }
 
 export const deleteQuestion = (id, token) => {
-    const URL = WEB.BACK +'/question' + id;
+    console.log(id)
+    console.log(token)
+    const URL = WEB.BACK +'/question/' + id;
     return fetch(URL, {
         method: 'DELETE',
         headers: {
@@ -80,10 +82,8 @@ export const deleteQuestion = (id, token) => {
         }
     })
     .then(async (response) => {
-        if (response.status === 201) {
-            const responseJSON = await response.json();
-            console.log(responseJSON)
-            return responseJSON
+        if (response.status === 202) {
+            return response
         } else if (response.status === 403) {
             console.log(response.status)
             throw new Error("Not authorized")

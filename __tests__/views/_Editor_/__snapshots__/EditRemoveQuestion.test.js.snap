@@ -146,6 +146,7 @@ exports[`<EditRemoveQuestion /> CreateQuestion test against snapshot 1`] = `
             }
           }
           underlineColorAndroid="transparent"
+          value=""
         />
         <TextInput
           allowFontScaling={true}
@@ -169,6 +170,7 @@ exports[`<EditRemoveQuestion /> CreateQuestion test against snapshot 1`] = `
             }
           }
           underlineColorAndroid="transparent"
+          value=""
         />
         <Text
           style={
@@ -269,6 +271,7 @@ exports[`<EditRemoveQuestion /> CreateQuestion test against snapshot 1`] = `
           Fill in at least 2 answers
         </Text>
         <RCTScrollView
+          data={Array []}
           disableVirtualization={false}
           getItem={[Function]}
           getItemCount={[Function]}

@@ -52,11 +52,11 @@ describe('<EditRemoveQuestion />', () => {
 
         let event = 'What is the capital of Spain?';
         wrapper.find('.questionInput').simulate('changeText', event)
-        expect(wrapper.instance().onChangeText).toBeCalledWith('data.title','What is the capital of Spain?');
+        expect(wrapper.instance().onChangeText).toBeCalledWith('title','What is the capital of Spain?');
 
         event = 'Description';
         wrapper.find('.description').simulate('changeText', event)
-        expect(wrapper.instance().onChangeText).toBeCalledWith('data.description','Description');
+        expect(wrapper.instance().onChangeText).toBeCalledWith('description','Description');
 
     });
 });

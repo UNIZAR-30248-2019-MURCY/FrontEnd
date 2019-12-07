@@ -9,7 +9,8 @@ import {
 } from 'react-native'
 import {Button, Text, CheckBox, ListItem} from 'react-native-elements';
 
-import {editQuestion, deleteQuestion, infoQuestion} from "../../services/quiz/questionFuncs";
+import {editQuestion, deleteQuestion, infoQuestion, createQuestion} from "../../services/quiz/questionFuncs";
+import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
 
 
 export default class EditRemoveQuestion extends Component {
@@ -20,14 +21,26 @@ export default class EditRemoveQuestion extends Component {
             data: [],
             loading: false,
             error: false,
+            token: '',
+            title: '',
+            description: '',
+            options: [],
         }
         this.onChangeText = this.onChangeText.bind(this);
     }
 
     componentDidMount() {
+        retrieveItem('token')
+            .then(data => {
+                this.setState({token: JSON.parse(data)})
+            })
+
         if (this.props.navigation) {
-            if(this.props.navigation.getParam('info')){
-                this.setState({data: this.props.navigation.getParam('info')})
+            if (this.props.navigation.getParam('info')) {
+                this.setState({id: this.props.navigation.getParam('info').id})
+                this.setState({title: this.props.navigation.getParam('info').title})
+                this.setState({description: this.props.navigation.getParam('info').description})
+                this.setState({options: this.props.navigation.getParam('info').options})
             }
         }
     }
@@ -39,35 +52,37 @@ export default class EditRemoveQuestion extends Component {
     editQuestion() {
         this.setState({loading: true})
         this.setState({error: false})
-        /*
-        editQuestion(this.state.id, this.state.question, this.state.answer1, this.state.answer2, this.state.answer3, this.state.answer4, this.state.value)
-            .then((data) => {
-                console.log(data);
-                this.setState({loading: false})
-            })
-            .catch((error) => {
-                this.setState( {error: error.message})
-                this.setState({loading: false})
-            });
-            */
-        this.props.navigation.replace('QuestionConfirm', { type: 'modified' });
+
+        if (this.state.title !== '') {
+            editQuestion(this.state.id, this.state.title, this.state.description, this.state.options, this.state.token)
+                .then((data) => {
+                    console.log(data);
+                    this.setState({loading: false})
+                    this.props.navigation.replace('QuestionConfirm', {type: 'modified'});
+                })
+                .catch((error) => {
+                    this.setState({error: error.message})
+                    this.setState({loading: false})
+                });
+        } else {
+            this.setState({loading: false})
+            this.setState({error: 'Incomplete Fields'})
+        }
     }
 
     deleteQuestion() {
         this.setState({loading: true})
         this.setState({error: false})
-        /*
-        deleteQuestion(this.state.id)
+
+        deleteQuestion(this.state.id, this.state.token)
             .then((data) => {
-                console.log(data);
                 this.setState({loading: false})
+                this.props.navigation.replace('QuestionConfirm', {type: 'deleted'});
             })
             .catch((error) => {
-                this.setState( {error: error.message})
+                this.setState({error: error.message})
                 this.setState({loading: false})
             });
-            */
-        this.props.navigation.replace('QuestionConfirm', { type: 'deleted' });
     }
 
     render() {
@@ -103,8 +118,8 @@ export default class EditRemoveQuestion extends Component {
                             placeholder='Question'
                             autoCapitalize="none"
                             placeholderTextColor='darkgrey'
-                            value={this.state.data.title}
-                            onChangeText={val => this.onChangeText('data.title', val)}
+                            value={this.state.title}
+                            onChangeText={val => this.onChangeText('title', val)}
                         />
                         <TextInput
                             className='description'
@@ -112,28 +127,41 @@ export default class EditRemoveQuestion extends Component {
                             placeholder='Description'
                             autoCapitalize="none"
                             placeholderTextColor='darkgrey'
-                            value={this.state.data.description}
-                            onChangeText={val => this.onChangeText('data.description', val)}
+                            value={this.state.description}
+                            onChangeText={val => this.onChangeText('description', val)}
                         />
 
                         <Text style={styles.subTitle2}>Answers</Text>
                         <Text style={styles.subTitle3}>Fill in at least 2 answers</Text>
 
                         <FlatList
-                            data={this.state.data.options}
+                            data={this.state.options}
                             keyExtractor={item => item.title}
-                            renderItem={({item}) => (
+                            renderItem={({item, index}) => (
                                 <View style={styles.containerButtons}>
                                     <TextInput
                                         style={styles.inputAns}
-                                        placeholder={item.title}
+                                        value={item.title}
+                                        placeholder='Answer'
                                         placeholderTextColor='darkgrey'
-                                        onChangeText={val => this.onChangeText('title1', val)}
+                                        onChangeText={(val) => {
+                                            const copyOptions = [...this.state.options];
+                                            copyOptions[index].title = val;
+                                            this.setState({
+                                                options: copyOptions,
+                                            });
+                                        }}
                                     />
                                     <CheckBox value="1"
                                               containerStyle={styles.checkBoxC}
                                               checked={item.correct}
-                                              onPress={() => this.setState({correct1: !this.state.correct1})}/>
+                                              onPress={() => {
+                                                  const copyOptions = [...this.state.options];
+                                                  copyOptions[index].correct = !copyOptions[index].correct;
+                                                  this.setState({
+                                                      options: copyOptions,
+                                                  });
+                                              }}/>
                                 </View>
                             )}
                         />
