@@ -92,6 +92,7 @@ exports[`<QuestionsEdit /> QuestionsEdit test against snapshot 1`] = `
           />
         </View>
         <RCTScrollView
+          className="list"
           data={Array []}
           disableVirtualization={false}
           getItem={[Function]}

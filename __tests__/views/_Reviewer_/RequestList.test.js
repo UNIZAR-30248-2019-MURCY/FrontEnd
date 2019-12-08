@@ -30,4 +30,17 @@ describe('<RequestList />', () => {
         wrapper.setState({ loading: false });
         expect(wrapper.find('.reqList').length).toBe(1);
     });
+    it('filter-button', async () => {
+        await retrieveItem();
+        let wrapper = shallow(<RequestList/>);
+        wrapper.instance().reload = jest.fn();
+        wrapper.update();
+        wrapper.find('.accepted-button').simulate('press');
+        expect(wrapper.instance().reload).toBeCalledTimes(1);
+        wrapper.find('.denied-button').simulate('press');
+        expect(wrapper.instance().reload).toBeCalledTimes(2);
+        wrapper.find('.opened-button').simulate('press');
+        expect(wrapper.instance().reload).toBeCalledTimes(3);
+
+    });
 });

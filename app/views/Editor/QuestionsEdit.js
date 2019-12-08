@@ -82,10 +82,12 @@ export default class QuestionsEdit extends Component {
                     <SafeAreaView style={styles.containerQuestions}>
                         {showLoading}
                         <FlatList
+                            className='list'
                             data={this.state.data}
                             keyExtractor={item => item.id.toString()}
                             renderItem={({item}) => (
                                 <ListItem
+                                    className='item-button'
                                     title={item.title}
                                     rightIcon={
                                         <Icon

@@ -104,10 +104,10 @@ export default class RequestList extends Component {
                     className='filter-button'
                     hideShadow={true}
                     buttonColor="grey"
-                    renderIcon={active => active ? (<Icon name="filter" size={30} color="white"/> ) : (<Icon name="filter" size={30} color="white"/>)}>
+                    renderIcon={active => active ? (<Icon className='filter-active' name="filter" size={30} color="white"/> ) : (<Icon className='filter-inactive'  name="filter" size={30} color="white"/>)}>
                 >
 
-                    <ActionButton.Item buttonColor='#33d9b2' title="Accepted"
+                    <ActionButton.Item className='accepted-button' buttonColor='#33d9b2' title="Accepted"
                                        onPress={() => this.reload( true, true)}>
                         <Icon
                             className='accepted'
@@ -117,7 +117,7 @@ export default class RequestList extends Component {
                         />
                     </ActionButton.Item>
 
-                    <ActionButton.Item buttonColor='#ff5252' title="Denied"
+                    <ActionButton.Item className='denied-button' buttonColor='#ff5252' title="Denied"
                                        onPress={() => this.reload( true, false)}>
                         <Icon
                             className='denied'
@@ -127,7 +127,7 @@ export default class RequestList extends Component {
                         />
                     </ActionButton.Item>
 
-                    <ActionButton.Item buttonColor='#ffda79' title="Opened"
+                    <ActionButton.Item className='opened-button' buttonColor='#ffda79' title="Opened"
                                        onPress={() =>this.reload( false, false)}>
                         <Icon
                             className='opened'

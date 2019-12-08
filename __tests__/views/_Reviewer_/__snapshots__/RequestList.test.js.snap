@@ -208,6 +208,7 @@ exports[`<RequestList /> RequestList test against snapshot 1`] = `
             >
               <Text
                 allowFontScaling={false}
+                className="filter-inactive"
                 style={
                   Array [
                     Object {
