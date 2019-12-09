@@ -11,6 +11,7 @@ import {Button, Text, CheckBox, ListItem} from 'react-native-elements';
 
 import {editQuestion, deleteQuestion, infoQuestion, createQuestion} from "../../services/quiz/questionFuncs";
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
+import SwitchSelector from "react-native-switch-selector";
 
 
 export default class EditRemoveQuestion extends Component {
@@ -18,13 +19,15 @@ export default class EditRemoveQuestion extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            data: {},
             loading: false,
             error: false,
             token: '',
             title: '',
             description: '',
             options: [],
+            showPublish: true,
+            publish: false,
         }
         this.onChangeText = this.onChangeText.bind(this);
     }
@@ -41,6 +44,12 @@ export default class EditRemoveQuestion extends Component {
                 this.setState({title: this.props.navigation.getParam('info').title})
                 this.setState({description: this.props.navigation.getParam('info').description})
                 this.setState({options: this.props.navigation.getParam('info').options})
+                this.setState({data: this.props.navigation.getParam('info')})
+                if (this.props.navigation.getParam('info').lastWorkflow.status === 'DRAFT') {
+                    this.setState({publish: false})
+                } else {
+                    this.setState({publish: true, showPublish: false})
+                }
             }
         }
     }
@@ -54,7 +63,7 @@ export default class EditRemoveQuestion extends Component {
         this.setState({error: false})
 
         if (this.state.title !== '') {
-            editQuestion(this.state.id, this.state.title, this.state.description, this.state.options, this.state.token)
+            editQuestion(this.state.id, this.state.title, this.state.description, this.state.options, this.state.publish, this.state.token)
                 .then((data) => {
                     console.log(data);
                     this.setState({loading: false})
@@ -101,6 +110,51 @@ export default class EditRemoveQuestion extends Component {
                 <View style={[styles.containerLoading]} className='loadingShow'>
                     <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
                 </View> :
+                <View></View>
+        );
+        let showDraft = (
+            this.state.showPublish ?
+                <SwitchSelector
+                    initial={0}
+                    onPress={value => this.setState({publish: value})}
+                    textColor='grey'
+                    selectedColor='white'
+                    buttonColor='grey'
+                    borderColor='grey'
+                    hasPadding
+                    options={[
+                        {label: "Draft", value: "false",},
+                        {label: "Public", value: "true",}
+                    ]}
+                /> :
+                <View>
+                    <Text style={styles.subTitle3}>Status of publication: {this.state.data.lastWorkflow.status}</Text>
+                </View>
+        );
+        let workflowButton = (
+            this.state.data.workflow ?
+                <Button
+                    className='workflow-button'
+                    type="clear"
+                    title="Workflow"
+                    style={{marginTop: 20}}
+                    titleStyle={{color: 'grey'}}
+                    onPress={() => {
+                        let workflowList = [this.state.data.workflow];
+                        let lastW = this.state.data.workflow;
+
+                        if (lastW) {
+                            while (lastW.nextWorkflow) {
+                                workflowList.push(lastW.nextWorkflow);
+                                lastW = lastW.nextWorkflow;
+                            }
+                        }
+
+                        this.props.navigation.navigate('WorkflowQuestionView', {
+                            workflow: workflowList,
+                        });
+                    }}/>
+                :
                 <View></View>
         );
 
@@ -168,6 +222,11 @@ export default class EditRemoveQuestion extends Component {
 
                         {showErr}
                         {showLoading}
+
+                        <View style={styles.containerSelector}>
+                            {showDraft}
+                        </View>
+
                         <Button
                             className='edit-button'
                             buttonStyle={styles.button}
@@ -182,6 +241,7 @@ export default class EditRemoveQuestion extends Component {
                             onPress={() => {
                                 this.deleteQuestion()
                             }}/>
+                        {workflowButton}
                         <Button
                             className='return-button'
                             type="clear"
@@ -270,17 +330,18 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     button: {
-        width: 150,
-        height: 55,
-        marginTop: 50,
+        width: 200,
+        height: 50,
+        marginTop: 60,
         margin: 10,
         backgroundColor: 'grey',
         borderRadius: 14
     },
     button1: {
-        width: 120,
+        width: 130,
         height: 45,
-        marginTop: 15,
+        marginTop: 10,
+        marginBottom: 20,
         margin: 10,
         backgroundColor: '#ff5252',
         borderRadius: 14
@@ -297,5 +358,14 @@ const styles = StyleSheet.create({
     },
     containerButtons: {
         flexDirection: 'row'
+    },
+    containerSelector: {
+        flex: 1,
+        marginTop: 10,
+        width: 250,
+    },
+    error: {
+        margin: 20,
+        alignItems: 'center',
     },
 })

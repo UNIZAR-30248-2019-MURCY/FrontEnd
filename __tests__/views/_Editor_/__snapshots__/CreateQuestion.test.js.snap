@@ -541,6 +541,143 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
             </View>
           </View>
         </View>
+        <View
+          style={
+            Object {
+              "flex": 1,
+              "marginBottom": 15,
+              "marginTop": 65,
+              "width": 250,
+            }
+          }
+        >
+          <View
+            style={
+              Array [
+                Object {
+                  "flexDirection": "row",
+                },
+                Object {},
+              ]
+            }
+          >
+            <View
+              onMoveShouldSetResponder={[Function]}
+              onMoveShouldSetResponderCapture={[Function]}
+              onResponderEnd={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderReject={[Function]}
+              onResponderRelease={[Function]}
+              onResponderStart={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              onStartShouldSetResponderCapture={[Function]}
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <View
+                onLayout={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "#FFFFFF",
+                    "borderRadius": 50,
+                    "height": 40,
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "borderColor": "grey",
+                      "borderRadius": 50,
+                      "borderWidth": 1,
+                      "flex": 1,
+                      "flexDirection": "row",
+                    }
+                  }
+                >
+                  <View
+                    accessible={true}
+                    isTVSelectable={true}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "flex": 1,
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                        "opacity": 1,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "backgroundColor": "transparent",
+                            "color": "white",
+                            "fontSize": 14,
+                            "fontWeight": "normal",
+                            "textAlign": "center",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      Draft
+                    </Text>
+                  </View>
+                  <View
+                    accessible={true}
+                    isTVSelectable={true}
+                    onResponderGrant={[Function]}
+                    onResponderMove={[Function]}
+                    onResponderRelease={[Function]}
+                    onResponderTerminate={[Function]}
+                    onResponderTerminationRequest={[Function]}
+                    onStartShouldSetResponder={[Function]}
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "flex": 1,
+                        "flexDirection": "row",
+                        "justifyContent": "center",
+                        "opacity": 1,
+                      }
+                    }
+                  >
+                    <Text
+                      style={
+                        Array [
+                          Object {
+                            "backgroundColor": "transparent",
+                            "color": "grey",
+                            "fontSize": 14,
+                            "fontWeight": "normal",
+                            "textAlign": "center",
+                          },
+                          Object {},
+                        ]
+                      }
+                    >
+                      Public
+                    </Text>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
         <View />
         <View />
         <View
@@ -574,12 +711,12 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
                   "borderRadius": 14,
                   "borderWidth": 0,
                   "flexDirection": "row",
-                  "height": 55,
+                  "height": 50,
                   "justifyContent": "center",
                   "margin": 10,
                   "marginTop": 30,
                   "padding": 8,
-                  "width": 250,
+                  "width": 200,
                 }
               }
             >

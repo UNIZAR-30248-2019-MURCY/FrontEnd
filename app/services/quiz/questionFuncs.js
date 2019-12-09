@@ -1,6 +1,6 @@
 import WEB from "../../config/web";
 
-export const createQuestion = (title, description, options, token) => {
+export const createQuestion = (title, description, options, publish, token) => {
     const URL = WEB.BACK +'/question';
     return fetch(URL, {
         method: 'POST',
@@ -12,7 +12,8 @@ export const createQuestion = (title, description, options, token) => {
         body: JSON.stringify({
             title: title,
             description: description,
-            options: options
+            options: options,
+            publish: publish
         }),
     })
     .then(async (response) => {
@@ -34,7 +35,7 @@ export const createQuestion = (title, description, options, token) => {
     });
 }
 
-export const editQuestion = (id, title, description, options, token) => {
+export const editQuestion = (id, title, description, options, publish, token) => {
     const URL = WEB.BACK +'/question/' + id;
     return fetch(URL, {
         method: 'PUT',
@@ -46,7 +47,8 @@ export const editQuestion = (id, title, description, options, token) => {
         body: JSON.stringify({
             title: title,
             description: description,
-            options: options
+            options: options,
+            publish: publish
         }),
     })
     .then(async (response) => {

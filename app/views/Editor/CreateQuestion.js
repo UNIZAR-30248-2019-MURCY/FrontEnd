@@ -8,6 +8,7 @@ import {
 import {Button, Text, CheckBox} from 'react-native-elements';
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
 import {createQuestion} from "../../services/quiz/questionFuncs";
+import SwitchSelector from 'react-native-switch-selector';
 
 
 export default class CreateQuestion extends Component {
@@ -36,7 +37,8 @@ export default class CreateQuestion extends Component {
             ans4: false,
             length: 0,
 
-            loading: false
+            loading: false,
+            publish: false
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -73,7 +75,7 @@ export default class CreateQuestion extends Component {
             console.log(this.state.options)
 
 
-            createQuestion(this.state.title, this.state.description, this.state.options, this.state.token)
+            createQuestion(this.state.title, this.state.description, this.state.options, this.state.publish ,this.state.token)
                 .then((data) => {
                     console.log(data);
                     this.setState({loading: false})
@@ -120,6 +122,12 @@ export default class CreateQuestion extends Component {
 
 
     render() {
+        const options = [
+            { label: '01:00', value: '1' },
+            { label: '01:30', value: '1.5' },
+            { label: '02:00', value: '2' }
+        ];
+
         let showErr = (
             this.state.error ?
                 <View style={styles.error} className='errorShow'>
@@ -249,8 +257,27 @@ export default class CreateQuestion extends Component {
                             </View>
                         </View>
 
+
+
+                        <View style={styles.containerSelector}>
+                            <SwitchSelector
+                                initial={0}
+                                onPress={value => this.setState({ publish: value })}
+                                textColor='grey'
+                                selectedColor='white'
+                                buttonColor='grey'
+                                borderColor='grey'
+                                hasPadding
+                                options={[
+                                    { label: "Draft", value: "false", },
+                                    { label: "Public", value: "true",  }
+                                ]}
+                            />
+                        </View>
+
                         {showErr}
                         {showLoading}
+
                         <Button
                             buttonStyle={styles.button}
                             className='create-button'
@@ -269,6 +296,7 @@ export default class CreateQuestion extends Component {
                             }
                             }/>
                     </View>
+
                 </View>
             </ScrollView>
         )
@@ -308,6 +336,7 @@ const styles = StyleSheet.create({
         color: 'grey',
         marginBottom: 5
     },
+
     checkBoxC: {
         padding: 0,
         marginTop: 25,
@@ -345,8 +374,8 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     button: {
-        width: 250,
-        height: 55,
+        width: 200,
+        height: 50,
         marginTop: 30,
         margin: 10,
         backgroundColor: 'grey',
@@ -364,7 +393,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     buttonContainer: {
-
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -393,7 +421,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     error: {
-        marginTop: 20,
+        marginTop: 40,
         alignItems: 'center',
+    },
+    containerSelector: {
+        flex: 1,
+        marginTop: 65,
+        marginBottom: 15,
+        width: 250,
     },
 })

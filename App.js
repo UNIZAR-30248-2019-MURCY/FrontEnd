@@ -24,6 +24,8 @@ import SettingsReviewer from "./app/views/Reviewer/SettingsReviewer";
 import EditRemoveQuestion from "./app/views/Editor/EditRemoveQuestion";
 import QuestionConfirm from "./app/views/Editor/QuestionConfirm";
 import WorkflowView from "./app/components/WorkflowView";
+import WorkflowQuestionView from "./app/components/WorkflowQuestionView";
+
 import {Linking} from "expo";
 
 import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
@@ -103,6 +105,7 @@ const QuestionsEditStack = createStackNavigator(
         CreateQuestion: CreateQuestion,
         EditRemoveQuestion: EditRemoveQuestion,
         QuestionConfirm: QuestionConfirm,
+        WorkflowQuestionView: WorkflowQuestionView,
     },
     {
         initialRouteName: 'QuestionsEdit',

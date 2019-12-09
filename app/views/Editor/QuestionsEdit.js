@@ -10,7 +10,7 @@ import {Button, Text, ListItem} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
-import {listQuestions } from "../../services/quiz/questionFuncs";
+import {listQuestions} from "../../services/quiz/questionFuncs";
 
 
 export default class QuestionsEdit extends Component {
@@ -33,33 +33,33 @@ export default class QuestionsEdit extends Component {
                 listQuestions(this.state.token)
                     .then((data) => {
                         console.log(data);
-                        this.setState( {data: data});
+                        this.setState({data: data});
                         this.setState({loading: false})
                     })
                     .catch((error) => {
-                        this.setState( {error: error.message})
+                        this.setState({error: error.message})
                         this.setState({loading: false})
                     })
             })
     }
 
-    componentWillReceiveProps(nextProps){
+    componentWillReceiveProps(nextProps) {
         this.setState({loading: true})
         if (nextProps.navigation.state.params.reload) {
             retrieveItem('token')
-            .then(data => {
-                this.setState({token: JSON.parse(data)})
-                listQuestions(this.state.token)
-                    .then((data) => {
-                        console.log(data);
-                        this.setState( {data: data});
-                        this.setState({loading: false})
-                    })
-                    .catch((error) => {
-                        this.setState( {error: error.message})
-                        this.setState({loading: false})
-                    })
-            })
+                .then(data => {
+                    this.setState({token: JSON.parse(data)})
+                    listQuestions(this.state.token)
+                        .then((data) => {
+                            console.log(data);
+                            this.setState({data: data});
+                            this.setState({loading: false})
+                        })
+                        .catch((error) => {
+                            this.setState({error: error.message})
+                            this.setState({loading: false})
+                        })
+                })
         }
     }
 
@@ -72,6 +72,7 @@ export default class QuestionsEdit extends Component {
                 </View> :
                 <View></View>
         );
+
 
         return (
             <View style={styles.container}>
@@ -88,7 +89,21 @@ export default class QuestionsEdit extends Component {
                             renderItem={({item}) => (
                                 <ListItem
                                     className='item-button'
-                                    title={item.title}
+                                    title={
+                                        <View style={styles.containerPublic}>
+                                            <Text style={{fontSize: 18}}>{item.title}</Text>
+                                            {item.isPublic ?
+                                                <Icon
+                                                    style={styles.iconPublic}
+                                                    name="globe"
+                                                    size={20}
+                                                    color="grey"
+                                                /> :
+                                                item.lastWorkflow ?
+                                                    <Text style={{fontSize: 12, color: 'grey', marginTop: 3.5}}>{'    '+ item.lastWorkflow.status}</Text> :
+                                                    <View></View> }
+                                        </View>
+                                    }
                                     rightIcon={
                                         <Icon
                                             name="chevron-right"
@@ -98,7 +113,7 @@ export default class QuestionsEdit extends Component {
                                     }
                                     bottomDivider
                                     onPress={() => {
-                                        this.props.navigation.navigate('EditRemoveQuestion', { info: item });
+                                        this.props.navigation.navigate('EditRemoveQuestion', {info: item});
                                     }}
                                 />
                             )}
@@ -144,6 +159,13 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: 'grey',
         borderRadius: 14
+    },
+    containerPublic: {
+        flex: 1,
+        flexDirection: 'row',
+    },
+    iconPublic: {
+        marginLeft: 20,
     },
 
 })
