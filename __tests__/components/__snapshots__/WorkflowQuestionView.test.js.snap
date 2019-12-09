@@ -1,0 +1,169 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<WorkflowQuestionView /> WorkflowView test against snapshot 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "padding": 20,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "marginTop": 50,
+        "padding": 20,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "fontSize": 42.5,
+        }
+      }
+      theme={
+        Object {
+          "colors": Object {
+            "disabled": "hsl(208, 8%, 90%)",
+            "divider": "#bcbbc1",
+            "error": "#ff190c",
+            "grey0": "#393e42",
+            "grey1": "#43484d",
+            "grey2": "#5e6977",
+            "grey3": "#86939e",
+            "grey4": "#bdc6cf",
+            "grey5": "#e1e8ee",
+            "greyOutline": "#bbb",
+            "platform": Object {
+              "android": Object {
+                "error": "#f44336",
+                "primary": "#2196f3",
+                "secondary": "#9C27B0",
+                "success": "#4caf50",
+                "warning": "#ffeb3b",
+              },
+              "ios": Object {
+                "error": "#ff3b30",
+                "primary": "#007aff",
+                "secondary": "#5856d6",
+                "success": "#4cd964",
+                "warning": "#ffcc00",
+              },
+            },
+            "primary": "#2089dc",
+            "searchBg": "#303337",
+            "secondary": "#8F0CE8",
+            "success": "#52c41a",
+            "warning": "#faad14",
+          },
+        }
+      }
+    >
+      Workflow
+    </Text>
+  </View>
+  <View
+    className="reqList"
+    style={
+      Object {
+        "alignItems": "center",
+        "flex": 1,
+        "marginTop": 20,
+      }
+    }
+  >
+    <RCTScrollView
+      className="flatList"
+      data={Array []}
+      disableVirtualization={false}
+      getItem={[Function]}
+      getItemCount={[Function]}
+      horizontal={false}
+      initialNumToRender={10}
+      keyExtractor={[Function]}
+      maxToRenderPerBatch={10}
+      numColumns={1}
+      onContentSizeChange={[Function]}
+      onEndReachedThreshold={2}
+      onLayout={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      removeClippedSubviews={false}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      stickyHeaderIndices={Array []}
+      updateCellsBatchingPeriod={50}
+      viewabilityConfigCallbackPairs={Array []}
+      windowSize={21}
+    >
+      <View />
+    </RCTScrollView>
+  </View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "marginBottom": 25,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "borderRadius": 3,
+        }
+      }
+    >
+      <View
+        accessible={true}
+        isTVSelectable={true}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "transparent",
+              "borderColor": "#2089dc",
+              "borderRadius": 3,
+              "borderWidth": 0,
+              "flexDirection": "row",
+              "justifyContent": "center",
+              "padding": 8,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "grey",
+                "fontSize": 20,
+                "paddingBottom": 1,
+                "paddingTop": 2,
+                "textAlign": "center",
+              }
+            }
+          >
+            Return
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;

@@ -115,6 +115,7 @@ export default class EditRemoveQuestion extends Component {
         let showDraft = (
             this.state.showPublish ?
                 <SwitchSelector
+                    className='selector-button'
                     initial={0}
                     onPress={value => this.setState({publish: value})}
                     textColor='grey'
@@ -128,7 +129,7 @@ export default class EditRemoveQuestion extends Component {
                     ]}
                 /> :
                 <View>
-                    <Text style={styles.subTitle3}>Status of publication: {this.state.data.lastWorkflow.status}</Text>
+                    <Text className='statusText' style={styles.subTitle3}>Status of publication: {this.state.data.lastWorkflow.status}</Text>
                 </View>
         );
         let workflowButton = (

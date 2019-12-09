@@ -19,6 +19,7 @@ describe('<QuestionsEdit />', () => {
         expect(navigationMock.navigate.mock.calls.length).toEqual(1);
         expect(navigationMock.navigate.mock.calls[0]).toEqual(['CreateQuestion']);
     });
+
     /*
     it('Button Create Question', () => {
         const navigationMock = { navigate: jest.fn() };
