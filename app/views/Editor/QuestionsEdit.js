@@ -10,7 +10,7 @@ import {Button, Text, ListItem} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
-import {listQuestions} from "../../services/quiz/questionFuncs";
+import {listQuestions} from "../../services/question/questionFuncs";
 
 
 export default class QuestionsEdit extends Component {

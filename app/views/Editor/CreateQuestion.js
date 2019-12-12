@@ -7,7 +7,7 @@ import {
 } from 'react-native'
 import {Button, Text, CheckBox} from 'react-native-elements';
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
-import {createQuestion} from "../../services/quiz/questionFuncs";
+import {createQuestion} from "../../services/question/questionFuncs";
 import SwitchSelector from 'react-native-switch-selector';
 
 
@@ -426,7 +426,7 @@ const styles = StyleSheet.create({
     },
     containerSelector: {
         flex: 1,
-        marginTop: 65,
+        marginTop: 40,
         marginBottom: 15,
         width: 250,
     },

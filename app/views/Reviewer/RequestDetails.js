@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {ActivityIndicator, AsyncStorage, FlatList, StyleSheet, TextInput, View,} from 'react-native'
 import {Button, ListItem, Text} from 'react-native-elements';
-import {getRequestEdit, requestEditor} from "../../services/user/userFuncs";
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
 import {acceptRe, denyReq} from "../../services/user/reviewerFuncs";
 

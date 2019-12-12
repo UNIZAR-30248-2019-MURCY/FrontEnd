@@ -2,13 +2,12 @@ import React, {Component} from 'react';
 import {
     View,
     StyleSheet,
-    Image, ActivityIndicator,
+    ActivityIndicator,
     Linking
 } from 'react-native'
-import {Button, colors, Text} from 'react-native-elements';
+import {Button, Text} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
-import {emailVerif, signUpUser} from "../../services/user/userFuncs";
+import {emailVerif} from "../../services/user/userFuncs";
 import WEB from '../../config/web';
 
 

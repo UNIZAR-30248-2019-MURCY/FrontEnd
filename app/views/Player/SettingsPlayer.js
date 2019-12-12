@@ -6,9 +6,8 @@ import {
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
 import {NavigationActions, StackActions} from 'react-navigation';
-import {removeAll, removeItem} from "../../modules/AsyncStorage/remove";
+import {removeAll} from "../../modules/AsyncStorage/remove";
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
-import {getRequestEdit} from "../../services/user/userFuncs";
 
 export default class SettingsPlayer extends Component {
 

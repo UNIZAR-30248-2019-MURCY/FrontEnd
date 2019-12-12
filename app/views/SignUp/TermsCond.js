@@ -4,7 +4,7 @@ import {
     StyleSheet,
     ScrollView
 } from 'react-native'
-import {Button, colors, Text} from 'react-native-elements';
+import {Button, Text} from 'react-native-elements';
 
 export default class Terms extends Component {
 

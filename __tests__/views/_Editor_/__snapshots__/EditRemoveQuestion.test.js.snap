@@ -303,7 +303,7 @@ exports[`<EditRemoveQuestion /> CreateQuestion test against snapshot 1`] = `
           style={
             Object {
               "flex": 1,
-              "marginTop": 10,
+              "marginTop": 30,
               "width": 250,
             }
           }

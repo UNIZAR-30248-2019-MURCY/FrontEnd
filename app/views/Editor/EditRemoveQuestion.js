@@ -7,9 +7,8 @@ import {
     FlatList,
     SafeAreaView, ActivityIndicator
 } from 'react-native'
-import {Button, Text, CheckBox, ListItem} from 'react-native-elements';
-
-import {editQuestion, deleteQuestion, infoQuestion, createQuestion} from "../../services/quiz/questionFuncs";
+import {Button, Text, CheckBox} from 'react-native-elements';
+import {editQuestion, deleteQuestion} from "../../services/question/questionFuncs";
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
 import SwitchSelector from "react-native-switch-selector";
 
@@ -362,7 +361,7 @@ const styles = StyleSheet.create({
     },
     containerSelector: {
         flex: 1,
-        marginTop: 10,
+        marginTop: 30,
         width: 250,
     },
     error: {

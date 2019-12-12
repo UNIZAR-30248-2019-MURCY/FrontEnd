@@ -546,7 +546,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
             Object {
               "flex": 1,
               "marginBottom": 15,
-              "marginTop": 65,
+              "marginTop": 40,
               "width": 250,
             }
           }
