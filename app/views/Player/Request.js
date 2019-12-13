@@ -218,7 +218,7 @@ export default class Request extends Component {
                             {'\n'}{'\n'}
                             Status: {this.state.lastWorkflow.status}
                             {'\n'}{'\n'}
-                            Response: {this.state.lastWorkflow.response}
+                            Response: {this.state.lastWorkflow.response ? this.state.lastWorkflow.response : ' --- '}
                         </Text>
                         {editReq}
                     </View>

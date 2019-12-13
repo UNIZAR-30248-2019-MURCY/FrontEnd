@@ -43,7 +43,7 @@ export default class WorkflowQuestionView extends Component {
                                 className='detail-button'
                                 title={ item.title}
                                 titleStyle={{fontSize: 18}}
-                                subtitle={ 'Status: ' + item.status + '\n' + 'Response: ' + item.response  }
+                                subtitle={item.response ? 'Response: ' + item.response + '\n' + 'Status: ' + item.status :  'Status: ' + item.status }
                                 bottomDivider
                             />
                         )}
