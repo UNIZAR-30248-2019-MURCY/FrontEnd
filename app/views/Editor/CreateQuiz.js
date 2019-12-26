@@ -7,11 +7,14 @@ import {
 } from 'react-native'
 import {Button, Text, CheckBox} from 'react-native-elements';
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
-import {createQuestion} from "../../services/question/questionFuncs";
+import {createQuiz} from "../../services/quiz/quizFuncs";
 import SwitchSelector from 'react-native-switch-selector';
+import {listQuestions} from "../../services/question/questionFuncs";
 
 
-export default class CreateQuestion extends Component {
+
+
+export default class CreateQuiz extends Component {
 
     constructor(props) {
         super(props);
@@ -21,21 +24,7 @@ export default class CreateQuestion extends Component {
             description: '',
             options: [],
 
-            title1: '',
-            correct1: false,
-
-            title2: '',
-            correct2: false,
-
-            title3: '',
-            correct3: false,
-
-            title4: '',
-            correct4: false,
-
-            ans3: false,
-            ans4: false,
-            length: 0,
+            questions: [],
 
             loading: false,
             publish: false
@@ -47,9 +36,18 @@ export default class CreateQuestion extends Component {
 
     componentDidMount() {
         retrieveItem('token')
-            .then(data => {
-                this.setState({token: JSON.parse(data)})
-            })
+        .then(data => {
+            this.setState({token: JSON.parse(data)})
+            listQuestions(this.state.token)
+                .then((data) => {
+                    console.log(data);
+                    this.setState({questions: data});
+                })
+                .catch((error) => {
+                    this.setState({error: error.message})
+                })
+        })
+        
     }
 
 
@@ -60,26 +58,15 @@ export default class CreateQuestion extends Component {
     handleSubmit() {
         this.setState({loading: true})
         this.setState({error: false})
-        if (this.state.title !== '' && this.state.title1 !== '' && this.state.title2 !== '') {
-            this.state.options.push({title: this.state.title1, correct: this.state.correct1})
-            this.state.options.push({title: this.state.title2, correct: this.state.correct2})
-
-            if (this.state.title3 !== '') {
-                this.state.options.push({title: this.state.title3, correct: this.state.correct3})
-            }
-            if (this.state.title4 !== '') {
-                this.state.options.push({title: this.state.title4, correct: this.state.correct4})
-            }
+        if (this.state.title !== '') {
             console.log(this.state.title)
             console.log(this.state.description)
             console.log(this.state.options)
-
-
-            createQuestion(this.state.title, this.state.description, this.state.options, this.state.publish ,this.state.token)
+            createQuiz(this.state.title, this.state.description, this.state.questions, this.state.publish ,this.state.token)
                 .then((data) => {
                     console.log(data);
                     this.setState({loading: false})
-                    this.props.navigation.replace('QuestionConfirm', {type: 'created'});
+                    this.props.navigation.replace('QuizConfirm', {type: 'created'});
                 })
                 .catch((error) => {
                     this.setState({error: error.message})
@@ -87,39 +74,9 @@ export default class CreateQuestion extends Component {
                 });
         } else {
             this.setState({loading: false})
-            this.setState({error: 'Enter title and minimum 2 answers'})
+            this.setState({error: 'Enter title and minimum 2 questions'})
         }
     }
-
-    addAnswer = (key) => {
-        console.log(key)
-        if (key == 0) {
-            this.setState({ans3: true})
-            this.setState({length: 1})
-            this.setState({error: ''})
-        } else if (key == 1) {
-            this.setState({ans4: true})
-            this.setState({length: 2})
-        } else {
-            this.setState({error: 'Maximum is 4 answers'})
-        }
-    }
-
-    deleteAnswer = (key) => {
-        if (key == 2) {
-            this.setState({ans4: false})
-            this.setState({length: 1})
-            this.setState({title4: ''})
-            this.setState({error: ''})
-        } else if (key == 1) {
-            this.setState({ans3: false})
-            this.setState({length: 0})
-            this.setState({title3: ''})
-        } else {
-            this.setState({error: 'Minimum is 2 answers'})
-        }
-    }
-
 
     render() {
         const options = [
@@ -145,49 +102,14 @@ export default class CreateQuestion extends Component {
                 <View></View>
         );
 
-        let answer3 = (
-            this.state.ans3 ?
-                <View style={styles.containerButtons}>
-                    <TextInput
-                        className='title3'
-                        style={styles.inputAns}
-                        placeholder='Answer 3'
-                        placeholderTextColor='darkgrey'
-                        onChangeText={val => this.onChangeText('title3', val)}
-                    />
-                    <CheckBox
-                        className='correct3'
-                        containerStyle={styles.checkBoxC}
-                        checked={this.state.correct3}
-                        onPress={() => this.setState({correct3: !this.state.correct3})}/>
-                </View> : <View></View>);
-
-        let answer4 = (
-            this.state.ans4 ?
-                <View style={styles.containerButtons}>
-                    <TextInput
-                        className='title4'
-                        style={styles.inputAns}
-                        placeholder='Answer 4'
-                        placeholderTextColor='darkgrey'
-                        onChangeText={val => this.onChangeText('title4', val)}
-                    />
-                    <CheckBox
-                        className='correct4'
-                        containerStyle={styles.checkBoxC}
-                        checked={this.state.correct4}
-                        onPress={() => this.setState({correct4: !this.state.correct4})}/>
-                </View> : <View></View>);
-
-
         return (
             <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.containerTitle}>
-                        <Text h2>New Question</Text>
+                        <Text h2>New Quiz</Text>
                     </View>
                     <View style={styles.containerCreate}>
-                        <Text style={styles.subTitle}>Question and description</Text>
+                        <Text style={styles.subTitle}>Title and description</Text>
                         <TextInput
                             className='questionInput'
                             style={styles.input}
@@ -205,59 +127,6 @@ export default class CreateQuestion extends Component {
                             onChangeText={val => this.onChangeText('description', val)}
                         />
                         <Text style={styles.subTitle2}>Answers</Text>
-                        <Text style={styles.subTitle3}>Fill in at least 2 answers</Text>
-
-                        <View style={styles.containerButtons}>
-                            <TextInput
-                                className='title1'
-                                style={styles.inputAns}
-                                placeholder='Answer 1'
-                                placeholderTextColor='darkgrey'
-                                onChangeText={val => this.onChangeText('title1', val)}
-                            />
-
-                            <CheckBox value="1"
-                                      className='correct1'
-                                      containerStyle={styles.checkBoxC}
-                                      checked={this.state.correct1}
-                                      onPress={() => this.setState({correct1: !this.state.correct1})}/>
-                        </View>
-                        <View style={styles.containerButtons}>
-                            <TextInput
-                                className='title2'
-                                style={styles.inputAns}
-                                placeholder='Answer 2'
-                                placeholderTextColor='darkgrey'
-                                onChangeText={val => this.onChangeText('title2', val)}
-                            />
-                            <CheckBox value="2"
-                                      className='correct2'
-                                      containerStyle={styles.checkBoxC}
-                                      checked={this.state.correct2}
-                                      onPress={() => this.setState({correct2: !this.state.correct2})}/>
-                        </View>
-                        {answer3}
-                        {answer4}
-                        <View style={styles.containerButton}>
-                            <View style={styles.buttonContainer}>
-                                <Button title="Add answer"
-                                        buttonStyle={styles.buttonAdd}
-                                        className='add-button'
-                                        onPress={() => {
-                                            this.addAnswer(this.state.length)
-                                        }}/>
-                            </View>
-                            <View style={styles.buttonContainer}>
-                                <Button title="Delete answer"
-                                        buttonStyle={styles.buttonRemove}
-                                        className='remove-button'
-                                        onPress={() => {
-                                            this.deleteAnswer(this.state.length)
-                                        }}/>
-                            </View>
-                        </View>
-
-
 
                         <View style={styles.containerSelector}>
                             <SwitchSelector

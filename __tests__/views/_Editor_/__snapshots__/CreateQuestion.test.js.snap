@@ -469,7 +469,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
                       }
                     }
                   >
-                    Add ans
+                    Add answer
                   </Text>
                 </View>
               </View>
@@ -534,7 +534,7 @@ exports[`<CreateQuestion /> CreateQuestion test against snapshot 1`] = `
                       }
                     }
                   >
-                    Delete ans
+                    Delete answer
                   </Text>
                 </View>
               </View>
