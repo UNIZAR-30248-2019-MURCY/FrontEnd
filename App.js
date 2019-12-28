@@ -26,6 +26,7 @@ import QuestionConfirm from "./app/views/Editor/QuestionConfirm";
 import WorkflowView from "./app/components/WorkflowView";
 import WorkflowQuestionView from "./app/components/WorkflowQuestionView";
 import CreateQuiz from "./app/views/Editor/CreateQuiz";
+import CreateQuiz2 from "./app/views/Editor/CreateQuiz2";
 
 import {Linking} from "expo";
 
@@ -104,7 +105,6 @@ const QuestionsEditStack = createStackNavigator(
     {
         QuestionsEdit: QuestionsEdit,
         CreateQuestion: CreateQuestion,
-        CreateQuiz: CreateQuiz,
         EditRemoveQuestion: EditRemoveQuestion,
         QuestionConfirm: QuestionConfirm,
         WorkflowQuestionView: WorkflowQuestionView,
@@ -121,6 +121,8 @@ const QuestionsEditStack = createStackNavigator(
 const QuizzesEditStack = createStackNavigator(
     {
         QuizzesEdit: QuizzesEdit,
+        CreateQuiz: CreateQuiz,
+        CreateQuiz2: CreateQuiz2,
     },
     {
         initialRouteName: 'QuizzesEdit',

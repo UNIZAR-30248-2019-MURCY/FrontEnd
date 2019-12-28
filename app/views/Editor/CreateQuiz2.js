@@ -24,127 +24,54 @@ export default class CreateQuiz extends Component {
             title: '',
             description: '',
             options: [],
-
             questions: [],
-
             loading: false,
             publish: false,
-            dataSource: [
-                {
-                    id: 1,
-                    title: "Question 1",
-                    isSelect: false,
-                },
-                {
-                    id: 2,
-                    title: "Question 2",
-                    isSelect: false,
-                },
-                {
-                    id: 3,
-                    title: "Question 3",
-                    isSelect: false,
-                },
-                {
-                    id: 4,
-                    title: "Question 4",
-                    isSelect: false,
-                },
-                {
-                    id: 5,
-                    title: "Question 5",
-                    isSelect: false,
-                },
-                {
-                    id: 6,
-                    title: "Question 6",
-                    isSelect: false,
-                },
-                {
-                    id: 7,
-                    title: "Question 7",
-                    isSelect: false,
-                },
-                {
-                    id: 8,
-                    title: "Question 8",
-                    isSelect: false,
-                },
-
-            ],
+            dataSource: []
         }
-        this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-
     componentDidMount() {
-        retrieveItem('token')
-        .then(data => {
-            this.setState({token: JSON.parse(data)})
-            listQuestions(this.state.token)
-                .then((data) => {
-                    console.log(data);
-                    this.setState({questions: data});
-                })
-                .catch((error) => {
-                    this.setState({error: error.message})
-                })
-        })
-
-    }
-
-
-    onChangeText = (key, val) => {
-        this.setState({[key]: val})
+        if (this.props.navigation) {
+            if(this.props.navigation.getParam('data')){
+                this.setState({title: this.props.navigation.getParam('title')})
+                this.setState({description: this.props.navigation.getParam('description')})
+                this.setState({dataSource: this.props.navigation.getParam('data')})
+            }
+        }
     }
 
     handleSubmit() {
+        /*
         this.setState({loading: true})
         this.setState({error: false})
-        const selected = this.state.dataSource.filter(
-            item => item.isSelect === true
-        );
-        console.log(selected)
-        if (this.state.title !== '' && selected.length > 1) {
-            this.setState({loading: false})
-            this.props.navigation.navigate('CreateQuiz2',{title: this.state.title, description:this.state.description, data: selected});
+        if (this.state.title !== '') {
+            console.log(this.state.title)
+            console.log(this.state.description)
+            console.log(this.state.options)
+            createQuiz(this.state.title, this.state.description, this.state.questions, this.state.publish ,this.state.token)
+                .then((data) => {
+                    console.log(data);
+                    this.setState({loading: false})
+                    this.props.navigation.replace('QuizConfirm', {type: 'created'});
+                })
+                .catch((error) => {
+                    this.setState({error: error.message})
+                    this.setState({loading: false})
+                });
         } else {
             this.setState({loading: false})
             this.setState({error: 'Enter title and minimum 2 questions'})
         }
+        */
     }
 
     FlatListItemSeparator = () => <View style={styles.line} />;
 
-    selectItem = data => {
-        data.item.isSelect = !data.item.isSelect;
-
-        const index = this.state.dataSource.findIndex(
-            item => data.item.id === item.id
-        );
-
-        this.state.dataSource[index] = data.item;
-
-        this.setState({
-            dataSource: this.state.dataSource,
-        });
-    };
 
     renderItem = data =>
-        <TouchableOpacity
-            style={[styles.list]}
-            onPress={() => this.selectItem(data)}
-        >
-            <Text style={styles.lightText}>  {data.item.title}    {data.item.isSelect ?
-                <Icon
-                    name='check'
-                    size={18}
-                    color='#33d9b2'
-                />:
-                <Text/>
-            } </Text>
-        </TouchableOpacity>
+        <Text style={[styles.list, styles.lightText]}>  {data.item.title} </Text>
 
 
     render() {
@@ -171,28 +98,16 @@ export default class CreateQuiz extends Component {
                 <View style={styles.container}>
                     <View style={styles.containerTitle}>
                         <Text h2>New Quiz</Text>
-
                     </View>
                     <View style={styles.containerCreate}>
                         <Text style={styles.subTitle}>Title and description</Text>
-                        <TextInput
-                            className='questionInput'
-                            style={styles.input}
-                            placeholder='Title'
-                            autoCapitalize="none"
-                            placeholderTextColor='darkgrey'
-                            onChangeText={val => this.onChangeText('title', val)}
-                        />
-                        <TextInput
-                            className='description'
-                            style={styles.input}
-                            placeholder='Description'
-                            autoCapitalize="none"
-                            placeholderTextColor='darkgrey'
-                            onChangeText={val => this.onChangeText('description', val)}
-                        />
+                        <View style={styles.container3}>
+
+                            <Text style={[styles.list, styles.lightText]}>{this.state.title}</Text>
+                            <Text style={[styles.list, styles.lightText]}>{this.state.description}</Text>
+                        </View>
+
                         <Text style={styles.subTitle2}>Questions</Text>
-                        <Text style={styles.subTitle3}>Select at least 2 questions</Text>
 
                         <ScrollView>
                         <View style={styles.container2}>
@@ -206,13 +121,30 @@ export default class CreateQuiz extends Component {
                         </View>
                         </ScrollView>
 
+
+                        <View style={styles.containerSelector}>
+                            <SwitchSelector
+                                initial={0}
+                                onPress={value => this.setState({ publish: value })}
+                                textColor='grey'
+                                selectedColor='white'
+                                buttonColor='grey'
+                                borderColor='grey'
+                                hasPadding
+                                options={[
+                                    { label: "Draft", value: "false", },
+                                    { label: "Public", value: "true",  }
+                                ]}
+                            />
+                        </View>
+
                         {showErr}
                         {showLoading}
 
                         <Button
                             buttonStyle={styles.button}
                             className='create-button'
-                            title="Next step"
+                            title="Create"
                             onPress={() => {
                                 this.handleSubmit()
                             }}/>
@@ -266,6 +198,13 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: 'grey',
         marginBottom: 5
+    },
+    subTitle4: {
+        flex: 1,
+        fontSize: 17,
+        color: 'grey',
+        justifyContent: "flex-start",
+        alignItems: "flex-start",
     },
 
     checkBoxC: {
@@ -365,11 +304,18 @@ const styles = StyleSheet.create({
     container2: {
         flex: 1,
         //backgroundColor: "#192338",
-        marginTop: 10,
+        marginTop: 20,
         marginBottom: 5,
         position: "relative",
         width: 300,
         maxHeight: 200,
+    },
+    container3: {
+        flex: 1,
+        //backgroundColor: "#192338",
+        marginTop: 10,
+        position: "relative",
+        width: 300,
     },
     list: {
         paddingVertical: 5,

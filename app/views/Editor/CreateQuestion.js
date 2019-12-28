@@ -122,11 +122,6 @@ export default class CreateQuestion extends Component {
 
 
     render() {
-        const options = [
-            { label: '01:00', value: '1' },
-            { label: '01:30', value: '1.5' },
-            { label: '02:00', value: '2' }
-        ];
 
         let showErr = (
             this.state.error ?

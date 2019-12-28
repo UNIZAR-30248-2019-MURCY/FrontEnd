@@ -21,6 +21,7 @@
       "**/*.{js,jsx}",
       "!**/coverage/**",
       "!**/app/config/**",
+      "!**/app/modules/**",
       "!**/app/services/**",
       "!**/node_modules/**",
       "!**/babel.config.js",
