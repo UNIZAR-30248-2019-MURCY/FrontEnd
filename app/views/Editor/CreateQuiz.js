@@ -23,60 +23,17 @@ export default class CreateQuiz extends Component {
             token: '',
             title: '',
             description: '',
-            options: [],
+            dataSource: [],
 
             questions: [],
 
             loading: false,
             publish: false,
-            dataSource: [
-                {
-                    id: 1,
-                    title: "Question 1",
-                    isSelect: false,
-                },
-                {
-                    id: 2,
-                    title: "Question 2",
-                    isSelect: false,
-                },
-                {
-                    id: 3,
-                    title: "Question 3",
-                    isSelect: false,
-                },
-                {
-                    id: 4,
-                    title: "Question 4",
-                    isSelect: false,
-                },
-                {
-                    id: 5,
-                    title: "Question 5",
-                    isSelect: false,
-                },
-                {
-                    id: 6,
-                    title: "Question 6",
-                    isSelect: false,
-                },
-                {
-                    id: 7,
-                    title: "Question 7",
-                    isSelect: false,
-                },
-                {
-                    id: 8,
-                    title: "Question 8",
-                    isSelect: false,
-                },
-
-            ],
+            
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
-
 
     componentDidMount() {
         retrieveItem('token')
@@ -85,15 +42,22 @@ export default class CreateQuiz extends Component {
             listQuestions(this.state.token)
                 .then((data) => {
                     console.log(data);
+                    this.rellenar(data)
                     this.setState({questions: data});
                 })
                 .catch((error) => {
                     this.setState({error: error.message})
                 })
         })
-
     }
 
+    rellenar(data){
+        var options=[];
+        data.map(function(element, indice){
+            options.push({id: element.id, title: element.title, isSelect: false})
+        })
+        this.setState({dataSource: options});
+    }
 
     onChangeText = (key, val) => {
         this.setState({[key]: val})

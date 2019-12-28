@@ -1,6 +1,6 @@
 import WEB from "../../config/web";
 
-export const createQuiz = (title, description, questionsIds, publish, token) => {
+export const createQuiz = (title, description, questionIds, publish, token) => {
     const URL = WEB.BACK +'/quiz';
     return fetch(URL, {
         method: 'POST',
@@ -12,8 +12,7 @@ export const createQuiz = (title, description, questionsIds, publish, token) => 
         body: JSON.stringify({
             title: title,
             description: description,
-            questionsIds: questionsIds,
-            publish: publish
+            questionIds: questionIds
         }),
     })
     .then(async (response) => {

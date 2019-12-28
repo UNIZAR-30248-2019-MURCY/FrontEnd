@@ -23,8 +23,6 @@ export default class CreateQuiz extends Component {
             token: '',
             title: '',
             description: '',
-            options: [],
-            questions: [],
             loading: false,
             publish: false,
             dataSource: []
@@ -43,28 +41,28 @@ export default class CreateQuiz extends Component {
     }
 
     handleSubmit() {
-        /*
+        
         this.setState({loading: true})
         this.setState({error: false})
-        if (this.state.title !== '') {
-            console.log(this.state.title)
-            console.log(this.state.description)
-            console.log(this.state.options)
-            createQuiz(this.state.title, this.state.description, this.state.questions, this.state.publish ,this.state.token)
-                .then((data) => {
-                    console.log(data);
-                    this.setState({loading: false})
-                    this.props.navigation.replace('QuizConfirm', {type: 'created'});
-                })
-                .catch((error) => {
-                    this.setState({error: error.message})
-                    this.setState({loading: false})
-                });
-        } else {
-            this.setState({loading: false})
-            this.setState({error: 'Enter title and minimum 2 questions'})
-        }
-        */
+        console.log(this.state.title)
+        console.log(this.state.description)
+        console.log(this.state.dataSource)
+        var questionIds= []
+        this.state.dataSource.map(function(element, indice){
+            questionIds.push(element.id)
+        })
+        console.log(questionIds)
+        
+        createQuiz(this.state.title, this.state.description, this.state.questionIds, this.state.publish ,this.state.token)
+            .then((data) => {
+                console.log(data);
+                this.setState({loading: false})
+                this.props.navigation.replace('QuizConfirm', {type: 'created'});
+            })
+            .catch((error) => {
+                this.setState({error: error.message})
+                this.setState({loading: false})
+            });
     }
 
     FlatListItemSeparator = () => <View style={styles.line} />;
