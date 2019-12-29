@@ -22,7 +22,7 @@ describe('<CreateQuiz2 />', () => {
         let wrapper = shallow(<CreateQuiz2/>);
         wrapper.instance().handleSubmit = jest.fn();
         wrapper.update();
-        wrapper.find('.create-button').simulate('press');
+        wrapper.find('.create-quiz-button').simulate('press');
         expect(wrapper.instance().handleSubmit).toBeCalledTimes(1);
     });
     it('goBack and navigate to QuizzesEdit', async () => {
@@ -65,5 +65,5 @@ describe('<CreateQuiz2 />', () => {
         expect(key).toEqual('1')
     });
 
-    
+
 });

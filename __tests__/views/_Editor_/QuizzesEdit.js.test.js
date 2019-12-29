@@ -22,7 +22,7 @@ describe('<QuizzesEdit/>', () => {
         await retrieveItem();
         const navigationMock = { navigate: jest.fn() };
         const wrapper = shallow(<QuizzesEdit navigation={navigationMock} />);
-        wrapper.find('.create-button').simulate('press');
+        wrapper.find('.create-quiz-button').simulate('press');
         expect(navigationMock.navigate.mock.calls.length).toEqual(1);
         expect(navigationMock.navigate.mock.calls[0]).toEqual(['CreateQuiz']);
     });

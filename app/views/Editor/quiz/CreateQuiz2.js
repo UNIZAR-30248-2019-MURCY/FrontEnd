@@ -142,7 +142,7 @@ export default class CreateQuiz extends Component {
 
                         <Button
                             buttonStyle={styles.button}
-                            className='create-button'
+                            className='create-quiz-button'
                             title="Create"
                             onPress={() => {
                                 this.handleSubmit()

@@ -24,7 +24,7 @@ export default class CreateQuiz extends Component {
             title: '',
             description: '',
             dataSource: [],
-            loading: false,
+            loading: true,
             publish: false,
 
         }
@@ -40,9 +40,11 @@ export default class CreateQuiz extends Component {
                 .then((data) => {
                     console.log(data);
                     this.rellenar(data)
+                    this.setState({loading: false})
                 })
                 .catch((error) => {
                     this.setState({error: error.message})
+                    this.setState({loading: false})
                 })
         })
     }
@@ -131,7 +133,6 @@ export default class CreateQuiz extends Component {
                 <View style={styles.container}>
                     <View style={styles.containerTitle}>
                         <Text h2>New Quiz</Text>
-
                     </View>
                     <View style={styles.containerCreate}>
                         <Text style={styles.subTitle}>Title and description</Text>

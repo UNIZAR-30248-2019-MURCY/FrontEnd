@@ -290,7 +290,7 @@ exports[`<CreateQuiz /> CreateQuiz test against snapshot 1`] = `
                   Object {
                     "dataSource": Array [],
                     "description": "",
-                    "loading": false,
+                    "loading": true,
                     "publish": false,
                     "title": "",
                     "token": "",
@@ -324,7 +324,25 @@ exports[`<CreateQuiz /> CreateQuiz test against snapshot 1`] = `
           </View>
         </RCTScrollView>
         <View />
-        <View />
+        <View
+          className="loadingShow"
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+                "justifyContent": "space-around",
+                "padding": 10,
+              },
+            ]
+          }
+        >
+          <ActivityIndicator
+            animating={true}
+            color="grey"
+            hidesWhenStopped={true}
+            size="large"
+          />
+        </View>
         <View
           style={
             Object {

@@ -4,7 +4,7 @@ import {
     StyleSheet,
     FlatList,
     ScrollView,
-    SafeAreaView, ActivityIndicator
+    SafeAreaView, ActivityIndicator, TouchableOpacity
 } from 'react-native'
 import {Button, colors, Text, ListItem} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
@@ -74,7 +74,12 @@ export default class QuestionsEdit extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
-                    <Text h2>Quizzes</Text>
+
+                    <TouchableOpacity
+                        onPress={() => this.props.navigation.navigate('CreateQuiz')}
+                    >
+                        <Text h2>Quizzes</Text>
+                    </TouchableOpacity>
                 </View>
 
                 <ScrollView>
@@ -123,7 +128,7 @@ export default class QuestionsEdit extends Component {
                     </SafeAreaView>
                 </ScrollView>
                 <ActionButton
-                className='create-button'
+                className='create-quiz-button'
                 hideShadow={true}
                 buttonColor="grey"
                 onPress={() => {
