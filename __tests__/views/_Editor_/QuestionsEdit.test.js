@@ -75,6 +75,8 @@ describe('<QuestionsEdit />', () => {
         }
         wrapper.update();
         expect(wrapper.find('.list').length).toBe(1);
+        const key = wrapper.find('FlatList').props().keyExtractor({id: 3});
+        expect(key).toEqual('3')
     });
     
 });
