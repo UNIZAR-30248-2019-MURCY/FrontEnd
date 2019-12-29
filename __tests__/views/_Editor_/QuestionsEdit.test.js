@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import QuestionsEdit from "../../../app/views/Editor/QuestionsEdit";
+import QuestionsEdit from "../../../app/views/Editor/question/QuestionsEdit";
 import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 
 describe('<QuestionsEdit />', () => {
@@ -30,7 +30,7 @@ describe('<QuestionsEdit />', () => {
         expect(wrapper.find('.list').length).toBe(1);
     });
 
-    
+
     it('List', async () => {
         await retrieveItem();
         const navigationMock = { navigate: jest.fn() };
@@ -78,5 +78,5 @@ describe('<QuestionsEdit />', () => {
         const key = wrapper.find('FlatList').props().keyExtractor({id: 3});
         expect(key).toEqual('3')
     });
-    
+
 });

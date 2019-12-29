@@ -8,8 +8,8 @@ import {
     SafeAreaView, ActivityIndicator
 } from 'react-native'
 import {Button, Text, CheckBox} from 'react-native-elements';
-import {editQuestion, deleteQuestion} from "../../services/question/questionFuncs";
-import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
+import {editQuestion, deleteQuestion} from "../../../services/question/questionFuncs";
+import {retrieveItem} from "../../../modules/AsyncStorage/retrieve";
 import SwitchSelector from "react-native-switch-selector";
 
 
@@ -230,7 +230,7 @@ export default class EditRemoveQuestion extends Component {
                         <Button
                             className='edit-button'
                             buttonStyle={styles.button}
-                            title="Edit"
+                            title="Save"
                             onPress={() => {
                                 this.editQuestion()
                             }}/>

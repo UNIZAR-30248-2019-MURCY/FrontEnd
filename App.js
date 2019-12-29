@@ -8,12 +8,12 @@ import SignUp from './app/views/SignUp/SignUp';
 import EmailConfirm from './app/views/SignUp/EmailConfirm';
 import EmailVerif from './app/views/SignUp/EmailVerif';
 import TermsConditions from './app/views/SignUp/TermsCond';
-import CreateQuestion from './app/views/Editor/CreateQuestion';
+import CreateQuestion from './app/views/Editor/question/CreateQuestion';
 import QuizzesScreen from "./app/views/Player/QuizzesScreen";
 import Icon from "react-native-vector-icons/FontAwesome";
 import SettingsPlayer from "./app/views/Player/SettingsPlayer";
-import QuestionsEdit from "./app/views/Editor/QuestionsEdit";
-import QuizzesEdit from "./app/views/Editor/QuizzesEdit";
+import QuestionsEdit from "./app/views/Editor/question/QuestionsEdit";
+import QuizzesEdit from "./app/views/Editor/quiz/QuizzesEdit";
 import SettingsEditor from "./app/views/Editor/SettingsEditor";
 import Request from "./app/views/Player/Request";
 import RequestConfirm from "./app/views/Player/RequestConfirm";
@@ -21,13 +21,15 @@ import RequestList from "./app/views/Reviewer/RequestList";
 import RequestDetails from "./app/views/Reviewer/RequestDetails";
 import RequestActionConfirm from "./app/views/Reviewer/RequestActionConfirm";
 import SettingsReviewer from "./app/views/Reviewer/SettingsReviewer";
-import EditRemoveQuestion from "./app/views/Editor/EditRemoveQuestion";
-import QuestionConfirm from "./app/views/Editor/QuestionConfirm";
+import EditRemoveQuestion from "./app/views/Editor/question/EditRemoveQuestion";
+import QuestionConfirm from "./app/views/Editor/question/QuestionConfirm";
 import WorkflowView from "./app/components/WorkflowView";
 import WorkflowQuestionView from "./app/components/WorkflowQuestionView";
-import CreateQuiz from "./app/views/Editor/CreateQuiz";
-import CreateQuiz2 from "./app/views/Editor/CreateQuiz2";
-import QuizConfirm from "./app/views/Editor/QuizConfirm";
+import CreateQuiz from "./app/views/Editor/quiz/CreateQuiz";
+import CreateQuiz2 from "./app/views/Editor/quiz/CreateQuiz2";
+import QuizConfirm from "./app/views/Editor/quiz/QuizConfirm";
+import EditRemoveQuiz from "./app/views/Editor/quiz/EditRemoveQuiz";
+import EditRemoveQuiz2 from "./app/views/Editor/quiz/EditRemoveQuiz2";
 
 import {Linking} from "expo";
 
@@ -125,6 +127,8 @@ const QuizzesEditStack = createStackNavigator(
         CreateQuiz: CreateQuiz,
         CreateQuiz2: CreateQuiz2,
         QuizConfirm: QuizConfirm,
+        EditRemoveQuiz: EditRemoveQuiz,
+        EditRemoveQuiz2: EditRemoveQuiz2,
     },
     {
         initialRouteName: 'QuizzesEdit',

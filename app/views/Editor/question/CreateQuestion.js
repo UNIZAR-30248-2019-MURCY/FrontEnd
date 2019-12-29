@@ -6,8 +6,8 @@ import {
     ScrollView, ActivityIndicator
 } from 'react-native'
 import {Button, Text, CheckBox} from 'react-native-elements';
-import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
-import {createQuestion} from "../../services/question/questionFuncs";
+import {retrieveItem} from "../../../modules/AsyncStorage/retrieve";
+import {createQuestion} from "../../../services/question/questionFuncs";
 import SwitchSelector from 'react-native-switch-selector';
 
 

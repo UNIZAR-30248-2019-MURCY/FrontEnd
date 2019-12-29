@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import renderer from 'react-test-renderer';
-import QuizConfirm from "../../../app/views/Editor/QuizConfirm";
+import QuizConfirm from "../../../app/views/Editor/quiz/QuizConfirm";
 
 describe('<QuizConfirm />', () => {
     it('Welcome renders without crashing', () => {
