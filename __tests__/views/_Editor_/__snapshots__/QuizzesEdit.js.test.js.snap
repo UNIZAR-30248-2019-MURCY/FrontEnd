@@ -4,7 +4,6 @@ exports[`<QuizzesEdit/> QuizzesScreen test against snapshot 1`] = `
 <View
   style={
     Object {
-      "alignItems": "center",
       "flex": 1,
       "padding": 20,
     }
@@ -70,6 +69,12 @@ exports[`<QuizzesEdit/> QuizzesScreen test against snapshot 1`] = `
     <View>
       <RCTSafeAreaView
         emulateUnlessSupported={true}
+        style={
+          Object {
+            "flex": 1,
+            "marginTop": 20,
+          }
+        }
       >
         <View
           className="loadingShow"

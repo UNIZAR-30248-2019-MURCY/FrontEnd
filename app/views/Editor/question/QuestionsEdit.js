@@ -6,11 +6,12 @@ import {
     ScrollView,
     SafeAreaView, ActivityIndicator
 } from 'react-native'
-import {Button, colors, Text, ListItem} from 'react-native-elements';
+import {Button, Text, ListItem} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
-import {listQuiz} from "../../services/quiz/quizFuncs";
+import {retrieveItem} from "../../../modules/AsyncStorage/retrieve";
+import {listQuestions} from "../../../services/question/questionFuncs";
+
 
 export default class QuestionsEdit extends Component {
 
@@ -23,12 +24,13 @@ export default class QuestionsEdit extends Component {
         }
     }
 
+
     componentDidMount() {
         this.setState({loading: true})
         retrieveItem('token')
             .then(data => {
                 this.setState({token: JSON.parse(data)})
-                listQuiz(this.state.token)
+                listQuestions(this.state.token)
                     .then((data) => {
                         console.log(data);
                         this.setState({data: data});
@@ -47,7 +49,7 @@ export default class QuestionsEdit extends Component {
             retrieveItem('token')
                 .then(data => {
                     this.setState({token: JSON.parse(data)})
-                    listQuiz(this.state.token)
+                    listQuestions(this.state.token)
                         .then((data) => {
                             console.log(data);
                             this.setState({data: data});
@@ -61,8 +63,8 @@ export default class QuestionsEdit extends Component {
         }
     }
 
-    render() {
 
+    render() {
         let showLoading = (
             this.state.loading ?
                 <View style={[styles.containerLoading]} className='loadingShow'>
@@ -71,12 +73,12 @@ export default class QuestionsEdit extends Component {
                 <View></View>
         );
 
+
         return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
-                    <Text h2>Quizzes</Text>
+                    <Text h2>Questions</Text>
                 </View>
-
                 <ScrollView>
                     <SafeAreaView style={styles.containerQuestions}>
                         {showLoading}
@@ -110,11 +112,9 @@ export default class QuestionsEdit extends Component {
                                         />
                                     }
                                     bottomDivider
-                                    /*
                                     onPress={() => {
                                         this.props.navigation.navigate('EditRemoveQuestion', {info: item});
                                     }}
-                                    */
                                 />
                             )}
                         />
@@ -122,14 +122,16 @@ export default class QuestionsEdit extends Component {
                     </SafeAreaView>
                 </ScrollView>
                 <ActionButton
-                className='create-button'
-                hideShadow={true}
-                buttonColor="grey"
-                onPress={() => {
-                    this.props.navigation.navigate('CreateQuiz');
-                }}
-            />
+                    className='create-button'
+                    hideShadow={true}
+                    buttonColor="grey"
+                    onPress={() => {
+                        this.props.navigation.navigate('CreateQuestion');
+                    }}
+                />
+
             </View>
+
 
         )
     }
@@ -138,7 +140,6 @@ export default class QuestionsEdit extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         //justifyContent: 'center',
         padding: 20
     },
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
         marginTop: 50,
         padding: 20
     },
-    containerQuiz: {
+    containerQuestions: {
         flex: 1,
         marginTop: 20,
     },
@@ -166,7 +167,5 @@ const styles = StyleSheet.create({
     iconPublic: {
         marginLeft: 20,
     },
-    
-
 
 })

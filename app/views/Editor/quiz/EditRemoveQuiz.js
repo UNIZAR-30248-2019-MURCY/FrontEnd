@@ -6,16 +6,13 @@ import {
     ScrollView, ActivityIndicator, FlatList, TouchableOpacity
 } from 'react-native'
 import {Button, Text, CheckBox} from 'react-native-elements';
-import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
-import {createQuiz} from "../../services/quiz/quizFuncs";
+import {retrieveItem} from "../../../modules/AsyncStorage/retrieve";
+import {createQuiz, deleteQuiz} from "../../../services/quiz/quizFuncs";
 import SwitchSelector from 'react-native-switch-selector';
-import {listQuestions} from "../../services/question/questionFuncs";
+import {listQuestions} from "../../../services/question/questionFuncs";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-
-
-
-export default class CreateQuiz extends Component {
+export default class EditRemoveQuiz extends Component {
 
     constructor(props) {
         super(props);
@@ -23,13 +20,10 @@ export default class CreateQuiz extends Component {
             token: '',
             title: '',
             description: '',
-            dataSource: [],
-
-            questions: [],
-
+            data: [],
             loading: false,
             publish: false,
-            
+
         }
         this.onChangeText = this.onChangeText.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,24 +31,38 @@ export default class CreateQuiz extends Component {
 
     componentDidMount() {
         retrieveItem('token')
-        .then(data => {
-            this.setState({token: JSON.parse(data)})
-            listQuestions(this.state.token)
-                .then((data) => {
-                    console.log(data);
-                    this.rellenar(data)
-                    this.setState({questions: data});
-                })
-                .catch((error) => {
-                    this.setState({error: error.message})
-                })
-        })
+            .then(data => {
+                this.setState({token: JSON.parse(data)})
+                listQuestions(this.state.token)
+                    .then((data) => {
+                        if (this.props.navigation) {
+                            if (this.props.navigation.getParam('quiz')) {
+                                this.setState({id: this.props.navigation.getParam('quiz').id})
+                                this.setState({title: this.props.navigation.getParam('quiz').title})
+                                this.setState({description: this.props.navigation.getParam('quiz').description})
+                                /*
+                                if (this.props.navigation.getParam('quiz').lastWorkflow.status === 'DRAFT') {
+                                    this.setState({publish: false})
+                                } else {
+                                    this.setState({publish: true})
+                                }*/
+                            }
+                        }
+                        this.rellenar(data, this.props.navigation.getParam('quiz').questions)
+                    })
+                    .catch((error) => {
+                        this.setState({error: error.message})
+                    })
+            })
     }
 
-    rellenar(data){
+    rellenar(data, questions){
         var options=[];
         data.map(function(element, indice){
-            options.push({id: element.id, title: element.title, isSelect: false})
+            const selected = questions.find(
+                item => item.id === element.id
+            );
+            options.push({id: element.id, title: element.title, isSelect: selected != null})
         })
         this.setState({dataSource: options});
     }
@@ -72,11 +80,26 @@ export default class CreateQuiz extends Component {
         console.log(selected)
         if (this.state.title !== '' && selected.length > 1) {
             this.setState({loading: false})
-            this.props.navigation.navigate('CreateQuiz2',{title: this.state.title, description:this.state.description, data: selected});
+            this.props.navigation.navigate('EditRemoveQuiz2',{id: this.state.id, title: this.state.title, description:this.state.description, data: selected});
         } else {
             this.setState({loading: false})
             this.setState({error: 'Enter title and minimum 2 questions'})
         }
+    }
+
+    deleteQuiz() {
+        this.setState({loading: true})
+        this.setState({error: false})
+
+        deleteQuiz(this.state.id, this.state.token)
+            .then((data) => {
+                this.setState({loading: false})
+                this.props.navigation.replace('QuizConfirm', {type: 'deleted'});
+            })
+            .catch((error) => {
+                this.setState({error: error.message})
+                this.setState({loading: false})
+            });
     }
 
     FlatListItemSeparator = () => <View style={styles.line} />;
@@ -134,7 +157,7 @@ export default class CreateQuiz extends Component {
             <ScrollView>
                 <View style={styles.container}>
                     <View style={styles.containerTitle}>
-                        <Text h2>New Quiz</Text>
+                        <Text h2>Quiz</Text>
 
                     </View>
                     <View style={styles.containerCreate}>
@@ -145,6 +168,7 @@ export default class CreateQuiz extends Component {
                             placeholder='Title'
                             autoCapitalize="none"
                             placeholderTextColor='darkgrey'
+                            value={this.state.title}
                             onChangeText={val => this.onChangeText('title', val)}
                         />
                         <TextInput
@@ -153,6 +177,7 @@ export default class CreateQuiz extends Component {
                             placeholder='Description'
                             autoCapitalize="none"
                             placeholderTextColor='darkgrey'
+                            value={this.state.description}
                             onChangeText={val => this.onChangeText('description', val)}
                         />
                         <Text style={styles.subTitle2}>Questions</Text>
@@ -179,6 +204,13 @@ export default class CreateQuiz extends Component {
                             title="Next step"
                             onPress={() => {
                                 this.handleSubmit()
+                            }}/>
+                        <Button
+                            className='delete-button'
+                            buttonStyle={styles.button1}
+                            title="Delete"
+                            onPress={() => {
+                                this.deleteQuiz()
                             }}/>
                         <Button
                             className='return-button'
@@ -274,6 +306,15 @@ const styles = StyleSheet.create({
         marginTop: 30,
         margin: 10,
         backgroundColor: 'grey',
+        borderRadius: 14
+    },
+    button1: {
+        width: 130,
+        height: 45,
+        marginTop: 10,
+        marginBottom: 20,
+        margin: 10,
+        backgroundColor: '#ff5252',
         borderRadius: 14
     },
     button2: {

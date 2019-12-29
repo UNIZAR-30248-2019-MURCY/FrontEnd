@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
-import QuizzesEdit from "../../../app/views/Editor/QuizzesEdit";
+import QuizzesEdit from "../../../app/views/Editor/quiz/QuizzesEdit";
 
 describe('<QuizzesEdit/>', () => {
     it('QuizzesScreen renders without crashing', () => {

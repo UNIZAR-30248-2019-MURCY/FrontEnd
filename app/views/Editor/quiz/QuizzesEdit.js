@@ -6,12 +6,11 @@ import {
     ScrollView,
     SafeAreaView, ActivityIndicator
 } from 'react-native'
-import {Button, Text, ListItem} from 'react-native-elements';
+import {Button, colors, Text, ListItem} from 'react-native-elements';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
-import {listQuestions} from "../../services/question/questionFuncs";
-
+import {retrieveItem} from "../../../modules/AsyncStorage/retrieve";
+import {listQuiz} from "../../../services/quiz/quizFuncs";
 
 export default class QuestionsEdit extends Component {
 
@@ -24,13 +23,12 @@ export default class QuestionsEdit extends Component {
         }
     }
 
-
     componentDidMount() {
         this.setState({loading: true})
         retrieveItem('token')
             .then(data => {
                 this.setState({token: JSON.parse(data)})
-                listQuestions(this.state.token)
+                listQuiz(this.state.token)
                     .then((data) => {
                         console.log(data);
                         this.setState({data: data});
@@ -49,7 +47,7 @@ export default class QuestionsEdit extends Component {
             retrieveItem('token')
                 .then(data => {
                     this.setState({token: JSON.parse(data)})
-                    listQuestions(this.state.token)
+                    listQuiz(this.state.token)
                         .then((data) => {
                             console.log(data);
                             this.setState({data: data});
@@ -63,8 +61,8 @@ export default class QuestionsEdit extends Component {
         }
     }
 
-
     render() {
+
         let showLoading = (
             this.state.loading ?
                 <View style={[styles.containerLoading]} className='loadingShow'>
@@ -73,12 +71,12 @@ export default class QuestionsEdit extends Component {
                 <View></View>
         );
 
-
         return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
-                    <Text h2>Questions</Text>
+                    <Text h2>Quizzes</Text>
                 </View>
+
                 <ScrollView>
                     <SafeAreaView style={styles.containerQuestions}>
                         {showLoading}
@@ -92,6 +90,7 @@ export default class QuestionsEdit extends Component {
                                     title={
                                         <View style={styles.containerPublic}>
                                             <Text style={{fontSize: 18}}>{item.title}</Text>
+
                                             {item.isPublic ?
                                                 <Icon
                                                     style={styles.iconPublic}
@@ -112,9 +111,11 @@ export default class QuestionsEdit extends Component {
                                         />
                                     }
                                     bottomDivider
+
                                     onPress={() => {
-                                        this.props.navigation.navigate('EditRemoveQuestion', {info: item});
+                                        this.props.navigation.navigate('EditRemoveQuiz', {quiz: item});
                                     }}
+
                                 />
                             )}
                         />
@@ -122,16 +123,14 @@ export default class QuestionsEdit extends Component {
                     </SafeAreaView>
                 </ScrollView>
                 <ActionButton
-                    className='create-button'
-                    hideShadow={true}
-                    buttonColor="grey"
-                    onPress={() => {
-                        this.props.navigation.navigate('CreateQuestion');
-                    }}
-                />
-
+                className='create-button'
+                hideShadow={true}
+                buttonColor="grey"
+                onPress={() => {
+                    this.props.navigation.navigate('CreateQuiz');
+                }}
+            />
             </View>
-
 
         )
     }
@@ -169,3 +168,4 @@ const styles = StyleSheet.create({
     },
 
 })
+

@@ -6,10 +6,10 @@ import {
     ScrollView, ActivityIndicator, FlatList, TouchableOpacity
 } from 'react-native'
 import {Button, Text, CheckBox} from 'react-native-elements';
-import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
-import {createQuiz} from "../../services/quiz/quizFuncs";
+import {retrieveItem} from "../../../modules/AsyncStorage/retrieve";
+import {createQuiz} from "../../../services/quiz/quizFuncs";
 import SwitchSelector from 'react-native-switch-selector';
-import {listQuestions} from "../../services/question/questionFuncs";
+import {listQuestions} from "../../../services/question/questionFuncs";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -36,12 +36,13 @@ export default class CreateQuiz extends Component {
                 this.setState({title: this.props.navigation.getParam('title')})
                 this.setState({description: this.props.navigation.getParam('description')})
                 this.setState({dataSource: this.props.navigation.getParam('data')})
+                this.setState({token: this.props.navigation.getParam('token')})
             }
         }
     }
 
     handleSubmit() {
-        
+
         this.setState({loading: true})
         this.setState({error: false})
         console.log(this.state.title)
@@ -52,8 +53,8 @@ export default class CreateQuiz extends Component {
             questionIds.push(element.id)
         })
         console.log(questionIds)
-        
-        createQuiz(this.state.title, this.state.description, this.state.questionIds, this.state.publish ,this.state.token)
+
+        createQuiz(this.state.title, this.state.description, questionIds, this.state.publish ,this.state.token)
             .then((data) => {
                 console.log(data);
                 this.setState({loading: false})

@@ -486,7 +486,7 @@ exports[`<EditRemoveQuestion /> CreateQuestion test against snapshot 1`] = `
                   }
                 }
               >
-                Edit
+                Save
               </Text>
             </View>
           </View>

@@ -35,7 +35,6 @@ export const createQuiz = (title, description, questionIds, publish, token) => {
 }
 
 
-
 export const editQuiz = (id, title, description, questionsIds, publish, token) => {
     const URL = WEB.BACK +'/quiz/' + id;
     return fetch(URL, {
@@ -48,8 +47,7 @@ export const editQuiz = (id, title, description, questionsIds, publish, token) =
         body: JSON.stringify({
             title: title,
             description: description,
-            options: questionsIds,
-            publish: publish
+            questionIds: questionsIds
         }),
     })
     .then(async (response) => {
@@ -72,9 +70,7 @@ export const editQuiz = (id, title, description, questionsIds, publish, token) =
     });
 }
 
-export const deleteQuestion = (id, token) => {
-    console.log(id)
-    console.log(token)
+export const deleteQuiz = (id, token) => {
     const URL = WEB.BACK +'/quiz/' + id;
     return fetch(URL, {
         method: 'DELETE',
@@ -85,7 +81,7 @@ export const deleteQuestion = (id, token) => {
         }
     })
     .then(async (response) => {
-        if (response.status === 201) {
+        if (response.status === 202) {
             return response
         } else if (response.status === 403) {
             console.log(response.status)

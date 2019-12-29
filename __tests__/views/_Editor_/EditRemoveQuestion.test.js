@@ -1,8 +1,8 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import renderer from 'react-test-renderer';
-import EditRemoveQuestion from "../../../app/views/Editor/EditRemoveQuestion";
-import CreateQuestion from "../../../app/views/Editor/CreateQuestion";
+import EditRemoveQuestion from "../../../app/views/Editor/question/EditRemoveQuestion";
+import CreateQuestion from "../../../app/views/Editor/question/CreateQuestion";
 import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 import RequestDetails from "../../../app/views/Reviewer/RequestDetails";
 
