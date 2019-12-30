@@ -6,23 +6,37 @@ import {
 import {Button, colors, Text} from 'react-native-elements';
 import Carousel from 'react-native-snap-carousel';
 import {sliderWidth, itemWidth} from '../../modules/QuizzesCards/SliderEntry.style';
-import SliderEntry from '../../components/SliderEntry';
+import SliderEntryQuestion from '../../components/SliderEntryQuestion';
 import {ENTRIES1, ENTRIES2} from '../../modules/QuizzesCards/entries';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { scrollInterpolators, animatedStyles } from '../../modules/QuizzesCards/animations';
 
 const WEB = Platform.OS === 'web';
 
-export default class QuizzesScreen extends Component {
+export default class QuizPlayScreen extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            lastColor: ''
+            title:''
         }
     }
+
+    componentDidMount() {
+        if (this.props.navigation) {
+            if(this.props.navigation.getParam('title')){
+                this.setState({title: this.props.navigation.getParam('title')})
+            }
+        }
+    }
+
+    __renderItem({item, index}) {
+        return <SliderEntryQuestion data={item} even={(index + 1) % 2 === 0}/>;
+    }
+
+
     render() {
-        const { navigation } = this.props;
+        const { color } = this.props;
 
         let buttons = (
             WEB ?
@@ -60,41 +74,87 @@ export default class QuizzesScreen extends Component {
         );
 
         return (
-            <View style={styles.container}>
+            <View style={styles.containerUp}>
+                <View style={styles.cross}>
+                    <Button
+                        className='close-button'
+                        type="clear"
+                        icon={
+                            <Icon
+                                name="times"
+                                size={30}
+                                color="grey"
+                            />
+                        }
+                        onPress={() => {
+                            this.props.navigation.goBack()
+                        }
+                        }
+                    />
+                </View>
+                <View style={styles.container}>
+
                 <View style={styles.containerTitle}>
-                    <Text h2>Quizzes</Text>
+                    <Text h3 style={{color: 'white', fontWeight: 'bold'}} numberOfLines={2} >{this.state.title}</Text>
                 </View>
 
                 <Carousel
                     ref={'carousel'}
                     data={ENTRIES1}
-                    renderItem=
-                        {({item, index}) => (
-                            <SliderEntry  navigation={navigation} data={item} even={(index + 1) % 2 === 0}/>
-                        )}
+                    renderItem={this.__renderItem}
                     sliderWidth={sliderWidth}
                     itemWidth={itemWidth}
                     layout={'stack'}
-                    scrollInterpolator={ WEB ? scrollInterpolators[`scrollInterpolator1`] : null  }
-                    slideInterpolatedStyle={ WEB ? animatedStyles[`animatedStyles1`] : null  }
+                    scrollInterpolator={scrollInterpolators[`scrollInterpolator1`] }
+                    slideInterpolatedStyle={ animatedStyles[`animatedStyles1`] }
                 />
                 {buttons}
+
+                <View style={styles.sendContainer}>
+                    <Button icon={
+                        <Icon
+                            name="paper-plane"
+                            size={22}
+                            color="white"
+                        />
+                    }
+                            buttonStyle={styles.buttonSend}
+                            className='remove-button'
+                            onPress={() => {
+                                this.refs.carousel.snapToNext();
+                            }}/>
+                </View>
+                </View>
             </View>
         )
     }
 }
 
 const styles = StyleSheet.create({
+    cross: {
+        marginTop: 30,
+        marginBottom: 0,
+        marginRight: 30,
+        alignItems: 'flex-end',
+    },
+    containerUp: {
+        flex: 1,
+        //justifyContent: 'center',
+        backgroundColor: 'black'
+    },
     container: {
         flex: 1,
         //justifyContent: 'center',
         alignItems: 'center',
-        padding: 20
+        padding: 20,
+        backgroundColor: 'black'
     },
     containerTitle: {
-        marginTop: 50,
+        marginTop: 0,
         marginBottom: 10,
-        padding: 20
+        paddingRight: 20,
+        paddingLeft: 20,
+        paddingBottom: 20,
     },
 
     containerSettings: {
@@ -118,15 +178,18 @@ const styles = StyleSheet.create({
         marginBottom: 50,
     },
     containerButton: {
-
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom:18
     },
     buttonContainer: {
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    sendContainer: {
+        marginBottom: WEB ? 7 : 30,
+        alignItems: 'flex-end',
+        justifyContent: 'flex-end',
     },
     buttonPrevNext: {
         width: 120,
@@ -134,7 +197,19 @@ const styles = StyleSheet.create({
         marginTop: 10,
         margin: 10,
         backgroundColor: 'black',
-        borderRadius: 14
+        borderRadius: 14,
+        borderWidth: 0.5,
+        borderColor: 'white'
+    },
+    buttonSend: {
+        width: 60,
+        height: 40,
+        marginTop: 10,
+        margin: 10,
+        backgroundColor: 'black',
+        borderRadius: 14,
+        borderWidth: 0.5,
+        borderColor: 'white'
     },
 
 
