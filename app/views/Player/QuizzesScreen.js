@@ -1,35 +1,85 @@
 import React, {Component} from 'react';
 import {
     View,
-    StyleSheet,
+    StyleSheet, Platform, ActivityIndicator,
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
-import Icon from "react-native-vector-icons/FontAwesome";
+import Carousel from 'react-native-snap-carousel';
+import {sliderWidth, itemWidth} from '../../modules/QuizzesCards/SliderEntry.style';
+import SliderEntry from '../../components/SliderEntry';
+import {ENTRIES1, ENTRIES2} from '../../modules/QuizzesCards/entries';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { scrollInterpolators, animatedStyles } from '../../modules/QuizzesCards/animations';
+
+const WEB = Platform.OS === 'web';
 
 export default class QuizzesScreen extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            lastColor: ''
+        }
+    }
+
+    __renderItem({item, index}) {
+        return <SliderEntry data={item} even={(index + 1) % 2 === 0}/>;
     }
 
     render() {
+        let buttons = (
+            WEB ?
+                <View style={styles.containerButton}>
+                    <View style={styles.buttonContainer}>
+                        <Button icon={
+                            <Icon
+                                name="arrow-left"
+                                size={18}
+                                color="white"
+                            />
+                        }
+                                buttonStyle={styles.buttonPrevNext}
+                                className='add-button'
+                                onPress={() => {
+                                    this.refs.carousel.snapToPrev();
+                                }}/>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <Button icon={
+                            <Icon
+                                name="arrow-right"
+                                size={18}
+                                color="white"
+                            />
+                        }
+                                buttonStyle={styles.buttonPrevNext}
+                                className='remove-button'
+                                onPress={() => {
+                                    this.refs.carousel.snapToNext();
+                                }}/>
+                    </View>
+                </View>:
+                <View></View>
+        );
+
         return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
                     <Text h2>Quizzes</Text>
                 </View>
 
-                <View style={styles.containerMessage}>
-                    <Icon
-                        name='wrench'
-                        size={100}
-                    />
-                    <Text style={{color: 'grey', fontSize: 19, marginTop:20, textAlign:'center'}} >
-                        We are working on it
-                    </Text>
-                </View>
+                <Carousel
+                    ref={'carousel'}
+                    data={ENTRIES1}
+                    renderItem={this.__renderItem}
+                    sliderWidth={sliderWidth}
+                    itemWidth={itemWidth}
+                    layout={'stack'}
+                    scrollInterpolator={ WEB ? scrollInterpolators[`scrollInterpolator1`] : null  }
+                    slideInterpolatedStyle={ WEB ? animatedStyles[`animatedStyles1`] : null  }
+                />
+                {buttons}
             </View>
-
         )
     }
 }
@@ -37,20 +87,54 @@ export default class QuizzesScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
         //justifyContent: 'center',
+        alignItems: 'center',
         padding: 20
     },
     containerTitle: {
-
         marginTop: 50,
+        marginBottom: 10,
         padding: 20
     },
-    containerMessage: {
-        alignItems: 'center',
-        //justifyContent: 'center',
-        marginTop: 130,
+
+    containerSettings: {
         padding: 20
+    },
+    button: {
+        width: 200,
+        height: 50,
+        marginTop: 30,
+        margin: 10,
+        backgroundColor: 'grey',
+        borderRadius: 14
+    },
+    buttonText: {
+        fontSize: 20,
+        color: 'grey'
+    },
+    buttonSO: {
+        position: 'absolute',
+        bottom: 0,
+        marginBottom: 50,
+    },
+    containerButton: {
+
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom:18
+    },
+    buttonContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonPrevNext: {
+        width: 120,
+        height: 35,
+        marginTop: 10,
+        margin: 10,
+        backgroundColor: 'black',
+        borderRadius: 14
     },
 
 

@@ -8,8 +8,4 @@ describe('<QuizzesScreen/>', () => {
         const rendered = renderer.create(<QuizzesScreen/>).toJSON();
         expect(rendered).toBeTruthy();
     });
-    it('QuizzesScreen test against snapshot', () => {
-        const welcomePage = renderer.create(<QuizzesScreen />).toJSON();
-        expect(welcomePage).toMatchSnapshot();
-    });
 });
