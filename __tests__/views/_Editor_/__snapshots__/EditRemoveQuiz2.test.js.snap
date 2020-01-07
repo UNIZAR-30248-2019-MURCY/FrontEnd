@@ -316,10 +316,12 @@ exports[`<EditRemoveQuiz2 /> CreateQuiz test against snapshot 1`] = `
                 disableVirtualization={false}
                 extraData={
                   Object {
+                    "data": Array [],
                     "dataSource": Array [],
                     "description": "",
                     "loading": false,
                     "publish": false,
+                    "showPublish": true,
                     "title": "",
                     "token": "",
                   }
@@ -351,6 +353,8 @@ exports[`<EditRemoveQuiz2 /> CreateQuiz test against snapshot 1`] = `
             </View>
           </View>
         </RCTScrollView>
+        <View />
+        <View />
         <View
           style={
             Object {
@@ -488,8 +492,6 @@ exports[`<EditRemoveQuiz2 /> CreateQuiz test against snapshot 1`] = `
             </View>
           </View>
         </View>
-        <View />
-        <View />
         <View
           style={
             Object {
@@ -546,6 +548,7 @@ exports[`<EditRemoveQuiz2 /> CreateQuiz test against snapshot 1`] = `
             </View>
           </View>
         </View>
+        <View />
         <View
           style={
             Object {

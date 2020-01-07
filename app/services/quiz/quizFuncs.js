@@ -12,7 +12,8 @@ export const createQuiz = (title, description, questionIds, publish, token) => {
         body: JSON.stringify({
             title: title,
             description: description,
-            questionIds: questionIds
+            questionIds: questionIds,
+            publish: publish
         }),
     })
     .then(async (response) => {
@@ -47,7 +48,8 @@ export const editQuiz = (id, title, description, questionsIds, publish, token) =
         body: JSON.stringify({
             title: title,
             description: description,
-            questionIds: questionsIds
+            questionIds: questionsIds,
+            publish: publish
         }),
     })
     .then(async (response) => {

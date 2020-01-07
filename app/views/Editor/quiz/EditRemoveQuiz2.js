@@ -25,7 +25,9 @@ export default class CreateQuiz extends Component {
             description: '',
             loading: false,
             publish: false,
-            dataSource: []
+            data: [],
+            dataSource: [],
+            showPublish: true,
         }
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -38,11 +40,20 @@ export default class CreateQuiz extends Component {
 
         if (this.props.navigation) {
             if(this.props.navigation.getParam('data')){
+                console.log('LLEGAAAAAAA')
+                console.log(this.props.navigation.getParam('data'))
+                this.setState({data: this.props.navigation.getParam('data')})
                 this.setState({id: this.props.navigation.getParam('id')})
                 this.setState({title: this.props.navigation.getParam('title')})
                 this.setState({description: this.props.navigation.getParam('description')})
-                this.setState({dataSource: this.props.navigation.getParam('data')})
+                this.setState({dataSource: this.props.navigation.getParam('selected')})
                 this.setState({token: this.props.navigation.getParam('token')})
+                if (this.props.navigation.getParam('data').lastWorkflow.status === 'DRAFT') {
+                    this.setState({publish: false})
+                } else {
+                    this.setState({publish: true, showPublish: false})
+                }
+
             }
         }
     }
@@ -97,6 +108,54 @@ export default class CreateQuiz extends Component {
                 </View> :
                 <View></View>
         );
+        let showDraft = (
+            this.state.showPublish ?
+                <View style={styles.containerSelector}>
+                    <SwitchSelector
+                        className='selector-button'
+                        initial={0}
+                        onPress={value => this.setState({publish: value})}
+                        textColor='grey'
+                        selectedColor='white'
+                        buttonColor='grey'
+                        borderColor='grey'
+                        hasPadding
+                        options={[
+                            {label: "Draft", value: "false",},
+                            {label: "Public", value: "true",}
+                        ]}
+                    />
+                </View>
+                 :
+                <View>
+                </View>
+        );
+        let workflowButton = (
+            this.state.data.workflow ?
+                <Button
+                    className='workflow-button'
+                    type="clear"
+                    title="Workflow"
+                    style={{marginTop: 20}}
+                    titleStyle={{color: 'grey'}}
+                    onPress={() => {
+                        let workflowList = [this.state.data.workflow];
+                        let lastW = this.state.data.workflow;
+
+                        if (lastW) {
+                            while (lastW.nextWorkflow) {
+                                workflowList.push(lastW.nextWorkflow);
+                                lastW = lastW.nextWorkflow;
+                            }
+                        }
+
+                        this.props.navigation.navigate('WorkflowQuestionView', {
+                            workflow: workflowList,
+                        });
+                    }}/>
+                :
+                <View></View>
+        );
 
         return (
             <ScrollView>
@@ -126,25 +185,10 @@ export default class CreateQuiz extends Component {
                         </View>
                         </ScrollView>
 
-
-                        <View style={styles.containerSelector}>
-                            <SwitchSelector
-                                initial={0}
-                                onPress={value => this.setState({ publish: value })}
-                                textColor='grey'
-                                selectedColor='white'
-                                buttonColor='grey'
-                                borderColor='grey'
-                                hasPadding
-                                options={[
-                                    { label: "Draft", value: "false", },
-                                    { label: "Public", value: "true",  }
-                                ]}
-                            />
-                        </View>
-
                         {showErr}
                         {showLoading}
+
+                        {showDraft}
 
                         <Button
                             buttonStyle={styles.button}
@@ -153,6 +197,9 @@ export default class CreateQuiz extends Component {
                             onPress={() => {
                                 this.handleSubmit()
                             }}/>
+
+                        {workflowButton}
+
                         <Button
                             className='return-button'
                             type="clear"

@@ -286,10 +286,12 @@ exports[`<EditRemoveQuiz /> CreateQuiz test against snapshot 1`] = `
             >
               <RCTScrollView
                 ItemSeparatorComponent={[Function]}
+                data={Array []}
                 disableVirtualization={false}
                 extraData={
                   Object {
                     "data": Array [],
+                    "dataSource": Array [],
                     "description": "",
                     "loading": false,
                     "publish": false,

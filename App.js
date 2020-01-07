@@ -155,6 +155,7 @@ const QuizzesEditStack = createStackNavigator(
         QuizConfirm: QuizConfirm,
         EditRemoveQuiz: EditRemoveQuiz,
         EditRemoveQuiz2: EditRemoveQuiz2,
+        WorkflowQuestionView: WorkflowQuestionView,
     },
     {
         initialRouteName: 'QuizzesEdit',

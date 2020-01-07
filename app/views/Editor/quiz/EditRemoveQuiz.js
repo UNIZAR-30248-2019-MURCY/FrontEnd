@@ -21,6 +21,7 @@ export default class EditRemoveQuiz extends Component {
             title: '',
             description: '',
             data: [],
+            dataSource: [],
             loading: false,
             publish: false,
 
@@ -37,15 +38,10 @@ export default class EditRemoveQuiz extends Component {
                     .then((data) => {
                         if (this.props.navigation) {
                             if (this.props.navigation.getParam('quiz')) {
+                                this.setState({data: this.props.navigation.getParam('quiz')})
                                 this.setState({id: this.props.navigation.getParam('quiz').id})
                                 this.setState({title: this.props.navigation.getParam('quiz').title})
                                 this.setState({description: this.props.navigation.getParam('quiz').description})
-                                /*
-                                if (this.props.navigation.getParam('quiz').lastWorkflow.status === 'DRAFT') {
-                                    this.setState({publish: false})
-                                } else {
-                                    this.setState({publish: true})
-                                }*/
                             }
                         }
                         this.rellenar(data, this.props.navigation.getParam('quiz').questions)
@@ -80,7 +76,7 @@ export default class EditRemoveQuiz extends Component {
         console.log(selected)
         if (this.state.title !== '' && selected.length > 1) {
             this.setState({loading: false})
-            this.props.navigation.navigate('EditRemoveQuiz2',{id: this.state.id, title: this.state.title, description:this.state.description, data: selected});
+            this.props.navigation.navigate('EditRemoveQuiz2',{id: this.state.id, title: this.state.title, description:this.state.description, selected: selected, data: this.state.data});
         } else {
             this.setState({loading: false})
             this.setState({error: 'Enter title and minimum 2 questions'})
