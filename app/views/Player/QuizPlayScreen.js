@@ -10,6 +10,8 @@ import SliderEntryQuestion from '../../components/SliderEntryQuestion';
 import {ENTRIES1, ENTRIES2} from '../../modules/QuizzesCards/entries';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { scrollInterpolators, animatedStyles } from '../../modules/QuizzesCards/animations';
+import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
+import {getQuizId, quizSearch} from "../../services/quiz/quizFuncs";
 
 const WEB = Platform.OS === 'web';
 
@@ -18,7 +20,11 @@ export default class QuizPlayScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title:''
+            title:'',
+            id: '',
+            data:{
+                questions:[]
+            }
         }
     }
 
@@ -26,6 +32,22 @@ export default class QuizPlayScreen extends Component {
         if (this.props.navigation) {
             if(this.props.navigation.getParam('title')){
                 this.setState({title: this.props.navigation.getParam('title')})
+
+                this.setState({loading: true})
+                retrieveItem('token')
+                    .then(data => {
+                        this.setState({token: JSON.parse(data)})
+                        getQuizId(this.state.token, this.props.navigation.getParam('id'))
+                            .then((data) => {
+                                console.log(data);
+                                this.setState({data: data});
+                                this.setState({loading: false})
+                            })
+                            .catch((error) => {
+                                this.setState({error: error.message})
+                                this.setState({loading: false})
+                            })
+                    })
             }
         }
     }
@@ -37,6 +59,14 @@ export default class QuizPlayScreen extends Component {
 
     render() {
         const { color } = this.props;
+
+        let showLoading = (
+            this.state.loading ?
+                <View style={[styles.containerLoading]} className='loadingShow'>
+                    <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
+                </View> :
+                <View></View>
+        );
 
         let buttons = (
             WEB ?
@@ -97,10 +127,11 @@ export default class QuizPlayScreen extends Component {
                 <View style={styles.containerTitle}>
                     <Text h3 style={{color: 'white', fontWeight: 'bold'}} numberOfLines={2} >{this.state.title}</Text>
                 </View>
+                    {showLoading}
 
                 <Carousel
                     ref={'carousel'}
-                    data={ENTRIES1}
+                    data={this.state.data.questions}
                     renderItem={this.__renderItem}
                     sliderWidth={sliderWidth}
                     itemWidth={itemWidth}

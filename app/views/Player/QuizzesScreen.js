@@ -10,6 +10,9 @@ import SliderEntry from '../../components/SliderEntry';
 import {ENTRIES1, ENTRIES2} from '../../modules/QuizzesCards/entries';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { scrollInterpolators, animatedStyles } from '../../modules/QuizzesCards/animations';
+import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
+import {listQuestions} from "../../services/question/questionFuncs";
+import {quizSearch} from "../../services/quiz/quizFuncs";
 
 const WEB = Platform.OS === 'web';
 
@@ -18,11 +21,40 @@ export default class QuizzesScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            lastColor: ''
+            lastColor: '',
+            loading: false,
+            data: []
         }
     }
+
+    componentDidMount() {
+        this.setState({loading: true})
+        retrieveItem('token')
+            .then(data => {
+                this.setState({token: JSON.parse(data)})
+                quizSearch(this.state.token, 0, 0, 0, 0, 0)
+                    .then((data) => {
+                        console.log(data);
+                        this.setState({data: data});
+                        this.setState({loading: false})
+                    })
+                    .catch((error) => {
+                        this.setState({error: error.message})
+                        this.setState({loading: false})
+                    })
+            })
+    }
+
     render() {
         const { navigation } = this.props;
+
+        let showLoading = (
+            this.state.loading ?
+                <View style={[styles.containerLoading]} className='loadingShow'>
+                    <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
+                </View> :
+                <View></View>
+        );
 
         let buttons = (
             WEB ?
@@ -64,10 +96,10 @@ export default class QuizzesScreen extends Component {
                 <View style={styles.containerTitle}>
                     <Text h2>Quizzes</Text>
                 </View>
-
+                {showLoading}
                 <Carousel
                     ref={'carousel'}
-                    data={ENTRIES1}
+                    data={this.state.data}
                     renderItem=
                         {({item, index}) => (
                             <SliderEntry  navigation={navigation} data={item} even={(index + 1) % 2 === 0}/>

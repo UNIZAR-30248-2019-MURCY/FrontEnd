@@ -129,3 +129,65 @@ export const listQuiz = (token) => {
         throw error;
     });
 }
+
+export const quizSearch = (token, page, size, sortColumn, sortType, query) => {
+    const URL = WEB.BACK +'/quiz/search';
+    //const URL = WEB.BACK +'quiz/search?page='+page+'&size='+size+'&sortColumn='+sortColumn+'&sortType='+sortType+'&query='+query;
+    return fetch(URL, {
+        method: 'GET',
+        headers: {
+            Authorization: 'Bearer ' + token,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(async (response) => {
+            if (response.status === 200) {
+                const responseJSON = await response.json();
+                console.log(responseJSON)
+                return responseJSON
+            } else if (response.status === 403) {
+                console.log(response.status)
+                throw new Error("Not authorized")
+            } else {
+                console.log(response.status)
+                throw new Error("Server error")
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            console.log(error.message)
+            throw error;
+        });
+}
+
+export const getQuizId = (token, id) => {
+    const URL = WEB.BACK +'/quiz/'+ id;
+    return fetch(URL, {
+        method: 'GET',
+        headers: {
+            Authorization: 'Bearer ' + token,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(async (response) => {
+            if (response.status === 200) {
+                const responseJSON = await response.json();
+                console.log(responseJSON)
+                return responseJSON
+            } else if (response.status === 403) {
+                console.log(response.status)
+                throw new Error("Not authorized")
+            } else {
+                console.log(response.status)
+                throw new Error("Server error")
+            }
+        })
+        .catch((error) => {
+            console.log(error)
+            console.log(error.message)
+            throw error;
+        });
+}
+
