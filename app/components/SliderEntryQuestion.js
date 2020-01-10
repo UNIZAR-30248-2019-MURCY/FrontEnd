@@ -16,20 +16,38 @@ class SliderEntryQuestion extends Component {
         super(props);
         this.state = {
             colorBack: '',
-            correct1: false,
-            correct2: false,
-            correct3: false,
+            options: [],
+            points: 1
         }
     }
 
+
     componentDidMount() {
-        const colors = ['#40407a', '#706fd3', '#34ace0', '#33d9b2', '#ff5252', '#ff793f', '#ffb142', 'black'];
+        const colors = ['#40407a', '#706fd3', '#34ace0', '#33d9b2', '#ff5252', '#ff793f', '#ffb142'];
         const min = 0;
-        const max = 7;
+        const max = 6;
         const rand = min + Math.random() * (max - min);
         this.setState({colorBack: colors[Math.round(rand)]})
+        this.rellenar()
     }
 
+    rellenar(){
+        var options=[];
+        this.props.data.options.map(function(element, indice){
+            options.push({title: element.title, correct: element.correct, isSelected: false})
+        })
+        this.setState({options: options});
+    }
+
+    checkPoints(){
+        let points = 0;
+        this.state.options.map(function(element, indice){
+            if(element.correct && element.isSelected){
+                points = points + 1
+            }
+        })
+        return points
+    }
 
     get image() {
         const {data: {illustration}, parallax, parallaxProps, even} = this.props;
@@ -53,7 +71,7 @@ class SliderEntryQuestion extends Component {
     }
 
     render() {
-        const {data: {title, description, options}} = this.props;
+        const {data: {id, title, description}} = this.props;
 
         const uppercaseTitle = title ? (
             <Text
@@ -84,7 +102,7 @@ class SliderEntryQuestion extends Component {
                     <View style={{marginTop: WEB ? 0 : 20}}>
 
                         <FlatList
-                            data={options}
+                            data={this.state.options}
                             keyExtractor={item => item.title}
                             renderItem={({item, index}) => (
 
@@ -101,8 +119,16 @@ class SliderEntryQuestion extends Component {
                                     <CheckBox value="1"
                                               className='correct1'
                                               containerStyle={styles2.checkBoxC}
-                                              checked={this.state.correct1}
-                                              onPress={() => this.setState({correct1: !this.state.correct1})}/>
+                                              checked={item.isSelected}
+                                              onPress={() => {
+                                                  const copyOptions = [...this.state.options];
+                                                  copyOptions[index].isSelected = !copyOptions[index].isSelected;
+                                                  this.setState({
+                                                      options: copyOptions,
+                                                  });
+                                                  console.log(this.props)
+                                                  this.props.points(id, this.checkPoints())
+                                              }}/>
                                 </View>
                             )}
                         />

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {
     View,
-    StyleSheet, Platform, ActivityIndicator,
+    StyleSheet, Platform, ActivityIndicator,Alert
 } from 'react-native'
 import {Button, colors, Text} from 'react-native-elements';
 import Carousel from 'react-native-snap-carousel';
@@ -12,6 +12,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { scrollInterpolators, animatedStyles } from '../../modules/QuizzesCards/animations';
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
 import {getQuizId, quizSearch} from "../../services/quiz/quizFuncs";
+import SliderEntry from "../../components/SliderEntry";
 
 const WEB = Platform.OS === 'web';
 
@@ -24,7 +25,8 @@ export default class QuizPlayScreen extends Component {
             id: '',
             data:{
                 questions:[]
-            }
+            },
+            points: 0
         }
     }
 
@@ -41,6 +43,7 @@ export default class QuizPlayScreen extends Component {
                             .then((data) => {
                                 console.log(data);
                                 this.setState({data: data});
+                                this.setState({points: []});
                                 this.setState({loading: false})
                             })
                             .catch((error) => {
@@ -52,10 +55,24 @@ export default class QuizPlayScreen extends Component {
         }
     }
 
-    __renderItem({item, index}) {
-        return <SliderEntryQuestion data={item} even={(index + 1) % 2 === 0}/>;
-    }
+    points = (id, point) => {
+        console.log('POINTS')
+        let copyPoints = [...this.state.points]
+        let indexF = 0;
+        let found = copyPoints.find(function(element, index) {
+            if ( element.id === id){
+                indexF = index;
+                return true;
+            }
+        });
 
+        if (found){
+            copyPoints[indexF].points=point;
+        }else{
+            copyPoints.push({id: id, points: point})
+        }
+        this.setState({points: copyPoints});
+    }
 
     render() {
         const { color } = this.props;
@@ -132,7 +149,10 @@ export default class QuizPlayScreen extends Component {
                 <Carousel
                     ref={'carousel'}
                     data={this.state.data.questions}
-                    renderItem={this.__renderItem}
+                    renderItem=
+                        {({item, index}) => (
+                            <SliderEntryQuestion points={this.points} data={item}  even={(index + 1) % 2 === 0}/>
+                        )}
                     sliderWidth={sliderWidth}
                     itemWidth={itemWidth}
                     layout={'stack'}
@@ -152,7 +172,14 @@ export default class QuizPlayScreen extends Component {
                             buttonStyle={styles.buttonSend}
                             className='remove-button'
                             onPress={() => {
-                                this.refs.carousel.snapToNext();
+                                console.log(this.state.points)
+                                let totalPoints = 0;
+                                this.state.points.map(function(element, indice){
+                                    totalPoints = totalPoints+ element.points;
+                                })
+
+                                this.props.navigation.replace('Points',{points: totalPoints});
+
                             }}/>
                 </View>
                 </View>

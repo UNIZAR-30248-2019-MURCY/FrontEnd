@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {
     View,
-    StyleSheet, Platform, ActivityIndicator,
+    StyleSheet, Platform, ActivityIndicator, Animated, TextInput, TouchableOpacity
 } from 'react-native'
-import {Button, colors, Text} from 'react-native-elements';
+import {Button, CheckBox, colors, Text} from 'react-native-elements';
 import Carousel from 'react-native-snap-carousel';
 import {sliderWidth, itemWidth} from '../../modules/QuizzesCards/SliderEntry.style';
 import SliderEntry from '../../components/SliderEntry';
@@ -13,6 +13,9 @@ import { scrollInterpolators, animatedStyles } from '../../modules/QuizzesCards/
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
 import {listQuestions} from "../../services/question/questionFuncs";
 import {quizSearch} from "../../services/quiz/quizFuncs";
+import ActionButton from "react-native-action-button";
+import {removeAll} from "../../modules/AsyncStorage/remove";
+
 
 const WEB = Platform.OS === 'web';
 
@@ -23,7 +26,15 @@ export default class QuizzesScreen extends Component {
         this.state = {
             lastColor: '',
             loading: false,
-            data: []
+            data: [],
+            showFilter: false,
+            ready: false,
+            SlideInLeft: new Animated.Value(0),
+            slideUpValue: new Animated.Value(0),
+            fadeValue: new Animated.Value(0),
+            byTitle: true,
+            byDescription: false,
+            search:''
         }
     }
 
@@ -32,7 +43,7 @@ export default class QuizzesScreen extends Component {
         retrieveItem('token')
             .then(data => {
                 this.setState({token: JSON.parse(data)})
-                quizSearch(this.state.token, 0, 0, 0, 0, 0)
+                quizSearch(this.state.token, 0, 0, 0, this.state.byTitle ? 'title' : 'description', this.state.search)
                     .then((data) => {
                         console.log(data);
                         this.setState({data: data});
@@ -41,17 +52,57 @@ export default class QuizzesScreen extends Component {
                     .catch((error) => {
                         this.setState({error: error.message})
                         this.setState({loading: false})
+                        removeAll()
+                            .then((r) => {
+                                if (r) {
+                                    this.props.navigation.navigate('Auth');
+                                }
+                            });
+
                     })
             })
     }
 
+    search() {
+        this.setState({loading: true})
+        quizSearch(this.state.token, 0, 0, 0, this.state.byTitle ? 'title' : 'description', this.state.search)
+            .then((data) => {
+                console.log(data);
+                this.setState({data: data});
+                this.setState({loading: false})
+            })
+            .catch((error) => {
+                this.setState({error: error.message})
+                this.setState({loading: false})
+                removeAll()
+                    .then((r) => {
+                        if (r) {
+                            this.props.navigation.navigate('Auth');
+                        }
+                    });
+
+            })
+    }
+
+    _start = () => {
+        return Animated.parallel([
+            Animated.timing(this.state.slideUpValue, {
+                toValue: this.state.showFilter ? 0 : 1 ,
+                duration: 120,
+                useNativeDriver: true
+            })
+        ]).start();
+    };
+
     render() {
+        let { slideUpValue} = this.state;
+
         const { navigation } = this.props;
 
         let showLoading = (
             this.state.loading ?
                 <View style={[styles.containerLoading]} className='loadingShow'>
-                    <ActivityIndicator animating={this.state.loading} size="large" color="grey"/>
+                    <ActivityIndicator animating={this.state.loading} size="large"  color="grey"/>
                 </View> :
                 <View></View>
         );
@@ -94,8 +145,11 @@ export default class QuizzesScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
-                    <Text h2>Quizzes</Text>
+                    <Text h2 style={{fontWeight: '600'}}  >Quizzes</Text>
                 </View>
+
+
+
                 {showLoading}
                 <Carousel
                     ref={'carousel'}
@@ -111,6 +165,119 @@ export default class QuizzesScreen extends Component {
                     slideInterpolatedStyle={ WEB ? animatedStyles[`animatedStyles1`] : null  }
                 />
                 {buttons}
+                    <Animated.View
+                        style={{
+
+                            transform: [
+                                {
+                                    translateX: slideUpValue.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [WEB ? -2000 : -600, 0]
+                                    }),
+                                }
+                            ],
+                            width: 250,
+                            height: 330,
+                            backgroundColor: 'black',
+                            marginTop: WEB ? 160 : 250,
+                            alignSelf: 'center',
+                            position: 'absolute',
+                            borderRadius: 14,
+                            shadowColor: "#000",
+                            shadowOpacity: 0.60,
+                            shadowOffset: { width: 0, height: 10 },
+                            shadowRadius: 10,
+                            elevation: 10,
+                        }}
+                    >
+                        <Text  style={{color:'white', fontSize:30, alignSelf:'center', marginTop:30}}  >Filter</Text>
+                        <Text  style={{color:'white', fontSize:22, marginTop:10, marginLeft:30}}  >Order by</Text>
+                        <TouchableOpacity
+                            style={{
+                                flexDirection: "row",
+                                //backgroundColor: "#192338",
+                                justifyContent: "flex-start",
+                                alignItems: "flex-start",
+                                zIndex: -1,
+                                borderRadius: 14}}
+                            onPress={() => {
+                                this.setState({byTitle: !this.state.byTitle});
+                                this.setState({byDescription: !this.state.byDescription});
+                            }
+                            }
+                        >
+                            <Text style={{color:'white', fontSize:17, marginTop:10, marginLeft:30}}>  Title    {this.state.byTitle ?
+                                <Icon
+                                    name='check'
+                                    size={18}
+                                    color='#33d9b2'
+                                />:
+                                <Text/>
+                            } </Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
+                            style={{
+                                flexDirection: "row",
+                                //backgroundColor: "#192338",
+                                justifyContent: "flex-start",
+                                alignItems: "flex-start",
+                                zIndex: -1,
+                                borderRadius: 14}}
+                            onPress={() => {
+                                this.setState({byTitle: !this.state.byTitle});
+                                this.setState({byDescription: !this.state.byDescription});
+                            }
+                            }
+                        >
+                            <Text style={{color:'white', fontSize:17, marginTop:10, marginLeft:30}}>  Description    {this.state.byDescription ?
+                                <Icon
+                                    name='check'
+                                    size={18}
+                                    color='#33d9b2'
+                                />:
+                                <Text/>
+                            } </Text>
+                        </TouchableOpacity>
+
+
+
+                        <Text  style={{color:'white', fontSize:22, marginTop:20, marginLeft:30}}  >Search</Text>
+
+                        <TextInput
+                            className='title2'
+                            style={styles.inputAns}
+                            placeholder='Word'
+                            placeholderTextColor='darkgrey'
+                            onChangeText={val =>  this.setState({search: val})}
+                        />
+
+                        <TouchableOpacity
+                            style={styles.button}
+                            className='search-button'
+                            onPress={() => {
+                                this.setState({showFilter: !this.state.showFilter});
+                                this._start();
+                                this.search();
+                            }}>
+                            <Text  style={{color:'black', fontSize:15, alignSelf:'center', marginTop:6, fontWeight:'bold'}}  >OK</Text>
+                        </TouchableOpacity>
+
+                    </Animated.View>
+
+
+                <ActionButton
+                    className='create-button'
+                    hideShadow={true}
+                    buttonColor="black"
+                    size={65}
+                    renderIcon={active => active ? (<Icon className='filter-active' name="filter" size={30} color="white"/> ) : (<Icon className='filter-inactive'  name="filter" size={30} color="white"/>)}
+                    onPress={() => {
+                        this.setState({showFilter: !this.state.showFilter})
+                        this._start()
+                        }}
+                />
+
             </View>
         )
     }
@@ -126,18 +293,19 @@ const styles = StyleSheet.create({
     containerTitle: {
         marginTop: 50,
         marginBottom: 10,
-        padding: 20
+        padding: 20,
     },
 
+
     containerSettings: {
-        padding: 20
+        padding: 20,
     },
     button: {
-        width: 200,
-        height: 50,
-        marginTop: 30,
-        margin: 10,
-        backgroundColor: 'grey',
+        marginTop:20,
+        alignSelf: 'center',
+        width: 70,
+        height: 30,
+        backgroundColor: 'white',
         borderRadius: 14
     },
     buttonText: {
@@ -150,7 +318,6 @@ const styles = StyleSheet.create({
         marginBottom: 50,
     },
     containerButton: {
-
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -167,6 +334,26 @@ const styles = StyleSheet.create({
         margin: 10,
         backgroundColor: 'black',
         borderRadius: 14
+    },
+    containerButtons: {
+        flexDirection: 'row'
+    },
+    inputAns: {
+        marginLeft:40,
+        width: 150,
+        height: 30,
+        backgroundColor: 'dimgrey',
+        margin: 10,
+        padding: 8,
+        color: 'white',
+        borderRadius: 14,
+        fontSize: 15,
+        fontWeight: '500',
+    },
+    containerLoading: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10
     },
 
 

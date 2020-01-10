@@ -33,6 +33,7 @@ import EditRemoveQuiz2 from "./app/views/Editor/quiz/EditRemoveQuiz2";
 import QuizPlayScreen from "./app/views/Player/QuizPlayScreen";
 import SliderEntry from "./app/components/SliderEntry";
 import SliderEntryQuestion from "./app/components/SliderEntryQuestion";
+import Points from "./app/views/Player/Points";
 
 import {Linking} from "expo";
 
@@ -52,7 +53,8 @@ const QuizzesPlayerStack = createStackNavigator(
         QuizzesScreen: QuizzesScreen,
         QuizPlayScreen: QuizPlayScreen,
         SliderEntry: SliderEntry,
-        SliderEntryQuestion: SliderEntryQuestion
+        SliderEntryQuestion: SliderEntryQuestion,
+        Points: Points
     },
     {
         initialRouteName: 'QuizzesScreen',
@@ -68,7 +70,7 @@ QuizzesPlayerStack.navigationOptions = ({ navigation }) => {
     let tabBarVisible;
     if (navigation.state.routes.length > 1) {
         navigation.state.routes.map(route => {
-            if (route.routeName === "QuizPlayScreen") {
+            if (route.routeName === "QuizPlayScreen" || route.routeName === "Points") {
                 tabBarVisible = false;
             } else {
                 tabBarVisible = true;

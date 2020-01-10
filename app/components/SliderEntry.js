@@ -17,9 +17,9 @@ export default class SliderEntry extends Component {
     }
 
     componentDidMount() {
-        const colors = ['#40407a', '#706fd3', '#34ace0', '#33d9b2', '#ff5252', '#ff793f', '#ffb142', 'black'];
+        const colors = ['#40407a', '#706fd3', '#34ace0', '#33d9b2', '#ff5252', '#ff793f', '#ffb142'];
         const min = 0;
-        const max = 7;
+        const max = 6;
         const rand = min + Math.random() * (max - min);
         this.setState({colorBack: colors[Math.round(rand)]})
     }
