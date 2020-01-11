@@ -34,6 +34,7 @@ import QuizPlayScreen from "./app/views/Player/QuizPlayScreen";
 import SliderEntry from "./app/components/SliderEntry";
 import SliderEntryQuestion from "./app/components/SliderEntryQuestion";
 import Points from "./app/views/Player/Points";
+import QuestionReqList from "./app/views/Reviewer/QuestionReqList"
 
 import {Linking} from "expo";
 
@@ -237,6 +238,21 @@ const RequestListStack = createStackNavigator(
     }
 );
 
+const QuestionRequestListStack = createStackNavigator(
+    {
+        QuestionReqList: QuestionReqList,
+        RequestDetails: RequestDetails,
+        WorkflowView: WorkflowView,
+        RequestActionConfirm: RequestActionConfirm,
+    },
+    {
+        initialRouteName: 'QuestionReqList',
+        headerMode: 'none',
+        navigationOptions: {
+            headerVisible: false,
+        }
+    }
+);
 
 const SettingsReviewerStack = createStackNavigator(
     {
@@ -253,12 +269,21 @@ const SettingsReviewerStack = createStackNavigator(
 
 const reviewerNavigator = createMaterialBottomTabNavigator(
     {
-        Requests: {
+        EditorRequests: {
             screen: RequestListStack,
             navigationOptions: {
                 showLabel: false,
                 tabBarIcon: ({tintColor}) => (
                     <Icon name="edit" size={22} color={tintColor}/>
+                )
+            }
+        },
+        QuestionRequests: {
+            screen: QuestionRequestListStack,
+            navigationOptions: {
+                showLabel: false,
+                tabBarIcon: ({tintColor}) => (
+                    <Icon name="question" size={22} color={tintColor}/>
                 )
             }
         },
@@ -272,7 +297,7 @@ const reviewerNavigator = createMaterialBottomTabNavigator(
         }
     },
     {
-        initialRouteName: 'Requests',
+        initialRouteName: 'EditorRequests',
         activeColor: '#f0edf6',
         inactiveColor: 'gray',
         barStyle: {backgroundColor: 'black'},
