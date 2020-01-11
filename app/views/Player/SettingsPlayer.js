@@ -82,7 +82,7 @@ export default class SettingsPlayer extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
-                    <Text h2>Settings</Text>
+                    <Text h2 style={{fontWeight: '600'}}>Settings</Text>
                 </View>
 
                 <View style={styles.containerSettings}>

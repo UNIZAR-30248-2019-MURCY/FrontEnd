@@ -22,6 +22,7 @@ exports[`<SettingsPlayer /> SettingsPlayer test against snapshot 1`] = `
       style={
         Object {
           "fontSize": 42.5,
+          "fontWeight": "600",
         }
       }
       theme={

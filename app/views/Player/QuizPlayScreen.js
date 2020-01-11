@@ -166,7 +166,7 @@ export default class QuizPlayScreen extends Component {
                         <Icon
                             name="paper-plane"
                             size={22}
-                            color="white"
+                            color="black"
                         />
                     }
                             buttonStyle={styles.buttonSend}
@@ -181,6 +181,13 @@ export default class QuizPlayScreen extends Component {
                                 this.props.navigation.replace('Points',{points: totalPoints});
 
                             }}/>
+
+                    <Text
+                        style={{fontSize: 15, color: 'white', alignSelf:'center'}}
+                        numberOfLines={2}
+                    >
+                        Send quiz
+                    </Text>
                 </View>
                 </View>
             </View>
@@ -245,7 +252,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     sendContainer: {
-        marginBottom: WEB ? 7 : 30,
+        marginBottom: WEB ? 7 : 40,
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
     },
@@ -264,7 +271,7 @@ const styles = StyleSheet.create({
         height: 40,
         marginTop: 10,
         margin: 10,
-        backgroundColor: 'black',
+        backgroundColor: 'white',
         borderRadius: 14,
         borderWidth: 0.5,
         borderColor: 'white'

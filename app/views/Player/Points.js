@@ -57,7 +57,7 @@ export default class Points extends Component {
                         {this.state.points}
                     </Text>
                     <Text style={{color: 'white', fontSize: 25, marginTop:20, textAlign:'center'}} >
-                        points
+                        questions right!
                     </Text>
                 </View>
 

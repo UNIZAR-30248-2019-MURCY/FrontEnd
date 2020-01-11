@@ -40,10 +40,10 @@ class SliderEntryQuestion extends Component {
     }
 
     checkPoints(){
-        let points = 0;
+        let points = 1;
         this.state.options.map(function(element, indice){
-            if(element.correct && element.isSelected){
-                points = points + 1
+            if(element.correct !== element.isSelected){
+                points = 0
             }
         })
         return points
@@ -71,7 +71,7 @@ class SliderEntryQuestion extends Component {
     }
 
     render() {
-        const {data: {id, title, description}} = this.props;
+        const {data: {id, title, description, isMultiple}} = this.props;
 
         const uppercaseTitle = title ? (
             <Text
@@ -99,6 +99,13 @@ class SliderEntryQuestion extends Component {
                         {description}
                     </Text>
 
+                    <Text
+                        style={[styles.subtitle, styles.subtitleEven]}
+                        numberOfLines={1}
+                    >
+                        {isMultiple ? '(Multiple choice)' : '(Single choice)'}
+                    </Text>
+
                     <View style={{marginTop: WEB ? 0 : 20}}>
 
                         <FlatList
@@ -117,12 +124,24 @@ class SliderEntryQuestion extends Component {
                                     </View>
 
                                     <CheckBox value="1"
+                                              checkedIcon= {isMultiple ? 'check-square-o' : 'dot-circle-o'}
+                                              uncheckedIcon= {isMultiple ? 'square-o' : 'circle-o'}
+                                              checkedColor='white'
+                                              uncheckedColor='white'
                                               className='correct1'
                                               containerStyle={styles2.checkBoxC}
                                               checked={item.isSelected}
                                               onPress={() => {
                                                   const copyOptions = [...this.state.options];
+
+                                                  if(!copyOptions[index].isSelected && !isMultiple){
+                                                      copyOptions.map(function(element, indice){
+                                                          copyOptions[indice].isSelected = false;
+                                                      })
+                                                  }
+
                                                   copyOptions[index].isSelected = !copyOptions[index].isSelected;
+
                                                   this.setState({
                                                       options: copyOptions,
                                                   });
@@ -144,18 +163,17 @@ class SliderEntryQuestion extends Component {
 const styles2 = StyleSheet.create({
 
     inputAns: {
+        marginLeft:20,
         width: 200,
-        margin: 10,
-        padding: 8,
-
+        justifyContent: 'center',
     },
 
     containerButtons: {
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     checkBoxC: {
         padding: 0,
-        marginTop: 25,
+        //marginTop: 25,
         alignItems: 'center',
         borderColor: "white"
     },
