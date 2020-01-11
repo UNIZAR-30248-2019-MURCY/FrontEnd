@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, AsyncStorage, FlatList, StyleSheet, TextInput, View,} from 'react-native'
+import {ActivityIndicator, AsyncStorage, FlatList, StyleSheet, TextInput, View,ScrollView} from 'react-native'
 import {Button, ListItem, Text} from 'react-native-elements';
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
 import {acceptRe, denyReq} from "../../services/user/reviewerFuncs";
@@ -15,7 +15,8 @@ export default class RequestDetails extends Component {
             loading: false,
             token: '',
             closed: false,
-            workflowList: ''
+            workflowList: '',
+            questionInfo: ''
         }
     }
 
@@ -25,6 +26,10 @@ export default class RequestDetails extends Component {
             this.setState({workflow: this.props.navigation.getParam('workflow', 'default value')});
             this.setState({workflowList: this.props.navigation.getParam('workflowList', 'default value')});
             this.setState({closed: this.props.navigation.getParam('closed', 'default value')});
+            this.setState({question: this.props.navigation.getParam('question')});
+            if(this.props.navigation.getParam('question')){
+                this.setState({questionInfo: this.props.navigation.getParam('item')});
+            }
         }
         retrieveItem('token')
             .then(data => {
@@ -132,10 +137,28 @@ export default class RequestDetails extends Component {
 
         );
 
+        let showQuestion = (
+            this.state.question ?
+                <View>
+                    <Text style={styles.containerRequestDetails}>
+                        User: {this.state.questionInfo.ownerUserName} 
+                        {'\n'}
+                        Title: {this.state.questionInfo.title} 
+                        {'\n'}{'\n'}
+                        Answers
+                    </Text>
+                    
+                    
+                </View> :
+                <View></View>
+
+        );
+
         let showDetails = (
             this.state.workflow ?
                 <View style={styles.containerRequest} className='showDetails'>
                     <Text h4 style={styles.containerSubTitle}>{this.state.workflow.title}</Text>
+                    {showQuestion}
                     <Text style={styles.containerRequestDetails}>
                         Description: {this.state.workflow.description}
                         {'\n'}{'\n'}
@@ -149,6 +172,7 @@ export default class RequestDetails extends Component {
                 <View></View>
 
         );
+
         let workflowButton = (
             <Button
                 className='workflow-button'
@@ -177,6 +201,7 @@ export default class RequestDetails extends Component {
                 <View style={styles.containerTitle}>
                     <Text h2>Details</Text>
                 </View>
+                <ScrollView>
                 <View style={styles.containerRequest2}>
                     {showDetails}
                     {workflowButton}
@@ -193,6 +218,7 @@ export default class RequestDetails extends Component {
                             }/>
                     </View>
                 </View>
+                </ScrollView>
             </View>
         )
     }

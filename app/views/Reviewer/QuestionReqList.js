@@ -1,17 +1,18 @@
+
 import React, {Component} from 'react';
 import {ActivityIndicator, AsyncStorage, FlatList, StyleSheet, TextInput, View,} from 'react-native'
 import {Button, ListItem, Text} from 'react-native-elements';
-import {reviewerReqList} from "../../services/user/reviewerFuncs";
+import {reviewerQuestionReqList} from "../../services/user/reviewerFuncs";
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
 import ActionButton from "react-native-action-button";
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class RequestList extends Component {
+export default class QuestionReqList extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            description: '',
+            title: '',
             token: '',
             requests: false,
             errorGettingReq: false,
@@ -24,7 +25,7 @@ export default class RequestList extends Component {
         retrieveItem('token')
             .then(data => {
                 this.setState({token: JSON.parse(data)})
-                reviewerReqList(this.state.token, false, false)
+                reviewerQuestionReqList(this.state.token, false, false)
                     .then((data) => {
                         this.setState({requests: data})
                         console.log(this.state.requests)
@@ -41,7 +42,7 @@ export default class RequestList extends Component {
         retrieveItem('token')
             .then(data => {
                 this.setState({token: JSON.parse(data)})
-                reviewerReqList(this.state.token,  closed, approved)
+                reviewerQuestionReqList(this.state.token,  closed, approved)
                     .then((data) => {
                         this.setState({requests: data})
                         console.log(this.state.requests)
@@ -77,7 +78,7 @@ export default class RequestList extends Component {
                             renderItem={({item}) => (
                                 <ListItem
                                     className='detail-button'
-                                    title={item.lastWorkflow.description}
+                                    title={item.title}
                                     titleStyle={{fontSize: 18}}
                                     bottomDivider
                                     onPress={() => {
@@ -85,7 +86,9 @@ export default class RequestList extends Component {
                                             workflowList: item.workflow,
                                             workflow: item.lastWorkflow,
                                             closed: item.closed,
-                                            question: false
+                                            ownerUserName: item.ownerUserName,
+                                            question: true,
+                                            item: item
                                         });
                                     }}
                                 />
@@ -98,7 +101,7 @@ export default class RequestList extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
-                    <Text h2>Requests List</Text>
+                    <Text h2>Requests Questions</Text>
                 </View>
                 {showReq}
                 <ActionButton
