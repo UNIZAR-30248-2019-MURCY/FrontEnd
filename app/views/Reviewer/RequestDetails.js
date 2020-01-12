@@ -147,7 +147,21 @@ export default class RequestDetails extends Component {
                         {'\n'}{'\n'}
                         Answers
                     </Text>
-                    
+                    <View className='reqList'>
+                        <FlatList
+                            className='flatList'
+                            data={this.state.questionInfo.options}
+                            keyExtractor={item => item.title}
+                            renderItem={({item}) => (
+                                <ListItem
+                                    className='detail-button'
+                                    title={item.title}
+                                    titleStyle={{fontSize: 15}}
+                                    bottomDivider
+                                />
+                            )}
+                        />
+                    </View>
                     
                 </View> :
                 <View></View>

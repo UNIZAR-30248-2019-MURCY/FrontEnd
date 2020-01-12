@@ -30,6 +30,12 @@ describe('<RequestList />', () => {
         wrapper.setState({ loading: false });
         expect(wrapper.find('.reqList').length).toBe(1);
     });
+    it('should render the List if state.notShow is true', async () => {
+        await retrieveItem();
+        let wrapper = shallow(<RequestList/>);
+        wrapper.setState({ loading: true });
+        expect(wrapper.find('.reqList').length).toBe(0);
+    });
     it('filter-button', async () => {
         await retrieveItem();
         let wrapper = shallow(<RequestList/>);
@@ -43,4 +49,50 @@ describe('<RequestList />', () => {
         expect(wrapper.instance().reload).toBeCalledTimes(3);
 
     });
+    it('list', async () => {
+        await retrieveItem();
+        const navigationMock = {
+            navigate: jest.fn()
+        };
+        let wrapper = shallow(<RequestList navigation={navigationMock}/>);
+        wrapper.setState({
+            loading: false,
+            requests: [
+                {
+                  "id": 0,
+                  "description": "string",
+                  "closed": true,
+                  "approved": true,
+                  "workflow": {
+                    "id": 0,
+                    "title": "string",
+                    "description": "string",
+                    "status": "APPROVED",
+                    "statusDate": "2020-01-12T09:58:58.743Z",
+                    "statusBy": "string",
+                    "response": "string"
+                  },
+                  "lastWorkflow": {
+                    "id": 0,
+                    "title": "string",
+                    "description": "string",
+                    "status": "APPROVED",
+                    "statusDate": "2020-01-12T09:58:58.743Z",
+                    "statusBy": "string",
+                    "response": "string"
+                  }
+                }
+              ]              
+         })
+
+        wrapper.update();
+        expect(wrapper.find('.flatList').length).toBe(1);
+        const key = wrapper.find('FlatList').props().keyExtractor({id: 3});
+        expect(key).toEqual('3')
+        
+
+        //wrapper.find('.flatList').simulate('press');
+        //expect(navigationMock.navigate.mock.calls[0]).toEqual(['RequestDetails']);
+    });
+
 });
