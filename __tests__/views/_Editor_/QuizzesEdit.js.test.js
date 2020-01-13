@@ -197,8 +197,6 @@ describe('<QuizzesEdit/>', () => {
             component.setProps(changedProps);
             //expectations
             expect(fakeCommentChanged).toHaveBeenCalled(); 
-            //wrapper.find(MyComponent).setProps({ something })
-           //write more expectations for other checks like when nextProps.value!=this.state.comment
         })
     })
 
