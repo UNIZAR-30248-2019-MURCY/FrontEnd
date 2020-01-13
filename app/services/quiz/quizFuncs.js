@@ -162,7 +162,7 @@ export const quizSearch = (token, page, size, sortColumn, sortType, query) => {
 }
 
 export const getQuizId = (token, id) => {
-    const URL = WEB.BACK +'/quiz/'+ id;
+    const URL = WEB.BACK +'/quiz/'+ id + '/public';
     return fetch(URL, {
         method: 'GET',
         headers: {
