@@ -153,6 +153,65 @@ describe('<EditRemoveQuestion />', () => {
         expect(navigationMock.navigate.mock.calls[0]).toEqual(['WorkflowQuestionView', workflowList]);
     });
 
+    describe('.renderItem', () => {
+        let info = {
+            approved: false,
+            closed: false,
+            description: "D3",
+            id: 108,
+            ownerId: 9,
+            ownerUserName: "javier",
+            title: "T3",
+            options: [],
+            lastWorkflow: {
+                description: null,
+                id: 105,
+                nextWorkflow: null,
+                response: null,
+                status: "PENDING",
+                statusBy: null,
+                statusDate: "2019-12-08T14:29:07.809+0000",
+                title: "Solicitud publicar pregunta"
+            },
+
+            workflow: {
+                description: "Prueba petición",
+                id: 1,
+                nextWorkflow: {
+                    description: "Prueba petición",
+                    id: 2,
+                    nextWorkflow: null,
+                    response: "Prueba",
+                    status: "APPROVED",
+                    statusBy: "test",
+                    statusDate: "2019-11-26T10:27:05.853+0000",
+                    title: "Solicitud para ser editor",
+                },
+                response: "Prueba",
+                status: "APPROVED",
+                statusBy: "test",
+                statusDate: "2019-11-26T10:27:05.853+0000",
+                title: "Solicitud para ser editor",
+            }
+        }
+        const navigationMock = { navigate: jest.fn(),
+            getParam: jest.fn((param) => info) };
+        let renderItemShallowWrapper;
+        let wrapper = shallow(<EditRemoveQuestion navigation={navigationMock}/>);
+
+        const mockItem = {
+            title: "hola"
+        }
+        beforeAll(() => {
+            let RenderItem = wrapper.find('FlatList').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem}/>);
+        });
+
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+    });
+
 });
 
 

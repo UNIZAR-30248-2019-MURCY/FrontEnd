@@ -187,5 +187,20 @@ describe('<QuizzesEdit/>', () => {
         });
     });
 
+    describe('componentWillReceiveProps()', () => {
+        it('call commentChanged once', () => {
+            const fakeCommentChanged =jest.spyOn(QuizzesEdit.prototype, 'componentWillReceiveProps');
+            let defaultProps={reload:false}//define your props here
+            const component = shallow(<QuizzesEdit props={defaultProps}/>);
+            changedProps={reload:true}//define your nextProps here
+            // triggers componentWillReceiveProps
+            component.setProps(changedProps);
+            //expectations
+            expect(fakeCommentChanged).toHaveBeenCalled(); 
+            //wrapper.find(MyComponent).setProps({ something })
+           //write more expectations for other checks like when nextProps.value!=this.state.comment
+        })
+    })
+
 
 });

@@ -79,4 +79,45 @@ describe('<QuestionsEdit />', () => {
         expect(key).toEqual('3')
     });
 
+    describe('.renderItem', () => {
+        const mockItem = {
+            isPublic: false,
+            lastWorkflow: {
+                status: 'PUBLIC'
+            }
+        }
+        const navigationMock = { navigate: jest.fn() };
+        let renderItemShallowWrapper;
+        let wrapper = shallow(<QuestionsEdit navigation={navigationMock}/>);
+
+        beforeAll(() => {
+            let RenderItem = wrapper.find('.list').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+        });
+
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+        it('selectItem()', async () => {
+            await retrieveItem();
+            renderItemShallowWrapper.simulate('press');
+            expect(navigationMock.navigate).toHaveBeenCalled()
+        });
+    });
+
+    describe('componentWillReceiveProps()', () => {
+        it('call commentChanged once', () => {
+            const fakeCommentChanged =jest.spyOn(QuestionsEdit.prototype, 'componentWillReceiveProps');
+            let defaultProps={reload:false}//define your props here
+            const component = shallow(<QuestionsEdit props={defaultProps}/>);
+            changedProps={reload:true}//define your nextProps here
+            // triggers componentWillReceiveProps
+            component.setProps(changedProps);
+            //expectations
+            expect(fakeCommentChanged).toHaveBeenCalled(); 
+            //wrapper.find(MyComponent).setProps({ something })
+           //write more expectations for other checks like when nextProps.value!=this.state.comment
+        })
+    })
+
 });

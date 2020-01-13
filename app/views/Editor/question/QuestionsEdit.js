@@ -46,7 +46,6 @@ export default class QuestionsEdit extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.setState({loading: true})
-        if (nextProps.navigation.state.params.reload) {
             retrieveItem('token')
                 .then(data => {
                     this.setState({token: JSON.parse(data)})
@@ -61,7 +60,6 @@ export default class QuestionsEdit extends Component {
                             this.setState({loading: false})
                         })
                 })
-        }
     }
 
 
