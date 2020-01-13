@@ -4,6 +4,7 @@ import renderer from 'react-test-renderer';
 import EditRemoveQuiz from "../../../app/views/Editor/quiz/EditRemoveQuiz";
 import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 import RequestDetails from "../../../app/views/Reviewer/RequestDetails";
+import CreateQuiz from "../../../app/views/Editor/quiz/CreateQuiz";
 
 describe('<EditRemoveQuiz />', () => {
     it('CreateQuiz renders without crashing', () => {
@@ -61,6 +62,75 @@ describe('<EditRemoveQuiz />', () => {
         wrapper.find('.description').simulate('changeText', event)
         expect(wrapper.instance().onChangeText).toBeCalledWith('description', 'Description');
 
+    });
+
+    describe('.renderItemIsSelected', () => {
+        const mockItem = {
+            title: 'Title',
+            isSelect: false,
+        }
+        let renderItemShallowWrapper;
+        let wrapper = shallow(<EditRemoveQuiz/>);
+
+        beforeAll(() => {
+            let RenderItem = wrapper.find('.flatList').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+        });
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+    });
+
+    describe('.selectItem()', () => {
+        const mockItem = {
+            title: 'Title',
+            isSelect: true,
+        }
+        let renderItemShallowWrapper;
+        let wrapper = shallow(<EditRemoveQuiz/>);
+        wrapper.instance().selectItem = jest.fn();
+        wrapper.update();
+
+        beforeAll(() => {
+            let RenderItem = wrapper.find('.flatList').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+        });
+
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+        it('selectItem()', async () => {
+            await retrieveItem();
+            renderItemShallowWrapper.find('.question').simulate('press');
+
+            expect(wrapper.instance().selectItem).toBeCalledTimes(1);
+        });
+    });
+
+    describe('.selectItem execute', () => {
+        const mockItem = {
+            title: 'Title',
+            isSelect: true,
+        }
+        let renderItemShallowWrapper;
+        let wrapper = shallow(<EditRemoveQuiz/>);
+
+        beforeAll(() => {
+            let RenderItem = wrapper.find('.flatList').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+        });
+
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+        it('selectItem()', async () => {
+            await retrieveItem();
+            const selectItem = jest.spyOn(wrapper.instance(), 'selectItem');
+            wrapper.update();
+            renderItemShallowWrapper.update();
+            renderItemShallowWrapper.find('.question').simulate('press',mockItem );
+            expect(selectItem).toBeCalled();
+        });
     });
 
 });

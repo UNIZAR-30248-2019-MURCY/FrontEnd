@@ -116,6 +116,7 @@ export default class EditRemoveQuiz extends Component {
 
     renderItem = data =>
         <TouchableOpacity
+            className='question'
             style={[styles.list]}
             onPress={() => this.selectItem(data)}
         >
@@ -182,6 +183,7 @@ export default class EditRemoveQuiz extends Component {
                         <ScrollView>
                         <View style={styles.container2}>
                             <FlatList
+                                className='flatList'
                                 data={this.state.dataSource}
                                 ItemSeparatorComponent={this.FlatListItemSeparator}
                                 renderItem={item => this.renderItem(item)}

@@ -1,5 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<QuizzesEdit/> .renderItem should match the snapshot 1`] = `ShallowWrapper {}`;
+
+exports[`<QuizzesEdit/> .renderItemPublic should match the snapshot 1`] = `ShallowWrapper {}`;
+
 exports[`<QuizzesEdit/> QuizzesScreen test against snapshot 1`] = `
 <View
   style={

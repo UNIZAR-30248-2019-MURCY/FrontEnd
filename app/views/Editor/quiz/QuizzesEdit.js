@@ -76,6 +76,7 @@ export default class QuestionsEdit extends Component {
                 <View style={styles.containerTitle}>
 
                     <TouchableOpacity
+                        className='createQuiz'
                         onPress={() => this.props.navigation.navigate('CreateQuiz')}
                     >
                         <Text h2>Quizzes</Text>

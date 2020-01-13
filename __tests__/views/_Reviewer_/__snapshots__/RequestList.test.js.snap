@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<RequestList /> .renderItemIsSelected should match the snapshot 1`] = `ShallowWrapper {}`;
+
 exports[`<RequestList /> RequestList test against snapshot 1`] = `
 <View
   style={
@@ -62,7 +64,7 @@ exports[`<RequestList /> RequestList test against snapshot 1`] = `
         }
       }
     >
-      Requests List
+      Editors Requests
     </Text>
   </View>
   <View

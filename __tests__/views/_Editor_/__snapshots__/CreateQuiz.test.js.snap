@@ -1,5 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<CreateQuiz /> .renderItemIsSelected should match the snapshot 1`] = `ShallowWrapper {}`;
+
+exports[`<CreateQuiz /> .renderItemIsSelected should match the snapshot 2`] = `ShallowWrapper {}`;
+
 exports[`<CreateQuiz /> CreateQuiz test against snapshot 1`] = `
 <RCTScrollView>
   <View>
@@ -284,6 +288,7 @@ exports[`<CreateQuiz /> CreateQuiz test against snapshot 1`] = `
             >
               <RCTScrollView
                 ItemSeparatorComponent={[Function]}
+                className="flatList"
                 data={Array []}
                 disableVirtualization={false}
                 extraData={

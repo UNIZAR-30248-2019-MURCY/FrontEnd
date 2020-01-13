@@ -98,7 +98,7 @@ export default class RequestList extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
-                    <Text h2>Requests List</Text>
+                    <Text h2>Editors Requests</Text>
                 </View>
                 {showReq}
                 <ActionButton

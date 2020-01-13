@@ -47,6 +47,13 @@ describe('<CreateQuiz />', () => {
         createComponent.setState({ loading: true });
         expect(createComponent.find('.loadingShow').length).toBe(1);
     });
+    it('should not render the Loading component if state.loading is false', async () => {
+        await retrieveItem();
+
+        let createComponent = shallow(<CreateQuiz />);
+        createComponent.setState({ loading: false });
+        expect(createComponent.find('.loadingShow').length).toBe(0);
+    });
     it('onChangeText', async () => {
         await retrieveItem();
 
@@ -70,5 +77,48 @@ describe('<CreateQuiz />', () => {
         expect(key).toEqual('1')
     });
 
-    
+    describe('.renderItemIsSelected', () => {
+        const mockItem = {
+            title: 'Title',
+            isSelect: false,
+        }
+        let renderItemShallowWrapper;
+        let wrapper = shallow(<CreateQuiz/>);
+
+        beforeAll(() => {
+            let RenderItem = wrapper.find('.flatList').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+        });
+
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+    });
+
+    describe('.renderItemIsSelected', () => {
+        const mockItem = {
+            title: 'Title',
+            isSelect: true,
+        }
+        let renderItemShallowWrapper;
+        let wrapper = shallow(<CreateQuiz/>);
+        wrapper.instance().selectItem = jest.fn();
+        wrapper.update();
+
+        beforeAll(() => {
+            let RenderItem = wrapper.find('.flatList').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+        });
+
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+        it('selectItem()', async () => {
+            await retrieveItem();
+            renderItemShallowWrapper.find('.question').simulate('press');
+            expect(wrapper.instance().selectItem).toBeCalledTimes(1);
+        });
+    });
+
+
 });

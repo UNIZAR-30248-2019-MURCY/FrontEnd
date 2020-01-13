@@ -5,6 +5,7 @@ import RequestList from "../../../app/views/Reviewer/RequestList";
 import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 import Request from "../../../app/views/Player/Request";
 import LogIn from "../../../app/views/LogIn/LogIn";
+import CreateQuiz from "../../../app/views/Editor/quiz/CreateQuiz";
 
 describe('<RequestList />', () => {
     it('RequestList renders without crashing', async () => {
@@ -82,17 +83,48 @@ describe('<RequestList />', () => {
                     "response": "string"
                   }
                 }
-              ]              
+              ]
          })
 
         wrapper.update();
         expect(wrapper.find('.flatList').length).toBe(1);
         const key = wrapper.find('FlatList').props().keyExtractor({id: 3});
         expect(key).toEqual('3')
-        
+
 
         //wrapper.find('.flatList').simulate('press');
         //expect(navigationMock.navigate.mock.calls[0]).toEqual(['RequestDetails']);
+    });
+    describe('.renderItemIsSelected', () => {
+        const mockItem = {
+            workflow: 'w',
+            item: 'i',
+            lastWorkflow:{
+                description: 'd'
+            }
+        }
+        let renderItemShallowWrapper;
+        const navigationMock = { navigate: jest.fn() };
+        let wrapper = shallow(<RequestList navigation={navigationMock}/>);
+        wrapper.setState({
+            loading: false
+        })
+        wrapper.instance().selectItem = jest.fn();
+        wrapper.update();
+
+        beforeAll(() => {
+            let RenderItem = wrapper.find('.flatList').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+        });
+
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+        it('navigate()', async () => {
+            await retrieveItem();
+            renderItemShallowWrapper.simulate('press');
+            expect(navigationMock.navigate).toHaveBeenCalled()
+        });
     });
 
 });

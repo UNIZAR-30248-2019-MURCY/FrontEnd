@@ -49,7 +49,7 @@ export default class Points extends Component {
 
                 <View style={styles.containerMessage}>
                     <Icon
-                        className='confirm-email'
+                        className='points'
                         name='check'
                         size={100}
                     />

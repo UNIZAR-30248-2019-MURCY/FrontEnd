@@ -176,6 +176,7 @@ export default class CreateQuiz extends Component {
                         <ScrollView>
                         <View style={styles.container2}>
                             <FlatList
+                                className='flatList'
                                 data={this.state.dataSource}
                                 ItemSeparatorComponent={this.FlatListItemSeparator}
                                 renderItem={item => this.renderItem(item)}

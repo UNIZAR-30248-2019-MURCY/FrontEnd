@@ -4,6 +4,8 @@ import renderer from 'react-test-renderer';
 import EditRemoveQuiz2 from "../../../app/views/Editor/quiz/EditRemoveQuiz2";
 import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 import RequestDetails from "../../../app/views/Reviewer/RequestDetails";
+import EditRemoveQuiz from "../../../app/views/Editor/quiz/EditRemoveQuiz";
+import CreateQuiz2 from "../../../app/views/Editor/quiz/CreateQuiz2";
 
 describe('<EditRemoveQuiz2 />', () => {
     it('CreateQuiz renders without crashing', () => {
@@ -48,6 +50,63 @@ describe('<EditRemoveQuiz2 />', () => {
         expect(wrapper.instance().setState).toBeCalledWith({publish: true});
 
     });
+    describe('.renderItemIsSelected', () => {
+        const mockItem = {
+            title: 'Title',
+        }
+        let renderItemShallowWrapper;
+        let wrapper = shallow(<EditRemoveQuiz2/>);
+
+        beforeAll(() => {
+            let RenderItem = wrapper.find('.flatList').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+        });
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+    });
+    it('get Params Draft', async () => {
+        await retrieveItem();
+        const mockData = {
+            title: 'Title',
+            description: 'd',
+            data: [],
+            token: 't',
+            lastWorkflow: {
+                status: 'DRAFT'
+            }
+        }
+        const navigationMock = {
+            navigate: jest.fn(),
+            getParam: jest.fn((param) => mockData),
+        };
+
+        const wrapper = shallow(<EditRemoveQuiz2 navigation={navigationMock} />);
+        wrapper.update();
+        expect(navigationMock.getParam).toHaveBeenCalled()
+    });
+    it('get Params Public', async () => {
+        await retrieveItem();
+        const mockData = {
+            title: 'Title',
+            description: 'd',
+            data: [],
+            token: 't',
+            lastWorkflow: {
+                status: 'PUBLIC'
+            }
+        }
+        const navigationMock = {
+            navigate: jest.fn(),
+            getParam: jest.fn((param) => mockData),
+        };
+
+        const wrapper = shallow(<EditRemoveQuiz2 navigation={navigationMock} />);
+        wrapper.update();
+        expect(navigationMock.getParam).toHaveBeenCalled()
+    });
+
+
 });
 
 

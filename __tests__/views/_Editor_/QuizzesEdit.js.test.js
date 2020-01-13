@@ -5,6 +5,7 @@ import QuizzesEdit from "../../../app/views/Editor/quiz/QuizzesEdit";
 import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 import {ListItem} from 'react-native-elements';
 import {FlatList} from 'react-native'
+import CreateQuiz from "../../../app/views/Editor/quiz/CreateQuiz";
 
 
 describe('<QuizzesEdit/>', () => {
@@ -135,4 +136,56 @@ describe('<QuizzesEdit/>', () => {
         //wrapper.update().find('item-button').simulate('press');
         //expect(navigationMock.navigate.mock.calls[0]).toEqual(['EditRemoveQuestion', {info: item} ]);
     });
+
+    describe('.renderItem', () => {
+        const mockItem = {
+            isPublic: false,
+            lastWorkflow: {
+                status: 'PUBLIC'
+            }
+        }
+        const navigationMock = { navigate: jest.fn() };
+        let renderItemShallowWrapper;
+        let wrapper = shallow(<QuizzesEdit navigation={navigationMock}/>);
+
+        beforeAll(() => {
+            let RenderItem = wrapper.find('.list').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+        });
+
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+        it('selectItem()', async () => {
+            await retrieveItem();
+            renderItemShallowWrapper.simulate('press');
+            expect(navigationMock.navigate).toHaveBeenCalled()
+        });
+    });
+
+    describe('.renderItemPublic', () => {
+        const mockItem = {
+            isPublic: true,
+
+        }
+        const navigationMock = { navigate: jest.fn() };
+        let renderItemShallowWrapper;
+        let wrapper = shallow(<QuizzesEdit navigation={navigationMock}/>);
+
+        beforeAll(() => {
+            let RenderItem = wrapper.find('.list').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+        });
+
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+        it('selectItem()', async () => {
+            await retrieveItem();
+            renderItemShallowWrapper.simulate('press');
+            expect(navigationMock.navigate).toHaveBeenCalled()
+        });
+    });
+
+
 });

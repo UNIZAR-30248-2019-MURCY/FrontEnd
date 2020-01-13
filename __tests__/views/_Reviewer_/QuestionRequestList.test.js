@@ -5,6 +5,7 @@ import QuestionRequestList from "../../../app/views/Reviewer/QuestionReqList";
 import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
 import Request from "../../../app/views/Player/Request";
 import LogIn from "../../../app/views/LogIn/LogIn";
+import RequestList from "../../../app/views/Reviewer/RequestList";
 
 describe('<QuestionRequestList />', () => {
     it('QuestionRequestList renders without crashing', async () => {
@@ -93,4 +94,37 @@ describe('<QuestionRequestList />', () => {
         const key = wrapper.find('FlatList').props().keyExtractor({id: 3});
         expect(key).toEqual('3')
     });
+    describe('.renderItemIsSelected', () => {
+        const mockItem = {
+            workflow: 'w',
+            item: 'i',
+            workflowList:[],
+            ownerUserName:'',
+            question:'',
+            closed:''
+        }
+        let renderItemShallowWrapper;
+        const navigationMock = { navigate: jest.fn() };
+        let wrapper = shallow(<QuestionRequestList navigation={navigationMock}/>);
+        wrapper.setState({
+            loading: false
+        })
+        wrapper.instance().selectItem = jest.fn();
+        wrapper.update();
+
+        beforeAll(() => {
+            let RenderItem = wrapper.find('.flatList').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+        });
+
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+        it('navigate()', async () => {
+            await retrieveItem();
+            renderItemShallowWrapper.simulate('press');
+            expect(navigationMock.navigate).toHaveBeenCalled()
+        });
+    });
+
 });

@@ -170,7 +170,7 @@ export default class QuizPlayScreen extends Component {
                         />
                     }
                             buttonStyle={styles.buttonSend}
-                            className='remove-button'
+                            className='send-button'
                             onPress={() => {
                                 console.log(this.state.points)
                                 let totalPoints = 0;

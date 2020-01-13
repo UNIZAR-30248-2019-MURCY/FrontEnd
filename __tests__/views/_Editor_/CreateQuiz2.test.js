@@ -3,6 +3,8 @@ import { shallow } from 'enzyme';
 import renderer from 'react-test-renderer';
 import CreateQuiz2 from "../../../app/views/Editor/quiz/CreateQuiz2";
 import {retrieveItem} from "../../../app/modules/AsyncStorage/retrieve";
+import CreateQuiz from "../../../app/views/Editor/quiz/CreateQuiz";
+import EditRemoveQuestion from "../../../app/views/Editor/question/EditRemoveQuestion";
 
 
 describe('<CreateQuiz2 />', () => {
@@ -65,5 +67,38 @@ describe('<CreateQuiz2 />', () => {
         expect(key).toEqual('1')
     });
 
+    describe('.renderItemIsSelected', () => {
+        const mockItem = {
+            title: 'Title',
+        }
+        let renderItemShallowWrapper;
+        let wrapper = shallow(<CreateQuiz2/>);
+
+        beforeAll(() => {
+            let RenderItem = wrapper.find('.flatList').prop('renderItem');
+            renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+        });
+
+        it('should match the snapshot', () => {
+            expect(renderItemShallowWrapper).toMatchSnapshot();
+        });
+    });
+    it('get Params', async () => {
+        await retrieveItem();
+        const mockData = {
+            title: 'Title',
+            description: 'd',
+            data: [],
+            token: 't',
+        }
+        const navigationMock = {
+            navigate: jest.fn(),
+            getParam: jest.fn((param) => mockData),
+        };
+
+        const wrapper = shallow(<CreateQuiz2 navigation={navigationMock} />);
+        wrapper.update();
+        expect(navigationMock.getParam).toHaveBeenCalled()
+    });
 
 });
