@@ -22,6 +22,7 @@
       "!**/coverage/**",
       "!**/app/config/**",
       "!**/app/modules/**",
+      "!**/app/components/**",
       "!**/app/services/**",
       "!**/node_modules/**",
       "!**/babel.config.js",
