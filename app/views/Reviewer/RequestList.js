@@ -85,7 +85,7 @@ export default class RequestList extends Component {
                                             workflowList: item.workflow,
                                             workflow: item.lastWorkflow,
                                             closed: item.closed,
-                                            question: false
+                                            isQuestion: false
                                         });
                                     }}
                                 />

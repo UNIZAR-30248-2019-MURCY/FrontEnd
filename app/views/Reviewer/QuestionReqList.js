@@ -86,9 +86,8 @@ export default class QuestionReqList extends Component {
                                             workflowList: item.workflow,
                                             workflow: item.lastWorkflow,
                                             closed: item.closed,
-                                            ownerUserName: item.ownerUserName,
-                                            question: true,
-                                            item: item
+                                            isQuestion: true,
+                                            question: item
                                         });
                                     }}
                                 />
@@ -101,7 +100,7 @@ export default class QuestionReqList extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.containerTitle}>
-                    <Text h2>Questions Requests</Text>
+                    <Text h2 style={{textAlign: 'center'}}>Questions Requests</Text>
                 </View>
                 {showReq}
                 <ActionButton

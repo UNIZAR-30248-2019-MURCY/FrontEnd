@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     cross: {
         marginTop: 30,
         marginBottom: 0,
-        marginRight: 30,
+        marginRight: 10,
         alignItems: 'flex-end',
     },
     containerUp: {

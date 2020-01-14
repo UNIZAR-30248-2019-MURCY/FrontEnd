@@ -13,9 +13,9 @@ exports[`<Points /> Points test against snapshot 1`] = `
     style={
       Object {
         "alignItems": "flex-end",
-        "marginBottom": 40,
+        "marginBottom": 60,
         "marginRight": 10,
-        "marginTop": 50,
+        "marginTop": 30,
       }
     }
   >

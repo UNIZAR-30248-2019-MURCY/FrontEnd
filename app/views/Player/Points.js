@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import {
     View,
     StyleSheet,
-    Image,
+    Image, Platform,
 } from 'react-native'
 import {Button,Text} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
 import {getQuizId} from "../../services/quiz/quizFuncs";
+
+const WEB = Platform.OS === 'web';
 
 export default class Points extends Component {
 
@@ -72,8 +74,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'black'
     },
     cross: {
-        marginTop: 50,
-        marginBottom: 40,
+        marginTop: 30,
+        marginBottom: WEB ? 20 : 60,
         marginRight: 10,
         alignItems: 'flex-end',
     },

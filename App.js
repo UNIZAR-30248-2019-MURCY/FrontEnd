@@ -269,7 +269,7 @@ const SettingsReviewerStack = createStackNavigator(
 
 const reviewerNavigator = createMaterialBottomTabNavigator(
     {
-        EditorRequests: {
+        Editors: {
             screen: RequestListStack,
             navigationOptions: {
                 showLabel: false,
@@ -278,7 +278,7 @@ const reviewerNavigator = createMaterialBottomTabNavigator(
                 )
             }
         },
-        QuestionRequests: {
+        Questions: {
             screen: QuestionRequestListStack,
             navigationOptions: {
                 showLabel: false,
@@ -297,7 +297,7 @@ const reviewerNavigator = createMaterialBottomTabNavigator(
         }
     },
     {
-        initialRouteName: 'EditorRequests',
+        initialRouteName: 'Editors',
         activeColor: '#f0edf6',
         inactiveColor: 'gray',
         barStyle: {backgroundColor: 'black'},

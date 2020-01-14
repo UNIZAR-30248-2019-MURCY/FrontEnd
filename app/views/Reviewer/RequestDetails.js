@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, AsyncStorage, FlatList, StyleSheet, TextInput, View,ScrollView} from 'react-native'
+import {ActivityIndicator, AsyncStorage, FlatList, StyleSheet, TextInput, View, ScrollView} from 'react-native'
 import {Button, ListItem, Text} from 'react-native-elements';
 import {retrieveItem} from "../../modules/AsyncStorage/retrieve";
 import {acceptRe, denyReq} from "../../services/user/reviewerFuncs";
@@ -16,7 +16,8 @@ export default class RequestDetails extends Component {
             token: '',
             closed: false,
             workflowList: '',
-            questionInfo: ''
+            questionInfo: '',
+            question: false
         }
     }
 
@@ -26,9 +27,9 @@ export default class RequestDetails extends Component {
             this.setState({workflow: this.props.navigation.getParam('workflow', 'default value')});
             this.setState({workflowList: this.props.navigation.getParam('workflowList', 'default value')});
             this.setState({closed: this.props.navigation.getParam('closed', 'default value')});
-            this.setState({question: this.props.navigation.getParam('question')});
-            if(this.props.navigation.getParam('question')){
-                this.setState({questionInfo: this.props.navigation.getParam('item')});
+            this.setState({question: this.props.navigation.getParam('isQuestion')});
+            if (this.props.navigation.getParam('isQuestion')) {
+                this.setState({questionInfo: this.props.navigation.getParam('question')});
             }
         }
         retrieveItem('token')
@@ -92,7 +93,7 @@ export default class RequestDetails extends Component {
         let showButtons = (
             !this.state.loading ?
                 !this.state.closed ?
-                    <View style={styles.containerForm}  className='containerButtons'>
+                    <View style={styles.containerForm} className='containerButtons'>
                         <View style={styles.containerButtons}>
                             <Button
                                 className='accept-button'
@@ -137,47 +138,54 @@ export default class RequestDetails extends Component {
 
         );
 
-        let showQuestion = (
+        let showAns = (
             this.state.question ?
-                <View style={styles.containerQuestion}>
-                    <Text style={styles.containerRequestDetails}>
-                        User: {this.state.questionInfo.ownerUserName}
-                        {'\n'}
-                        Title: {this.state.questionInfo.title}
-                        {'\n'}{'\n'}
-                        Answers
-                    </Text>
-                    <View className='reqList'>
-                        <FlatList
-                            className='flatList'
-                            data={this.state.questionInfo.options}
-                            keyExtractor={item => item.title}
-                            renderItem={({item}) => (
-                                <ListItem
-                                    className='detail-button'
-                                    title={item.title}
-                                    titleStyle={{fontSize: 15}}
-                                    bottomDivider
-                                />
-                            )}
-                        />
-                    </View>
-
+                <View style={styles.containerAns}>
+                    <FlatList
+                        className='flatList'
+                        data={this.state.questionInfo.options}
+                        keyExtractor={item => item.title}
+                        renderItem={({item}) => (
+                            <ListItem
+                                className='detail-button'
+                                title={item.title}
+                                titleStyle={{fontSize: 15}}
+                                bottomDivider
+                            />
+                        )}
+                    />
                 </View> :
                 <View></View>
 
+        );
+
+        let showDetailsText = (
+            this.state.question ?
+                <Text style={styles.containerRequestDetails}>
+                    Status: {this.state.workflow.status}
+                    {'\n'}
+                    User: {this.state.questionInfo.ownerUserName}
+                    {'\n'}{'\n'}
+                    Title: {this.state.questionInfo.title}
+                    {'\n'}
+                    Description: {this.state.questionInfo.description}
+                    {'\n'}
+                    Answers:
+                </Text> :
+                <Text style={styles.containerRequestDetails}>
+                    Status: {this.state.workflow.status}
+                    {'\n'}
+                    Description: {this.state.workflow.description}
+                </Text>
         );
 
         let showDetails = (
             this.state.workflow ?
                 <View style={styles.containerRequest} className='showDetails'>
                     <Text h4 style={styles.containerSubTitle}>{this.state.workflow.title}</Text>
-                    {showQuestion}
-                    <Text style={styles.containerRequestDetails}>
-                        Description: {this.state.workflow.description}
-                        {'\n'}{'\n'}
-                        Status: {this.state.workflow.status}
-                    </Text>
+                    {showDetailsText}
+
+                    {showAns}
 
                     {showInput}
                     {showErr}
@@ -197,7 +205,7 @@ export default class RequestDetails extends Component {
                     let workflowList = [this.state.workflowList];
                     let lastW = this.state.workflowList;
 
-                    if(lastW){
+                    if (lastW) {
                         while (lastW.nextWorkflow) {
                             workflowList.push(lastW.nextWorkflow);
                             lastW = lastW.nextWorkflow;
@@ -216,22 +224,22 @@ export default class RequestDetails extends Component {
                     <Text h2>Details</Text>
                 </View>
                 <ScrollView>
-                <View style={styles.containerRequest2}>
-                    {showDetails}
-                    {workflowButton}
-                    <View style={styles.containerRequest3}>
-                        <Button
-                            className='return-button'
-                            type="clear"
-                            buttonStyle={styles.button2}
-                            title="Return"
-                            titleStyle={{color: 'grey', fontSize: 20}}
-                            onPress={() => {
-                                this.props.navigation.goBack();
-                            }
-                            }/>
+                    <View style={styles.containerRequest2}>
+                        {showDetails}
+                        {workflowButton}
+                        <View style={styles.containerRequest3}>
+                            <Button
+                                className='return-button'
+                                type="clear"
+                                buttonStyle={styles.button2}
+                                title="Return"
+                                titleStyle={{color: 'grey', fontSize: 20}}
+                                onPress={() => {
+                                    this.props.navigation.goBack();
+                                }
+                                }/>
+                        </View>
                     </View>
-                </View>
                 </ScrollView>
             </View>
         )
@@ -321,6 +329,14 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         padding: 10,
         marginTop: 50,
+    },
+    containerAns: {
+        flex: 1,
+        //backgroundColor: "#192338",
+        marginTop: 10,
+        position: "relative",
+        width: 200,
+        maxHeight: 400,
     },
 
 

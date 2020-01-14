@@ -128,7 +128,7 @@ export default class EditRemoveQuestion extends Component {
                     ]}
                 /> :
                 <View>
-                    <Text className='statusText' style={styles.subTitle3}>Status of publication: {this.state.data.lastWorkflow.status}</Text>
+                    <Text className='statusText' style={[styles.subTitle3, {textAlign:'center'}]}>Status of publication: {this.state.data.lastWorkflow.status}</Text>
                 </View>
         );
         let workflowButton = (

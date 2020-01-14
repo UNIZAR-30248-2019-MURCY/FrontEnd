@@ -18,8 +18,9 @@ describe('<RequestDetails />', () => {
         await retrieveItem();
         const navigationMock = {
             goBack: jest.fn(),
-            getParam: jest.fn(),
+            getParam: jest.fn((param) => true),
         };
+
         const wrapper = shallow(<RequestDetails navigation={navigationMock}/>);
         wrapper.find('.return-button').simulate('press');
         expect(navigationMock.goBack.mock.calls.length).toEqual(1);
@@ -28,10 +29,30 @@ describe('<RequestDetails />', () => {
         await retrieveItem();
         const navigationMock = {
             navigate: jest.fn(),
-            getParam: jest.fn(),
+            getParam: jest.fn((param) => false),
         };
+
         let wrapper = shallow(<RequestDetails navigation={navigationMock}/>);
         wrapper.setState({
+            workflow: {
+                description: "Prueba petición",
+                id: 1,
+                nextWorkflow: {
+                    description: "Prueba petición",
+                    id: 2,
+                    nextWorkflow: null,
+                    response: "Prueba",
+                    status: "APPROVED",
+                    statusBy: "test",
+                    statusDate: "2019-11-26T10:27:05.853+0000",
+                    title: "Solicitud para ser editor",
+                },
+                response: "Prueba",
+                status: "APPROVED",
+                statusBy: "test",
+                statusDate: "2019-11-26T10:27:05.853+0000",
+                title: "Solicitud para ser editor",
+            },
             workflowList: {
                 description: "Prueba petición",
                 id: 1,

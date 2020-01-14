@@ -32,7 +32,7 @@ export default StyleSheet.create({
         left: itemHorizontalMargin,
         right: itemHorizontalMargin,
         bottom: 18,
-        height: WEB ? viewportHeight * 0.53 : viewportHeight * 0.62,
+        height: WEB ? viewportHeight * 0.49 : viewportHeight * 0.62,
         shadowColor: colors.black,
         shadowOpacity: 0.45,
         shadowOffset: { width: 0, height: 10 },
@@ -71,7 +71,7 @@ export default StyleSheet.create({
     },
     textContainer: {
         alignItems:  WEB ? 'center' : null ,
-        height: WEB ? viewportHeight * 0.53 : viewportHeight * 0.62  ,
+        height: WEB ? viewportHeight * 0.49 : viewportHeight * 0.62  ,
         paddingTop: 60 - entryBorderRadius,
         paddingBottom: 50,
         paddingHorizontal: 16,

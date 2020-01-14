@@ -16,7 +16,7 @@ exports[`<QuizPlayScreen/> QuizPlayScreen test against snapshot 1`] = `
       Object {
         "alignItems": "flex-end",
         "marginBottom": 0,
-        "marginRight": 30,
+        "marginRight": 10,
         "marginTop": 30,
       }
     }

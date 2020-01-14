@@ -24,6 +24,7 @@ exports[`<QuestionRequestList /> QuestionRequestList test against snapshot 1`] =
       style={
         Object {
           "fontSize": 42.5,
+          "textAlign": "center",
         }
       }
       theme={
