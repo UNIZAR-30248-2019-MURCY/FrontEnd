@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`.renderItem should match the snapshot 1`] = `ShallowWrapper {}`;
+
 exports[`<QuizzesScreen/> CreateQuiz test against snapshot 1`] = `
 <View
   style={
@@ -97,6 +99,7 @@ exports[`<QuizzesScreen/> CreateQuiz test against snapshot 1`] = `
     autoplayDelay={1000}
     autoplayInterval={3000}
     callbackOffsetMargin={5}
+    className="carousel"
     containerCustomStyle={Object {}}
     contentContainerCustomStyle={Object {}}
     contentContainerStyle={

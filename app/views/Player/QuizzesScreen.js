@@ -34,7 +34,7 @@ export default class QuizzesScreen extends Component {
             fadeValue: new Animated.Value(0),
             byTitle: true,
             byDescription: false,
-            search:''
+            search:'',
         }
     }
 
@@ -148,15 +148,14 @@ export default class QuizzesScreen extends Component {
                     <Text h2 style={{fontWeight: '600'}}  >Quizzes</Text>
                 </View>
 
-
-
                 {showLoading}
                 <Carousel
                     ref={'carousel'}
                     data={this.state.data}
+                    className='carousel'
                     renderItem=
                         {({item, index}) => (
-                            <SliderEntry  navigation={navigation} data={item} even={(index + 1) % 2 === 0}/>
+                            <SliderEntry navigation={navigation} data={item}  even={(index + 1) % 2 === 0}/>
                         )}
                     sliderWidth={sliderWidth}
                     itemWidth={itemWidth}

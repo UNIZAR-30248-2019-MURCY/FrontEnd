@@ -43,3 +43,20 @@ describe('<QuizPlayScreen/>', () => {
         expect(navigationMock.replace.mock.calls[0]).toEqual(['Points',{points: 0}]);
     });
 });
+
+describe('.renderItem', () => {
+    const mockItem = {
+        title: 'Title',
+    }
+    let renderItemShallowWrapper;
+    let wrapper = shallow(<QuizPlayScreen/>);
+
+    beforeAll(() => {
+        let RenderItem = wrapper.find('.carousel').prop('renderItem');
+        renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+    });
+
+    it('should match the snapshot', () => {
+        expect(renderItemShallowWrapper).toMatchSnapshot();
+    });
+});

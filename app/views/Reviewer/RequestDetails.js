@@ -139,11 +139,11 @@ export default class RequestDetails extends Component {
 
         let showQuestion = (
             this.state.question ?
-                <View>
+                <View style={styles.containerQuestion}>
                     <Text style={styles.containerRequestDetails}>
-                        User: {this.state.questionInfo.ownerUserName} 
+                        User: {this.state.questionInfo.ownerUserName}
                         {'\n'}
-                        Title: {this.state.questionInfo.title} 
+                        Title: {this.state.questionInfo.title}
                         {'\n'}{'\n'}
                         Answers
                     </Text>
@@ -162,7 +162,7 @@ export default class RequestDetails extends Component {
                             )}
                         />
                     </View>
-                    
+
                 </View> :
                 <View></View>
 
@@ -253,6 +253,10 @@ const styles = StyleSheet.create({
         marginTop: 25
     },
     containerRequest: {
+        flex: 1,
+        alignItems: 'center',
+    },
+    containerQuestion: {
         flex: 1,
         alignItems: 'center',
     },

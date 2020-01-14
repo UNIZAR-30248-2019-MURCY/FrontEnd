@@ -26,7 +26,7 @@ export default class QuizPlayScreen extends Component {
             data:{
                 questions:[]
             },
-            points: 0
+            points: 0,
         }
     }
 
@@ -148,10 +148,11 @@ export default class QuizPlayScreen extends Component {
 
                 <Carousel
                     ref={'carousel'}
+                    className='carousel'
                     data={this.state.data.questions}
                     renderItem=
                         {({item, index}) => (
-                            <SliderEntryQuestion points={this.points} data={item}  even={(index + 1) % 2 === 0}/>
+                            <SliderEntryQuestion points={this.points} data={item} even={(index + 1) % 2 === 0}/>
                         )}
                     sliderWidth={sliderWidth}
                     itemWidth={itemWidth}

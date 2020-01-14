@@ -31,3 +31,20 @@ describe('<QuizzesScreen/>', () => {
         expect(createComponent.find('.loadingShow').length).toBe(0);
     });
 });
+
+describe('.renderItem', () => {
+    const mockItem = {
+        title: 'Title',
+    }
+    let renderItemShallowWrapper;
+    let wrapper = shallow(<QuizzesScreen/>);
+
+    beforeAll(() => {
+        let RenderItem = wrapper.find('.carousel').prop('renderItem');
+        renderItemShallowWrapper = shallow(<RenderItem item={mockItem} />);
+    });
+
+    it('should match the snapshot', () => {
+        expect(renderItemShallowWrapper).toMatchSnapshot();
+    });
+});
